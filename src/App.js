@@ -94,13 +94,13 @@ class App extends Component {
   dayPhoto = () => {
     return(
         <div>
+            <Link to={`/photos`}>Go back</Link>
             <h2>This is Photo of the day!</h2>
   
             <div>
               <img src={this.state.dayPhoto.url} alt='image'/>
             </div>
   
-            <Link to={`/photos`}>Go back</Link>
         </div>
     )
   }
