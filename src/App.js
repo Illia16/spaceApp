@@ -8,32 +8,38 @@ class App extends Component {
     constructor() {
       super();
       this.state = {
+          date: "",
+          searchText: "",
+          roverName: "",
           dayPhoto: [],
           roverPhotos: [],
           spaceInfo: [],
       }
   }
 
-  handleSubmit = () => {
-      axios({
-          url: `https://api.nasa.gov/planetary/apod`,
-          method: 'GET',
-          params: {
-              api_key: `RQm9PKAWUOxPOwxSYLbTECB3ZtzrjLjlP4R9vIIm`,
-              date: `2020-01-16`, // need to be dynamic
-          }
-      }).then( (res) => {
-          console.log(res.data);
 
-          const photoOfTheDay = res.data;
+  findPhotoDay = () => {
+    axios({
+      url: `https://api.nasa.gov/planetary/apod`,
+      method: 'GET',
+      params: {
+          api_key: `RQm9PKAWUOxPOwxSYLbTECB3ZtzrjLjlP4R9vIIm`,
+          date: this.state.date,
+      }
+  }).then( (res) => {
+      console.log(res.data);
 
-          this.setState({
-              dayPhoto: photoOfTheDay,
-          })
+      const photoOfTheDay = res.data;
+
+      this.setState({
+          dayPhoto: photoOfTheDay,
       })
+  })
+}
 
+  findRoverPhotos = () => {
       axios({
-        url: `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos`, // need to be dynamic
+        url: `https://api.nasa.gov/mars-photos/api/v1/rovers/${this.state.roverName}/photos`, // need to be dynamic
         method: 'GET',
         params: {
             api_key: `RQm9PKAWUOxPOwxSYLbTECB3ZtzrjLjlP4R9vIIm`,
@@ -48,12 +54,14 @@ class App extends Component {
           roverPhotos: roverPhotos,
         })
     })
+  }
 
+  findSpaceInfo = () => {
     axios({
       url: `https://images-api.nasa.gov/search`,
       method: 'GET',
       params: {
-          q: '2020', // need to be dynamic
+          q: this.state.searchText,
       }
     }).then( (res) => {
       console.log(res.data.collection.items);
@@ -67,13 +75,62 @@ class App extends Component {
 
   }
 
+  userSelection = (e) => {
+    console.log(e.target);
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+
   Nav = () => {
     return(
         <div>          
               <header>
-                <h1>App</h1>
+                <h1>Space App</h1>
               </header>
               <Link to={`/photos`}><p>photos</p></Link>
+
+              {/* LOOKING FOR PHOTO OF THE DAY */}
+              <div>
+                <Link to="/photos/photooftheday" style={{ padding: '10px' }}>See Photo of the day</Link>
+
+                <form action="">
+                  <label htmlFor="date"></label>
+                  <input onChange={this.userSelection} type="date" name="date" id="date"/>
+                </form>
+
+                <button onClick={this.findPhotoDay}>Find photo of the day</button>
+              </div>
+
+              {/* LOOKING FOR ROVER PHOTOS */}
+              <div>
+              <Link to="/photos/roverPhotos"  style={{ padding: '10px' }}>See Mars Rover Photos</Link>
+
+                <form action="">
+                  <label htmlFor="rover">Pick a group to investigate plz</label>
+
+                  <select onChange={ this.userSelection } type="rover" id="rover" name="roverName">
+                    <option name="roverName" value="">Select a desired rover</option>
+                    <option name="roverName" value="spirit">Spirit</option>
+                    <option name="roverName" value="opportunity">Opportunity</option>
+                    <option name="roverName" value="curiosity">Curiosity</option>
+                  </select>
+                </form>
+                
+                <button onClick={this.findRoverPhotos}>Find rover photos</button>
+              </div>
+
+              {/* LOOKING FOR ADDITIONAL SPACE INFO */}
+              <div>
+              <Link to="/photos/spaceInfo"  style={{ padding: '10px' }}>See Space Information</Link>
+
+                <form action="">
+                  <label htmlFor="text"></label>
+                  <input onChange={this.userSelection} type="text" name="searchText" id="text" />
+                </form>
+                
+                <button onClick={this.findSpaceInfo}>Find additional space info</button>
+              </div>
         </div>
     )
   }
@@ -82,11 +139,6 @@ class App extends Component {
     return(
         <div>
           <Link to={`/`}>Go home</Link>
-          <Link to="/photos/photooftheday">Photo of the day</Link>
-          <Link to="/photos/roverPhotos">Mars Rover Photos</Link>
-          <Link to="/photos/spaceInfo">Space Information</Link>
-  
-          <button onClick={this.handleSubmit}>Find</button>
         </div>
     )
   }
@@ -94,7 +146,7 @@ class App extends Component {
   dayPhoto = () => {
     return(
         <div>
-            <Link to={`/photos`}>Go back</Link>
+            <Link to={`/`}>Go back</Link>
             <h2>This is Photo of the day!</h2>
   
             <div>
@@ -109,7 +161,7 @@ class App extends Component {
     return(
       <div>
         <h2>The rover photos</h2>
-        <Link to={`/photos`}>Go back</Link>
+        <Link to={`/`}>Go back</Link>
 
         <ul className="roverPhotos">
           {
@@ -129,7 +181,7 @@ class App extends Component {
     return(
       <div>
         <h2>Space Info</h2>
-        <Link to={`/photos`}>Go back</Link>
+        <Link to={`/`}>Go back</Link>
 
         <ul className="spaceInfo">
           {
