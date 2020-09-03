@@ -5,7 +5,6 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import axios from 'axios';
 
 // THINGS TO DO:
-//  - set the dates automatically for every rover's activity on Mars
 //  - pop up error if there's NO RESULTS AT all based on the input
 class App extends Component {
     constructor() {
@@ -14,11 +13,6 @@ class App extends Component {
           date: "",
           searchText: "",
           roverName: "",
-          // manifestData: {
-          //   spirit: [],
-          //   opportunity: [],
-          //   curiosity: [],
-          // },
           manifestData: [],
           dayPhoto: [],
           roverPhotos: [],
@@ -100,9 +94,9 @@ class App extends Component {
         })
   }
 
-// Curiosity landed on: 2012-08-06 - 2870
-// Opportunity landed on: 2004-01-25 - 5111
-// Spirit landed on: 2004-01-04 - 2208
+// Curiosity landed on: 2012-08-06 - 2870 days spent
+// Opportunity landed on: 2004-01-25 - 5111 days spent
+// Spirit landed on: 2004-01-04 - 2208 days spent
 
   findRoverPhotos = async () => {
 
@@ -114,6 +108,7 @@ class App extends Component {
         }
       })
 
+      // waiting for MAX DAYS SPENT ON MARS by selected rover to PASS that day value into next API call to get photos
         await axios({
           url: `https://api.nasa.gov/mars-photos/api/v1/manifests/${this.state.roverName}/`,
           method: 'GET',
@@ -134,7 +129,7 @@ class App extends Component {
         method: 'GET',
         params: {
             api_key: `RQm9PKAWUOxPOwxSYLbTECB3ZtzrjLjlP4R9vIIm`,
-            sol: Math.floor(Math.random()*(this.state.manifestData.max_sol)+1),
+            sol: Math.floor(Math.random()*(this.state.manifestData.max_sol)+1), // getting a random day out of all days spent by the selected rover on Mars
             //earth_date: `2020-01-16`, // more practical would be to use sol instead of earth_date
         }
     }).then( (res) => {
@@ -226,70 +221,6 @@ class App extends Component {
 
   }
 
-  // componentDidMount() {
-  //     axios({
-  //       url: `https://api.nasa.gov/mars-photos/api/v1/manifests/spirit/`,
-  //       method: 'GET',
-  //       params: {
-  //           api_key: `RQm9PKAWUOxPOwxSYLbTECB3ZtzrjLjlP4R9vIIm`,
-  //       }
-  //   }).then( (res) => {
-  //       console.log('Spirit', res);
-
-  //       this.setState({
-  //         manifestData: {
-  //           ...this.state.manifestData,
-  //           spirit: res
-  //         }
-  //       })
-  //     })
-
-  //     axios({
-  //       url: `https://api.nasa.gov/mars-photos/api/v1/manifests/opportunity/`,
-  //       method: 'GET',
-  //       params: {
-  //           api_key: `RQm9PKAWUOxPOwxSYLbTECB3ZtzrjLjlP4R9vIIm`,
-  //       }
-  //   }).then( (res) => {
-  //       console.log('Oportunity', res);
-
-  //       this.setState({
-  //         manifestData: {
-  //           ...this.state.manifestData,
-  //           opportunity: res
-  //         }
-  //       })
-  //     })
-
-  //     axios({
-  //       url: `https://api.nasa.gov/mars-photos/api/v1/manifests/curiosity/`,
-  //       method: 'GET',
-  //       params: {
-  //           api_key: `RQm9PKAWUOxPOwxSYLbTECB3ZtzrjLjlP4R9vIIm`,
-  //       }
-  //   }).then( (res) => {
-  //       console.log('Curiosity', res);
-
-  //       this.setState({
-  //         manifestData: {
-  //           ...this.state.manifestData,
-  //           curiosity: res
-  //         }
-  //       })
-  //     })
-  // }
-
-  // gettingMaxDay = (rover) => {
-  //   axios({
-  //     url: `https://api.nasa.gov/mars-photos/api/v1/manifests/${rover}/`,
-  //     method: 'GET',
-  //     params: {
-  //         api_key: `RQm9PKAWUOxPOwxSYLbTECB3ZtzrjLjlP4R9vIIm`,
-  //     }
-  // }).then( (res) => {
-  //     console.log(res);
-  //   })
-  // }
 
   userSelection = (e) => {
     // saving data in stated based on the input used
@@ -304,9 +235,6 @@ class App extends Component {
         spaceInfo: false,
       }
     })
-
-
-    //this.gettingMaxDay(e.target.value);
   }
 
   closeError = () => {
