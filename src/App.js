@@ -4,6 +4,9 @@ import Error from './Error';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import axios from 'axios';
 
+// THINGS TO DO:
+//  - set the dates automatically for every rover's activity on Mars
+//  - pop up error if there's NO RESULTS AT all based on the input
 class App extends Component {
     constructor() {
       super();
@@ -11,6 +14,12 @@ class App extends Component {
           date: "",
           searchText: "",
           roverName: "",
+          // manifestData: {
+          //   spirit: [],
+          //   opportunity: [],
+          //   curiosity: [],
+          // },
+          manifestData: [],
           dayPhoto: [],
           roverPhotos: [],
           spaceInfo: [],
@@ -35,23 +44,11 @@ class App extends Component {
   }
 
 
-  // componentDidMount() {
-  //     this.setState({
-  //       date: 
-  //     })
-  //     // making sure user can't pick a day beyond today's date
-  //     date.max = new Date().toISOString().split("T")[0];
-  // }
 
 
   findPhotoDay = () => {
 
-    // if (!this.state.date) {
-    //   this.setState({
-    //     errorPopUp: true,
-    //   })
-    // } else {
-
+    // loading logo while getting results ON
           this.setState({
             loadingStatus: {
               ...this.state.loadingStatus,
@@ -69,62 +66,89 @@ class App extends Component {
         }).then( (res) => {
             console.log(res);
             console.log(res.data);
-
             const photoOfTheDay = res.data;
 
+      // saving results in states
             this.setState({
                 dayPhoto: photoOfTheDay,
+      // loading logo while getting results OFF
                 loadingStatus: {
                   ...this.state.loadingStatus,
                   dayPhoto: false,
                 },
+      // showing "See results" link once we get the data
                 resultsReady: {
                   ...this.state.resultsReady,
                   dayPhoto: true,
                 }
             })
         }).catch( error => {
+          // getting error msg from API to later pass as a prop to Error component
           this.setState({
             errorMsg: {
               ...this.state.errorMsg,
               badDate: error.response.data.msg,
             },
+            // Error window pop-up ON
             errorPopUp: true,
+            // loading logo while getting results OFF
             loadingStatus: {
               ...this.state.loadingStatus,
               dayPhoto: false,
             }
           })
         })
-    //}
-}
+  }
 
-  findRoverPhotos = () => {
+// Curiosity landed on: 2012-08-06 - 2870
+// Opportunity landed on: 2004-01-25 - 5111
+// Spirit landed on: 2004-01-04 - 2208
 
+  findRoverPhotos = async () => {
+
+      // loading logo while getting results ON
       this.setState({
         loadingStatus: {
           ...this.state.loadingStatus,
           roverPhotos: true,
         }
       })
+
+        await axios({
+          url: `https://api.nasa.gov/mars-photos/api/v1/manifests/${this.state.roverName}/`,
+          method: 'GET',
+          params: {
+              api_key: `RQm9PKAWUOxPOwxSYLbTECB3ZtzrjLjlP4R9vIIm`,
+          }
+      }).then( (res) => {
+          console.log(res.data.photo_manifest);
+
+          this.setState({
+            manifestData: res.data.photo_manifest
+          })
+        })
+      //}
     
       axios({
         url: `https://api.nasa.gov/mars-photos/api/v1/rovers/${this.state.roverName}/photos`, // need to be dynamic
         method: 'GET',
         params: {
             api_key: `RQm9PKAWUOxPOwxSYLbTECB3ZtzrjLjlP4R9vIIm`,
-            earth_date: `2020-01-16`, // need to be dynamic
+            sol: Math.floor(Math.random()*(this.state.manifestData.max_sol)+1),
+            //earth_date: `2020-01-16`, // more practical would be to use sol instead of earth_date
         }
     }).then( (res) => {
         console.log(res);
-
         const roverPhotos = res.data.photos;
 
+      // saving results in states
         this.setState({
           roverPhotos: roverPhotos,
+      // loading logo while getting results OFF
           loadingStatus: {
             ...this.state.loadingStatus,
             roverPhotos: false,
+      // showing "See results" link once we get the data
           },
           resultsReady: {
             ...this.state.resultsReady,
@@ -132,12 +156,15 @@ class App extends Component {
           }
         })
     }).catch( (error) => {
+      // getting error msg from API to later pass as a prop to Error component
       this.setState({
         errorMsg: {
           ...this.state.errorMsg,
           noRover: error.response.data.errors,
         },
+        // Error window pop-up ON
         errorPopUp: true,
+        // loading logo while getting results OFF
         loadingStatus: {
           ...this.state.loadingStatus,
           roverPhotos: false,
@@ -147,7 +174,8 @@ class App extends Component {
   }
 
   findSpaceInfo = () => {
-
+    
+    // loading logo while getting results ON
     this.setState({
       loadingStatus: {
         ...this.state.loadingStatus,
@@ -163,27 +191,32 @@ class App extends Component {
       }
     }).then( (res) => {
       console.log(res.data.collection.items);
-
       const spaceInfo = res.data.collection.items;
 
+    // saving results in states
       this.setState({
         spaceInfo: spaceInfo,
+    // loading logo while getting results OFF
         loadingStatus: {
           ...this.state.loadingStatus,
           spaceInfo: false,
         },
+    // showing "See results" link once we get the data
         resultsReady: {
           ...this.state.resultsReady,
           spaceInfo: true,
         }
       })
     }).catch( (error) => {
+    // getting error msg from API to later pass as a prop to Error component
       this.setState({
         errorMsg: {
           ...this.state.errorMsg,
           emptyInput: error.response.data.reason,
         },
+    // Error window pop-up ON
         errorPopUp: true,
+    // loading logo while getting results OFF
         loadingStatus: {
           ...this.state.loadingStatus,
           spaceInfo: false,
@@ -193,21 +226,94 @@ class App extends Component {
 
   }
 
+  // componentDidMount() {
+  //     axios({
+  //       url: `https://api.nasa.gov/mars-photos/api/v1/manifests/spirit/`,
+  //       method: 'GET',
+  //       params: {
+  //           api_key: `RQm9PKAWUOxPOwxSYLbTECB3ZtzrjLjlP4R9vIIm`,
+  //       }
+  //   }).then( (res) => {
+  //       console.log('Spirit', res);
+
+  //       this.setState({
+  //         manifestData: {
+  //           ...this.state.manifestData,
+  //           spirit: res
+  //         }
+  //       })
+  //     })
+
+  //     axios({
+  //       url: `https://api.nasa.gov/mars-photos/api/v1/manifests/opportunity/`,
+  //       method: 'GET',
+  //       params: {
+  //           api_key: `RQm9PKAWUOxPOwxSYLbTECB3ZtzrjLjlP4R9vIIm`,
+  //       }
+  //   }).then( (res) => {
+  //       console.log('Oportunity', res);
+
+  //       this.setState({
+  //         manifestData: {
+  //           ...this.state.manifestData,
+  //           opportunity: res
+  //         }
+  //       })
+  //     })
+
+  //     axios({
+  //       url: `https://api.nasa.gov/mars-photos/api/v1/manifests/curiosity/`,
+  //       method: 'GET',
+  //       params: {
+  //           api_key: `RQm9PKAWUOxPOwxSYLbTECB3ZtzrjLjlP4R9vIIm`,
+  //       }
+  //   }).then( (res) => {
+  //       console.log('Curiosity', res);
+
+  //       this.setState({
+  //         manifestData: {
+  //           ...this.state.manifestData,
+  //           curiosity: res
+  //         }
+  //       })
+  //     })
+  // }
+
+  // gettingMaxDay = (rover) => {
+  //   axios({
+  //     url: `https://api.nasa.gov/mars-photos/api/v1/manifests/${rover}/`,
+  //     method: 'GET',
+  //     params: {
+  //         api_key: `RQm9PKAWUOxPOwxSYLbTECB3ZtzrjLjlP4R9vIIm`,
+  //     }
+  // }).then( (res) => {
+  //     console.log(res);
+  //   })
+  // }
+
   userSelection = (e) => {
+    // saving data in stated based on the input used
     console.log(e.target.name, e.target.value);
     this.setState({
       [e.target.name]: e.target.value,
+
+    // hiding "See results" upon change of any input
       resultsReady: {
         dayPhoto: false,
         roverPhotos: false,
         spaceInfo: false,
       }
     })
+
+
+    //this.gettingMaxDay(e.target.value);
   }
 
   closeError = () => {
+  // closing error window
     this.setState({
         errorPopUp: false,
+  // emptying error msg-es so that don't see them together if other error occurs
         errorMsg: {
           ...this.state.errorMsg,
           badDate: "",
@@ -319,6 +425,7 @@ class App extends Component {
   //   )
   // }
 
+  // 3 result components: dayPhoto, roverPhotos, spaceInfo
   dayPhoto = () => {
     const {title, url, copyright, explanation} = this.state.dayPhoto;
     return(
@@ -336,15 +443,20 @@ class App extends Component {
 
   RoverPhotos = () => {
     const [{earth_date: earthDate, rover:{landing_date: landingDate, launch_date: launchDate, name: roverName, status: roverStatus}}] = this.state.roverPhotos
+
+    const {max_date, total_photos} = this.state.manifestData
     console.log(earthDate, landingDate, launchDate, roverName, roverStatus);
+    console.log(max_date, total_photos);
 
     return(
       <div>
         <Link to={`/`}>Go back</Link>
-        <h2>The photos of {roverName} rover </h2>
-        <p>Launched from Earth: {launchDate}</p>
+        <h2>The photos of {roverName} rover taken on {earthDate} </h2>
+        <p>Left Earth: {launchDate}</p>
         <p>Landed on Mars: {landingDate}</p>
         <p>Status: {roverStatus}</p>
+        <p>Total photos taken: {total_photos}</p>
+        <p>The last photos taken on: {max_date}</p>
 
         <ul className="roverPhotos">
           {
@@ -390,10 +502,10 @@ class App extends Component {
   render() {
     return (
       <Router basename={process.env.PUBLIC_URL}>
-        <div className="App">
+        <div className="App wrapper">
           <Route exact path="/" component={ this.Nav } />
 
-          <Route exact path="/photos" component={ this.Photos } />
+          {/* <Route exact path="/photos" component={ this.Photos } /> */}
           <Route exact path="/photos/photooftheday" component={this.dayPhoto} />
           <Route exact path="/photos/roverPhotos" component={ this.RoverPhotos } />
           <Route exact path="/photos/spaceInfo" component={ this.SpaceInfo } />
