@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import "./styles/app.scss";
-// import Photos from './Photos';
+import Error from './Error';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import axios from 'axios';
 
@@ -14,30 +14,100 @@ class App extends Component {
           dayPhoto: [],
           roverPhotos: [],
           spaceInfo: [],
+          errorPopUp: false,
+          errorMsg: {
+            badDate: "",
+            noRover: "",
+            emptyInput: "",
+            noData: "No data found based on your request",
+          },
+          loadingStatus: {
+            dayPhoto: false,
+            roverPhotos: false,
+            spaceInfo: false,
+          },
+          resultsReady: {
+            dayPhoto: false,
+            roverPhotos: false,
+            spaceInfo: false,
+          }
       }
   }
 
 
+  // componentDidMount() {
+  //     this.setState({
+  //       date: 
+  //     })
+  //     // making sure user can't pick a day beyond today's date
+  //     date.max = new Date().toISOString().split("T")[0];
+  // }
+
+
   findPhotoDay = () => {
-    axios({
-      url: `https://api.nasa.gov/planetary/apod`,
-      method: 'GET',
-      params: {
-          api_key: `RQm9PKAWUOxPOwxSYLbTECB3ZtzrjLjlP4R9vIIm`,
-          date: this.state.date,
-      }
-  }).then( (res) => {
-      console.log(res.data);
 
-      const photoOfTheDay = res.data;
+    // if (!this.state.date) {
+    //   this.setState({
+    //     errorPopUp: true,
+    //   })
+    // } else {
 
-      this.setState({
-          dayPhoto: photoOfTheDay,
-      })
-  })
+          this.setState({
+            loadingStatus: {
+              ...this.state.loadingStatus,
+              dayPhoto: true,
+            }
+          })
+
+          axios({
+            url: `https://api.nasa.gov/planetary/apod`,
+            method: 'GET',
+            params: {
+                api_key: `RQm9PKAWUOxPOwxSYLbTECB3ZtzrjLjlP4R9vIIm`,
+                date: this.state.date,
+            }
+        }).then( (res) => {
+            console.log(res);
+            console.log(res.data);
+
+            const photoOfTheDay = res.data;
+
+            this.setState({
+                dayPhoto: photoOfTheDay,
+                loadingStatus: {
+                  ...this.state.loadingStatus,
+                  dayPhoto: false,
+                },
+                resultsReady: {
+                  ...this.state.resultsReady,
+                  dayPhoto: true,
+                }
+            })
+        }).catch( error => {
+          this.setState({
+            errorMsg: {
+              ...this.state.errorMsg,
+              badDate: error.response.data.msg,
+            },
+            errorPopUp: true,
+            loadingStatus: {
+              ...this.state.loadingStatus,
+              dayPhoto: false,
+            }
+          })
+        })
+    //}
 }
 
   findRoverPhotos = () => {
+
+      this.setState({
+        loadingStatus: {
+          ...this.state.loadingStatus,
+          roverPhotos: true,
+        }
+      })
+    
       axios({
         url: `https://api.nasa.gov/mars-photos/api/v1/rovers/${this.state.roverName}/photos`, // need to be dynamic
         method: 'GET',
@@ -52,11 +122,39 @@ class App extends Component {
 
         this.setState({
           roverPhotos: roverPhotos,
+          loadingStatus: {
+            ...this.state.loadingStatus,
+            roverPhotos: false,
+          },
+          resultsReady: {
+            ...this.state.resultsReady,
+            roverPhotos: true,
+          }
         })
+    }).catch( (error) => {
+      this.setState({
+        errorMsg: {
+          ...this.state.errorMsg,
+          noRover: error.response.data.errors,
+        },
+        errorPopUp: true,
+        loadingStatus: {
+          ...this.state.loadingStatus,
+          roverPhotos: false,
+        }
+      })    
     })
   }
 
   findSpaceInfo = () => {
+
+    this.setState({
+      loadingStatus: {
+        ...this.state.loadingStatus,
+        spaceInfo: true,
+      }
+    })
+
     axios({
       url: `https://images-api.nasa.gov/search`,
       method: 'GET',
@@ -70,17 +168,54 @@ class App extends Component {
 
       this.setState({
         spaceInfo: spaceInfo,
+        loadingStatus: {
+          ...this.state.loadingStatus,
+          spaceInfo: false,
+        },
+        resultsReady: {
+          ...this.state.resultsReady,
+          spaceInfo: true,
+        }
       })
+    }).catch( (error) => {
+      this.setState({
+        errorMsg: {
+          ...this.state.errorMsg,
+          emptyInput: error.response.data.reason,
+        },
+        errorPopUp: true,
+        loadingStatus: {
+          ...this.state.loadingStatus,
+          spaceInfo: false,
+        }
+      })  
     })
 
   }
 
   userSelection = (e) => {
-    console.log(e.target);
+    console.log(e.target.name, e.target.value);
     this.setState({
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
+      resultsReady: {
+        dayPhoto: false,
+        roverPhotos: false,
+        spaceInfo: false,
+      }
     })
   }
+
+  closeError = () => {
+    this.setState({
+        errorPopUp: false,
+        errorMsg: {
+          ...this.state.errorMsg,
+          badDate: "",
+          noRover: "",
+          emptyInput: "",
+        },
+    });
+  };
 
   Nav = () => {
     return(
@@ -88,29 +223,47 @@ class App extends Component {
               <header>
                 <h1>Space App</h1>
               </header>
-              <Link to={`/photos`}><p>photos</p></Link>
+              {/* <Link to={`/photos`}><p>photos</p></Link> */}
 
-              {/* LOOKING FOR PHOTO OF THE DAY */}
-              <div>
-                <Link to="/photos/photooftheday" style={{ padding: '10px' }}>See Photo of the day</Link>
+              {
+                this.state.errorPopUp ? <Error states={this.state} closeWindow={this.closeError} /> : null
+              }
+
+    {/* LOOKING FOR PHOTO OF THE DAY */}
+              <section className="dayPhoto">
 
                 <form action="">
                   <label htmlFor="date"></label>
-                  <input onChange={this.userSelection} type="date" name="date" id="date"/>
+                  <input onChange={this.userSelection} type="date" id="date" name="date" />
+
+                  {/*defaultValue="2020-09-02" */}
                 </form>
 
                 <button onClick={this.findPhotoDay}>Find photo of the day</button>
-              </div>
+                
+                {/* SHOW RESULTS ONCE WE GET THEM */}
+                {
+                this.state.resultsReady.dayPhoto 
+                ? <Link to="/photos/photooftheday" style={{ padding: '10px' }}>See results</Link>
+                : null
+                }
 
-              {/* LOOKING FOR ROVER PHOTOS */}
-              <div>
-              <Link to="/photos/roverPhotos"  style={{ padding: '10px' }}>See Mars Rover Photos</Link>
+                {/* WAITING LOGO WHILE GETTING THE RESULTS */}
+                {
+                  this.state.loadingStatus.dayPhoto
+                  ? <div className="waitingClock"><img src={require("./img/sandClock.png")} alt="loading results logo"/></div> 
+                  : null
+                }
+              </section>
+
+    {/* LOOKING FOR ROVER PHOTOS */}
+              <section className="roverPhotos">
 
                 <form action="">
-                  <label htmlFor="rover">Pick a group to investigate plz</label>
+                  <label htmlFor="rover" className="srOnly"></label>
 
                   <select onChange={ this.userSelection } type="rover" id="rover" name="roverName">
-                    <option name="roverName" value="">Select a desired rover</option>
+                    <option name="roverName" value="">Pick a Mars rover</option>
                     <option name="roverName" value="spirit">Spirit</option>
                     <option name="roverName" value="opportunity">Opportunity</option>
                     <option name="roverName" value="curiosity">Curiosity</option>
@@ -118,11 +271,22 @@ class App extends Component {
                 </form>
                 
                 <button onClick={this.findRoverPhotos}>Find rover photos</button>
-              </div>
 
-              {/* LOOKING FOR ADDITIONAL SPACE INFO */}
-              <div>
-              <Link to="/photos/spaceInfo"  style={{ padding: '10px' }}>See Space Information</Link>
+                {
+                this.state.resultsReady.roverPhotos 
+                ? <Link to="/photos/roverPhotos"  style={{ padding: '10px' }}>See results</Link>
+                : null
+                }
+
+                {
+                  this.state.loadingStatus.roverPhotos
+                  ? <div className="waitingClock"><img src={require("./img/sandClock.png")} alt="loading results logo"/></div> 
+                  : null
+                }
+              </section>
+
+    {/* LOOKING FOR ADDITIONAL SPACE INFO */}
+              <section className="spaceInfo">
 
                 <form action="">
                   <label htmlFor="text"></label>
@@ -130,27 +294,40 @@ class App extends Component {
                 </form>
                 
                 <button onClick={this.findSpaceInfo}>Find additional space info</button>
-              </div>
+
+                {
+                  this.state.resultsReady.spaceInfo 
+                  ? <Link to="/photos/spaceInfo"  style={{ padding: '10px' }}>See results</Link>
+                  : null
+                }
+
+                {
+                  this.state.loadingStatus.spaceInfo
+                  ? <div className="waitingClock"><img src={require("./img/sandClock.png")} alt="loading results logo"/></div> 
+                  : null
+                }
+              </section>
         </div>
     )
   }
 
-  Photos = () => {
-    return(
-        <div>
-          <Link to={`/`}>Go home</Link>
-        </div>
-    )
-  }
+  // Photos = () => {
+  //   return(
+  //       <div>
+  //         <Link to={`/`}>Go home</Link>
+  //       </div>
+  //   )
+  // }
 
   dayPhoto = () => {
+    const {title, url, copyright, explanation} = this.state.dayPhoto;
     return(
         <div>
             <Link to={`/`}>Go back</Link>
-            <h2>This is Photo of the day!</h2>
-  
+            <h2>{title} by {copyright}</h2>
+            <p>{explanation}</p>
             <div>
-              <img src={this.state.dayPhoto.url} alt='image'/>
+              <img src={url} alt={title}/>
             </div>
   
         </div>
@@ -158,10 +335,16 @@ class App extends Component {
   }
 
   RoverPhotos = () => {
+    const [{earth_date: earthDate, rover:{landing_date: landingDate, launch_date: launchDate, name: roverName, status: roverStatus}}] = this.state.roverPhotos
+    console.log(earthDate, landingDate, launchDate, roverName, roverStatus);
+
     return(
       <div>
-        <h2>The rover photos</h2>
         <Link to={`/`}>Go back</Link>
+        <h2>The photos of {roverName} rover </h2>
+        <p>Launched from Earth: {launchDate}</p>
+        <p>Landed on Mars: {landingDate}</p>
+        <p>Status: {roverStatus}</p>
 
         <ul className="roverPhotos">
           {
