@@ -4,8 +4,6 @@ import Error from './Error';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import axios from 'axios';
 
-// THINGS TO DO:
-//  - pop up error if there's NO RESULTS AT all based on the input
 class App extends Component {
     constructor() {
       super();
@@ -22,7 +20,7 @@ class App extends Component {
             badDate: "",
             noRover: "",
             emptyInput: "",
-            noData: "No data found based on your request",
+            noData: "No data found based on the search request",
           },
           loadingStatus: {
             dayPhoto: false,
@@ -37,18 +35,56 @@ class App extends Component {
       }
   }
 
+  // loading logo while getting results ON
+  loadingStatus = (loadOn) => {
+    this.setState({
+      loadingStatus: {
+        ...this.state.loadingStatus,
+        [loadOn]: true,
+      }
+    })
+  }
 
+  // saving results + loading status OFF + turning ON the results link 
+  gettingResults = (what, result) => {
+    // saving results in states
+    this.setState({
+      [what]: result,
+      // loading logo while getting results OFF
+      loadingStatus: {
+        ...this.state.loadingStatus,
+        [what]: false,
+      },
+      // showing "See results" link once we get the data
+      resultsReady: {
+        ...this.state.resultsReady,
+        [what]: true,
+      }
+    })
+  }
+
+  // If there's any error: showing error msg from API + popping up error window with responsive error msg + turining OFF loading status 
+  handingError = (typeOfError, errorText, what) => {
+    // getting error msg from API to later pass as a prop to Error component
+    this.setState({
+      errorMsg: {
+        ...this.state.errorMsg,
+        [typeOfError]: errorText,
+      },
+      // Error window pop-up ON
+      errorPopUp: true,
+      // loading logo while getting results OFF
+      loadingStatus: {
+        ...this.state.loadingStatus,
+        [what]: false,
+      }
+    })
+  }
 
 
   findPhotoDay = () => {
 
-    // loading logo while getting results ON
-          this.setState({
-            loadingStatus: {
-              ...this.state.loadingStatus,
-              dayPhoto: true,
-            }
-          })
+          this.loadingStatus('dayPhoto');
 
           axios({
             url: `https://api.nasa.gov/planetary/apod`,
@@ -58,39 +94,11 @@ class App extends Component {
                 date: this.state.date,
             }
         }).then( (res) => {
-            console.log(res);
-            console.log(res.data);
             const photoOfTheDay = res.data;
+            this.gettingResults('dayPhoto', photoOfTheDay);
 
-      // saving results in states
-            this.setState({
-                dayPhoto: photoOfTheDay,
-      // loading logo while getting results OFF
-                loadingStatus: {
-                  ...this.state.loadingStatus,
-                  dayPhoto: false,
-                },
-      // showing "See results" link once we get the data
-                resultsReady: {
-                  ...this.state.resultsReady,
-                  dayPhoto: true,
-                }
-            })
         }).catch( error => {
-          // getting error msg from API to later pass as a prop to Error component
-          this.setState({
-            errorMsg: {
-              ...this.state.errorMsg,
-              badDate: error.response.data.msg,
-            },
-            // Error window pop-up ON
-            errorPopUp: true,
-            // loading logo while getting results OFF
-            loadingStatus: {
-              ...this.state.loadingStatus,
-              dayPhoto: false,
-            }
-          })
+          this.handingError('badDate', error.response.data.msg, 'dayPhoto');
         })
   }
 
@@ -99,14 +107,15 @@ class App extends Component {
 // Spirit landed on: 2004-01-04 - 2208 days spent
 
   findRoverPhotos = async () => {
+      this.loadingStatus('roverPhotos');
 
-      // loading logo while getting results ON
-      this.setState({
-        loadingStatus: {
-          ...this.state.loadingStatus,
-          roverPhotos: true,
-        }
-      })
+      // checking if one of the rovers is selected
+      if (!this.state.roverName) {
+        this.handingError('noRover', 'Please, select a rover', 'roverPhotos');
+
+        // exiting the fucntion
+        return
+      };
 
       // waiting for MAX DAYS SPENT ON MARS by selected rover to PASS that day value into next API call to get photos
         await axios({
@@ -116,14 +125,12 @@ class App extends Component {
               api_key: `RQm9PKAWUOxPOwxSYLbTECB3ZtzrjLjlP4R9vIIm`,
           }
       }).then( (res) => {
-          console.log(res.data.photo_manifest);
 
           this.setState({
             manifestData: res.data.photo_manifest
           })
-        })
-      //}
-    
+        }).catch( (er) => { console.log(er); });
+        
       axios({
         url: `https://api.nasa.gov/mars-photos/api/v1/rovers/${this.state.roverName}/photos`, // need to be dynamic
         method: 'GET',
@@ -133,50 +140,16 @@ class App extends Component {
             //earth_date: `2020-01-16`, // more practical would be to use sol instead of earth_date
         }
     }).then( (res) => {
-        console.log(res);
         const roverPhotos = res.data.photos;
+        this.gettingResults('roverPhotos', roverPhotos);
 
-      // saving results in states
-        this.setState({
-          roverPhotos: roverPhotos,
-      // loading logo while getting results OFF
-          loadingStatus: {
-            ...this.state.loadingStatus,
-            roverPhotos: false,
-      // showing "See results" link once we get the data
-          },
-          resultsReady: {
-            ...this.state.resultsReady,
-            roverPhotos: true,
-          }
-        })
     }).catch( (error) => {
-      // getting error msg from API to later pass as a prop to Error component
-      this.setState({
-        errorMsg: {
-          ...this.state.errorMsg,
-          noRover: error.response.data.errors,
-        },
-        // Error window pop-up ON
-        errorPopUp: true,
-        // loading logo while getting results OFF
-        loadingStatus: {
-          ...this.state.loadingStatus,
-          roverPhotos: false,
-        }
-      })    
+      this.handingError('noRover', error.response.data.errors, 'roverPhotos');
     })
   }
 
   findSpaceInfo = () => {
-    
-    // loading logo while getting results ON
-    this.setState({
-      loadingStatus: {
-        ...this.state.loadingStatus,
-        spaceInfo: true,
-      }
-    })
+    this.loadingStatus('spaceInfo');
 
     axios({
       url: `https://images-api.nasa.gov/search`,
@@ -185,40 +158,16 @@ class App extends Component {
           q: this.state.searchText,
       }
     }).then( (res) => {
-      console.log(res.data.collection.items);
       const spaceInfo = res.data.collection.items;
 
-    // saving results in states
-      this.setState({
-        spaceInfo: spaceInfo,
-    // loading logo while getting results OFF
-        loadingStatus: {
-          ...this.state.loadingStatus,
-          spaceInfo: false,
-        },
-    // showing "See results" link once we get the data
-        resultsReady: {
-          ...this.state.resultsReady,
-          spaceInfo: true,
-        }
-      })
-    }).catch( (error) => {
-    // getting error msg from API to later pass as a prop to Error component
-      this.setState({
-        errorMsg: {
-          ...this.state.errorMsg,
-          emptyInput: error.response.data.reason,
-        },
-    // Error window pop-up ON
-        errorPopUp: true,
-    // loading logo while getting results OFF
-        loadingStatus: {
-          ...this.state.loadingStatus,
-          spaceInfo: false,
-        }
-      })  
-    })
+      // showing error if there's no results based on the user input
+      if (!spaceInfo.length) { this.setState({ errorPopUp: true }) };
 
+      this.gettingResults('spaceInfo', spaceInfo);
+
+    }).catch( (error) => {
+      this.handingError('emptyInput', error.response.data.reason, 'spaceInfo');  
+    })
   }
 
 
@@ -364,7 +313,6 @@ class App extends Component {
             <div>
               <img src={url} alt={title}/>
             </div>
-  
         </div>
     )
   }
@@ -373,8 +321,6 @@ class App extends Component {
     const [{earth_date: earthDate, rover:{landing_date: landingDate, launch_date: launchDate, name: roverName, status: roverStatus}}] = this.state.roverPhotos
 
     const {max_date, total_photos} = this.state.manifestData
-    console.log(earthDate, landingDate, launchDate, roverName, roverStatus);
-    console.log(max_date, total_photos);
 
     return(
       <div>
@@ -389,9 +335,8 @@ class App extends Component {
         <ul className="roverPhotos">
           {
             this.state.roverPhotos.map( (obj) => {
-              console.log(obj);
               return(
-                <li key={obj.id}><img src={obj.img_src} alt={`rover photo ${obj.earth_date}`}/></li>
+                <li key={obj.id}><img src={obj.img_src} alt={`taken by ${obj.rover.name} on ${obj.earth_date}`}/></li>
               )
             })
           }
@@ -410,13 +355,16 @@ class App extends Component {
           {
             this.state.spaceInfo.slice(0, 20).map( (obj) => {
               console.log(obj);
+              console.log(obj.hasOwnProperty('links'));
+
               return(
                 <li key={obj.data[0].nasa_id}>
                   <h3>{obj.data[0].title}</h3>
-                  <img src={obj.links[0].href} alt={`rover photo ${obj.data[0].title}`}/>
+                  {
+                    obj.hasOwnProperty('links') ? <img src={obj.links[0].href} alt={`${obj.data[0].title}`}/> : null
+                  }
                   <p>{obj.data[0].description}</p>
                   </li>
-                  
               )
             })
           }
