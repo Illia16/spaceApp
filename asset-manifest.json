@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/spaceApp/static/css/main.e0bcebe2.chunk.css",
-    "main.js": "/spaceApp/static/js/main.f8617b9e.chunk.js",
-    "main.js.map": "/spaceApp/static/js/main.f8617b9e.chunk.js.map",
+    "main.js": "/spaceApp/static/js/main.46c0c5ee.chunk.js",
+    "main.js.map": "/spaceApp/static/js/main.46c0c5ee.chunk.js.map",
     "runtime-main.js": "/spaceApp/static/js/runtime-main.e269b191.js",
     "runtime-main.js.map": "/spaceApp/static/js/runtime-main.e269b191.js.map",
-    "static/js/2.995162ec.chunk.js": "/spaceApp/static/js/2.995162ec.chunk.js",
-    "static/js/2.995162ec.chunk.js.map": "/spaceApp/static/js/2.995162ec.chunk.js.map",
+    "static/js/2.4bf61088.chunk.js": "/spaceApp/static/js/2.4bf61088.chunk.js",
+    "static/js/2.4bf61088.chunk.js.map": "/spaceApp/static/js/2.4bf61088.chunk.js.map",
     "index.html": "/spaceApp/index.html",
-    "precache-manifest.527715c3f3c298e87834bfd0a7537ffb.js": "/spaceApp/precache-manifest.527715c3f3c298e87834bfd0a7537ffb.js",
+    "precache-manifest.91fa4679a7f42a94a4a71d4c0c6ec73d.js": "/spaceApp/precache-manifest.91fa4679a7f42a94a4a71d4c0c6ec73d.js",
     "service-worker.js": "/spaceApp/service-worker.js",
     "static/css/main.e0bcebe2.chunk.css.map": "/spaceApp/static/css/main.e0bcebe2.chunk.css.map",
-    "static/js/2.995162ec.chunk.js.LICENSE.txt": "/spaceApp/static/js/2.995162ec.chunk.js.LICENSE.txt"
+    "static/js/2.4bf61088.chunk.js.LICENSE.txt": "/spaceApp/static/js/2.4bf61088.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.e269b191.js",
-    "static/js/2.995162ec.chunk.js",
+    "static/js/2.4bf61088.chunk.js",
     "static/css/main.e0bcebe2.chunk.css",
-    "static/js/main.f8617b9e.chunk.js"
+    "static/js/main.46c0c5ee.chunk.js"
   ]
 }
