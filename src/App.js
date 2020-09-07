@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import "./styles/app.scss";
 import Error from './Error';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import BgVideo from './BgVideo';
+import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
 import axios from 'axios';
 
 class App extends Component {
@@ -82,7 +83,8 @@ class App extends Component {
   }
 
 
-  findPhotoDay = () => {
+  findPhotoDay = (e) => {
+    e.preventDefault();
 
           this.loadingStatus('dayPhoto');
 
@@ -106,7 +108,8 @@ class App extends Component {
 // Opportunity landed on: 2004-01-25 - 5111 days spent
 // Spirit landed on: 2004-01-04 - 2208 days spent
 
-  findRoverPhotos = async () => {
+  findRoverPhotos = async (e) => {
+    e.preventDefault();
       this.loadingStatus('roverPhotos');
 
       // checking if one of the rovers is selected
@@ -148,7 +151,8 @@ class App extends Component {
     })
   }
 
-  findSpaceInfo = () => {
+  findSpaceInfo = (e) => {
+    e.preventDefault();
     this.loadingStatus('spaceInfo');
 
     axios({
@@ -176,13 +180,6 @@ class App extends Component {
     console.log(e.target.name, e.target.value);
     this.setState({
       [e.target.name]: e.target.value,
-
-    // hiding "See results" upon change of any input
-      resultsReady: {
-        dayPhoto: false,
-        roverPhotos: false,
-        spaceInfo: false,
-      }
     })
   }
 
@@ -204,114 +201,158 @@ class App extends Component {
     return(
         <div>          
               <header>
-                <h1>Space App</h1>
+                <h1>Explore Space</h1>
               </header>
-              {/* <Link to={`/photos`}><p>photos</p></Link> */}
 
               {
                 this.state.errorPopUp ? <Error states={this.state} closeWindow={this.closeError} /> : null
               }
 
     {/* LOOKING FOR PHOTO OF THE DAY */}
-              <section className="dayPhoto">
+              <section>
+                <h2>Photo of the day</h2>
+                <p>Select a desired date. If date is not selected, by default today's date is set.</p>
 
                 <form action="">
-                  <label htmlFor="date"></label>
-                  <input onChange={this.userSelection} type="date" id="date" name="date" />
+                  <div className="dayPhoto">
+                    <label htmlFor="date" className="srOnly"></label>
+                    <input onChange={this.userSelection} type="date" id="date" name="date" />
 
-                  {/*defaultValue="2020-09-02" */}
+                    <button onClick={this.findPhotoDay}>SEARCH</button>
+
+                    {/* SHOW RESULTS ONCE WE GET THEM */}
+                    {
+                      (this.state.resultsReady.dayPhoto && !this.state.loadingStatus.dayPhoto)
+                      ? <NavLink to="/photos/photooftheday" className="resultsLink">SEE RESULTS</NavLink>
+                      : null
+                    }
+
+                    {/* WAITING LOGO WHILE GETTING THE RESULTS */}
+                    {
+                      this.state.loadingStatus.dayPhoto
+                      ? 
+                      <div className="loadingLogo">
+                        <p>Loading</p>
+                        <div aria-hidden="true">
+                          <div className="line" aria-hidden="true"></div>
+                          <div className="line" aria-hidden="true"></div>
+                          <div className="line" aria-hidden="true"></div>
+                        </div>
+                      </div>
+                      : null
+                    }
+                  </div>
                 </form>
 
-                <button onClick={this.findPhotoDay}>Find photo of the day</button>
-                
-                {/* SHOW RESULTS ONCE WE GET THEM */}
-                {
-                this.state.resultsReady.dayPhoto 
-                ? <Link to="/photos/photooftheday" style={{ padding: '10px' }}>See results</Link>
-                : null
-                }
 
-                {/* WAITING LOGO WHILE GETTING THE RESULTS */}
-                {
-                  this.state.loadingStatus.dayPhoto
-                  ? <div className="waitingClock"><img src={require("./img/sandClock.png")} alt="loading results logo"/></div> 
-                  : null
-                }
               </section>
 
     {/* LOOKING FOR ROVER PHOTOS */}
-              <section className="roverPhotos">
+              <section>
+                <h2>Rover photos</h2>
+                <p>Select a desired rover.</p>
 
                 <form action="">
-                  <label htmlFor="rover" className="srOnly"></label>
+                  <div className="roverPhotos">
+                    <label htmlFor="rover" className="srOnly"></label>
 
-                  <select onChange={ this.userSelection } type="rover" id="rover" name="roverName">
-                    <option name="roverName" value="">Pick a Mars rover</option>
-                    <option name="roverName" value="spirit">Spirit</option>
-                    <option name="roverName" value="opportunity">Opportunity</option>
-                    <option name="roverName" value="curiosity">Curiosity</option>
-                  </select>
+                    <select onChange={ this.userSelection } type="rover" id="rover" name="roverName">
+                      <option name="roverName" value="">Pick a Mars rover</option>
+                      <option name="roverName" value="spirit">Spirit</option>
+                      <option name="roverName" value="opportunity">Opportunity</option>
+                      <option name="roverName" value="curiosity">Curiosity</option>
+                    </select>
+
+                    <button onClick={this.findRoverPhotos}>FIND</button>
+
+                    {
+                      (this.state.resultsReady.roverPhotos && !this.state.loadingStatus.roverPhotos)
+                      ?<NavLink to="/photos/roverPhotos" className="resultsLink">SEE RESULTS</NavLink>
+                      : null
+                    }
+
+                    {
+                      this.state.loadingStatus.roverPhotos
+                      ? 
+                      <div className="loadingLogo">
+                        <p>Loading</p>
+                        <div aria-hidden="true">
+                          <div className="line" aria-hidden="true"></div>
+                          <div className="line" aria-hidden="true"></div>
+                          <div className="line" aria-hidden="true"></div>
+                        </div>
+                      </div>
+                      : null
+                    }
+                  </div>
                 </form>
-                
-                <button onClick={this.findRoverPhotos}>Find rover photos</button>
-
-                {
-                this.state.resultsReady.roverPhotos 
-                ? <Link to="/photos/roverPhotos"  style={{ padding: '10px' }}>See results</Link>
-                : null
-                }
-
-                {
-                  this.state.loadingStatus.roverPhotos
-                  ? <div className="waitingClock"><img src={require("./img/sandClock.png")} alt="loading results logo"/></div> 
-                  : null
-                }
               </section>
 
     {/* LOOKING FOR ADDITIONAL SPACE INFO */}
-              <section className="spaceInfo">
+              <section>
+                <h2>Space information</h2>
+                <p>Search space information based on the search input.</p>
 
                 <form action="">
-                  <label htmlFor="text"></label>
-                  <input onChange={this.userSelection} type="text" name="searchText" id="text" />
+                  <div className="spaceInfo">
+                    <label htmlFor="text" className="srOnly"></label>
+                    <input onChange={this.userSelection} type="text" name="searchText" id="text" placeholder="Search query"/>
+                    
+                    <button onClick={this.findSpaceInfo}>FIND</button>
+
+                    {
+                    (this.state.resultsReady.spaceInfo && !this.state.loadingStatus.spaceInfo)
+                    ? <NavLink to="/photos/spaceInfo" className="resultsLink">SEE RESULTS</NavLink>
+                    
+                    : null
+                    }
+
+                    {
+                    this.state.loadingStatus.spaceInfo
+                    ?
+                    <div className="loadingLogo">
+                      <p>Loading</p>
+                      <div aria-hidden="true">
+                        <div className="line" aria-hidden="true"></div>
+                        <div className="line" aria-hidden="true"></div>
+                        <div className="line" aria-hidden="true"></div>
+                      </div>
+                    </div>
+                    : null
+                    }
+                  </div>
                 </form>
-                
-                <button onClick={this.findSpaceInfo}>Find additional space info</button>
-
-                {
-                  this.state.resultsReady.spaceInfo 
-                  ? <Link to="/photos/spaceInfo"  style={{ padding: '10px' }}>See results</Link>
-                  : null
-                }
-
-                {
-                  this.state.loadingStatus.spaceInfo
-                  ? <div className="waitingClock"><img src={require("./img/sandClock.png")} alt="loading results logo"/></div> 
-                  : null
-                }
               </section>
         </div>
     )
   }
 
-  // Photos = () => {
-  //   return(
-  //       <div>
-  //         <Link to={`/`}>Go home</Link>
-  //       </div>
-  //   )
-  // }
+  Footer = () => {
+    return (
+      <footer>
+        <p>2020 Made by Illia Nikitin</p> 
+        <a href="https://github.com/Illia16" className="github" target="_blank" aria-label="github icon for Illia's profile"><i className="fab fa-github" aria-hidden="true"></i></a>
+        <a href="https://www.linkedin.com/in/illia-nikitin-a4a637122/" className="linkedin" target="_blank" aria-label="linkedin icon for Illia's profile"><i className="fab fa-linkedin" aria-hidden="true"></i></a>
+      </footer>
+    )
+  }
+
 
   // 3 result components: dayPhoto, roverPhotos, spaceInfo
   dayPhoto = () => {
-    const {title, url, copyright, explanation} = this.state.dayPhoto;
+    const {title, url, copyright, date, explanation} = this.state.dayPhoto;
+
     return(
-        <div>
-            <Link to={`/`}>Go back</Link>
-            <h2>{title} by {copyright}</h2>
+        <div className="dayPhotoRes">
+            <h3>{title}</h3>
+            {this.state.dayPhoto.hasOwnProperty("copyright") ? <p>Photo of the day <span>{date}</span> by {copyright}</p> : <p>Photo of the day <span>{date}</span> by unknown author</p> }
             <p>{explanation}</p>
             <div>
               <img src={url} alt={title}/>
+            </div>
+
+            <div className="seeResLink">
+              <NavLink to={`/`} className="goBackLink">GO BACK</NavLink>
             </div>
         </div>
     )
@@ -323,14 +364,13 @@ class App extends Component {
     const {max_date, total_photos} = this.state.manifestData
 
     return(
-      <div>
-        <Link to={`/`}>Go back</Link>
-        <h2>The photos of {roverName} rover taken on {earthDate} </h2>
-        <p>Left Earth: {launchDate}</p>
-        <p>Landed on Mars: {landingDate}</p>
-        <p>Status: {roverStatus}</p>
-        <p>Total photos taken: {total_photos}</p>
-        <p>The last photos taken on: {max_date}</p>
+      <div className="roverPhotosRes">
+        <h3>The photos of {roverName} rover taken on {earthDate} </h3>
+        <p>Left Earth <span>{launchDate}</span></p>
+        <p>Landed on Mars <span>{landingDate}</span></p>
+        <p>Status <span>{roverStatus}</span></p>
+        <p>Total photos taken <span>{total_photos}</span></p>
+        <p>The last photos taken on <span>{max_date}</span></p>
 
         <ul className="roverPhotos">
           {
@@ -341,6 +381,9 @@ class App extends Component {
             })
           }
         </ul>
+        <div className="seeResLink">
+          <NavLink to={`/`} className="goBackLink">GO BACK</NavLink>
+        </div>
       </div>
     )
   }
@@ -348,10 +391,9 @@ class App extends Component {
   SpaceInfo = () => {
     return(
       <div>
-        <h2>Space Info</h2>
-        <Link to={`/`}>Go back</Link>
+        <h3>Space Information</h3>
 
-        <ul className="spaceInfo">
+        <ul className="spaceInfoRes">
           {
             this.state.spaceInfo.slice(0, 20).map( (obj) => {
               console.log(obj);
@@ -359,9 +401,9 @@ class App extends Component {
 
               return(
                 <li key={obj.data[0].nasa_id}>
-                  <h3>{obj.data[0].title}</h3>
+                  <h4>{obj.data[0].title}</h4>
                   {
-                    obj.hasOwnProperty('links') ? <img src={obj.links[0].href} alt={`${obj.data[0].title}`}/> : null
+                    obj.hasOwnProperty('links') ? <div className="imgParent"><img src={obj.links[0].href} alt={`${obj.data[0].title}`}/></div> : null
                   }
                   <p>{obj.data[0].description}</p>
                   </li>
@@ -369,15 +411,19 @@ class App extends Component {
             })
           }
         </ul>
+        <div className="seeResLink">
+          <NavLink to={`/`} className="goBackLink">GO BACK</NavLink>
+        </div>
       </div>
     )
   }
   
 
-
   render() {
     return (
       <Router basename={process.env.PUBLIC_URL}>
+        <BgVideo />
+
         <div className="App wrapper">
           <Route exact path="/" component={ this.Nav } />
 
@@ -386,6 +432,8 @@ class App extends Component {
           <Route exact path="/photos/roverPhotos" component={ this.RoverPhotos } />
           <Route exact path="/photos/spaceInfo" component={ this.SpaceInfo } />
         </div>
+
+        <Route exact path="/" component={ this.Footer } />
       </Router>
     );
   }

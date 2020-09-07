@@ -1,0 +1,81 @@
+.dayPhotoRes h3,
+.dayPhotoRes p,
+.roverPhotosRes h3,
+.roverPhotosRes p,
+.spaceInfoRes h3,
+.spaceInfoRes p {
+    text-shadow: 1px 1px black;
+    font-weight: 700;
+}
+
+// DAY PHOTO /////////////////////////////////////////////////
+.dayPhotoRes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.dayPhotoRes p:nth-child(2) {
+    text-align: center;
+}
+
+.dayPhotoRes p:nth-child(3),
+.dayPhotoRes div {
+    flex: 1 0 calc(50% - 40px);
+}
+
+.dayPhotoRes div {
+    max-width: 900px;
+}
+
+.dayPhotoRes > * {
+    margin: 20px;
+}
+
+.dayPhotoRes span {
+    font-weight: 700;
+}
+
+.dayPhotoRes h2,
+.dayPhotoRes p {
+    flex: 1 0 100%;
+}
+
+.seeResLink {
+    text-align: center;
+}
+
+// ROVER PHOTOS /////////////////////////////////////////////////
+.roverPhotosRes p {
+    text-align: center;
+}
+
+.roverPhotosRes span {
+    font-weight: 700;
+    display: inline;
+}
+
+.roverPhotosRes .roverPhotos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 400px));
+    grid-gap: 10px;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+// SPACE INFO RESULTS /////////////////////////////////////////////////
+.spaceInfoRes li {
+    margin-bottom: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.spaceInfoRes li > * {
+    margin-bottom: 25px;
+}
+
+.imgParent {
+    max-width: 600px;
+    margin: 0 auto;
+}

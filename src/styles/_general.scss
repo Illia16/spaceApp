@@ -2,10 +2,13 @@ body {
     font-size: 2rem;
     line-height: 1.6;
     font-family: 'Raleway', sans-serif;
+    color: white;
 }
 
 h1,
-h2{
+h2,
+h3,
+h4{
     font-family: 'Source Serif Pro', serif;
     text-transform: uppercase;
     text-align: center;
@@ -19,6 +22,10 @@ h2 {
     font-size: 4rem;
 }
 
+h3 {
+    font-size: 3rem;
+}
+
 p {
     margin: 0;
     // display: inline-block;
@@ -26,4 +33,38 @@ p {
 ::placeholder,
 ::-webkit-input-placeholder {
     opacity: 1;
+}
+
+
+// WAITING LOGO
+.loadingLogo {
+    text-align: center;
+}
+
+.line {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 10px;
+    background-color: #fafafa;
+    margin: 1px;
+}
+
+.loadingLogo .line:nth-child(1) {
+    animation: waiting .5s .1s linear infinite;
+}
+.loadingLogo .line:nth-child(2) {
+    animation: waiting .5s .25s linear infinite;
+}
+.loadingLogo .line:nth-child(3) {
+    animation: waiting .5s .4s linear infinite;
+}
+
+@keyframes waiting {
+    0 {
+        opacity: 1;
+    }
+    50%, 100% {
+        opacity: 0;
+    }
 }
