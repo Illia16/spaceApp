@@ -217,7 +217,7 @@ class App extends Component {
                 <form action="">
                   <div className="dayPhoto">
                     <label htmlFor="date" className="srOnly">Pick a date</label>
-                    <input onChange={this.userSelection} type="date" id="date" name="date" placeholder="format e.g.: 2020-07-11"/>
+                    <input onChange={this.userSelection} type="date" id="date" name="date" placeholder="e.g.: 2020-07-11"/>
 
                     <button onClick={this.findPhotoDay}>SEARCH</button>
 
