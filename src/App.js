@@ -165,10 +165,11 @@ class App extends Component {
       const spaceInfo = res.data.collection.items;
 
       // showing error if there's no results based on the user input
-      if (!spaceInfo.length) { this.setState({ errorPopUp: true }) };
-
-      this.gettingResults('spaceInfo', spaceInfo);
-
+      if (!spaceInfo.length) { 
+        this.setState({ errorPopUp: true, loadingStatus: {...this.state.loadingStatus, spaceInfo: false}, }) 
+      } else {
+        this.gettingResults('spaceInfo', spaceInfo);
+      }
     }).catch( (error) => {
       this.handingError('emptyInput', error.response.data.reason, 'spaceInfo');  
     })
@@ -215,8 +216,8 @@ class App extends Component {
 
                 <form action="">
                   <div className="dayPhoto">
-                    <label htmlFor="date" className="srOnly"></label>
-                    <input onChange={this.userSelection} type="date" id="date" name="date" placeholder="format: yyyy-month-date/2020-07-11"/>
+                    <label htmlFor="date" className="srOnly">Pick a date</label>
+                    <input onChange={this.userSelection} type="date" id="date" name="date" placeholder="format e.g.: 2020-07-11"/>
 
                     <button onClick={this.findPhotoDay}>SEARCH</button>
 
@@ -254,7 +255,7 @@ class App extends Component {
 
                 <form action="">
                   <div className="roverPhotos">
-                    <label htmlFor="rover" className="srOnly"></label>
+                    <label htmlFor="rover" className="srOnly">Select a rover</label>
 
                     <select onChange={ this.userSelection } type="rover" id="rover" name="roverName">
                       <option name="roverName" value="">Pick a Mars rover</option>
@@ -295,8 +296,8 @@ class App extends Component {
 
                 <form action="">
                   <div className="spaceInfo">
-                    <label htmlFor="text" className="srOnly"></label>
-                    <input onChange={this.userSelection} type="text" name="searchText" id="text" placeholder="Type here"/>
+                    <label htmlFor="text" className="srOnly">Input your search query</label>
+                    <input onChange={this.userSelection} type="text" name="searchText" id="text" placeholder="e.g. Nebulae"/>
                     
                     <button onClick={this.findSpaceInfo}>FIND</button>
 
