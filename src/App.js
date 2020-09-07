@@ -211,12 +211,12 @@ class App extends Component {
     {/* LOOKING FOR PHOTO OF THE DAY */}
               <section>
                 <h2>Photo of the day</h2>
-                <p>Select a desired date. If date is not selected, by default today's date is set.</p>
+                <p>Select a desired date. If date is not selected, by default today's date is set. The result shows up the title of the photo of the selected date, author name, description and the photo as well.</p>
 
                 <form action="">
                   <div className="dayPhoto">
                     <label htmlFor="date" className="srOnly"></label>
-                    <input onChange={this.userSelection} type="date" id="date" name="date" />
+                    <input onChange={this.userSelection} type="date" id="date" name="date" placeholder="format: yyyy-month-date/2020-07-11"/>
 
                     <button onClick={this.findPhotoDay}>SEARCH</button>
 
@@ -249,8 +249,8 @@ class App extends Component {
 
     {/* LOOKING FOR ROVER PHOTOS */}
               <section>
-                <h2>Rover photos</h2>
-                <p>Select a desired rover.</p>
+                <h2>Mars Rover photos</h2>
+                <p>Select a rover. The result shows up photos taken by a selected rover on one of the days, information about rover; when it left Earth, landed on Mars, how many photos took(taken if still operates) as well as when the last photos were taken.</p>
 
                 <form action="">
                   <div className="roverPhotos">
@@ -291,12 +291,12 @@ class App extends Component {
     {/* LOOKING FOR ADDITIONAL SPACE INFO */}
               <section>
                 <h2>Space information</h2>
-                <p>Search space information based on the search input.</p>
+                <p>Search space information based on the search input. The result shows up a list of items based on user requets. The list includes title of the event, its photo and description.</p>
 
                 <form action="">
                   <div className="spaceInfo">
                     <label htmlFor="text" className="srOnly"></label>
-                    <input onChange={this.userSelection} type="text" name="searchText" id="text" placeholder="Search query"/>
+                    <input onChange={this.userSelection} type="text" name="searchText" id="text" placeholder="Type here"/>
                     
                     <button onClick={this.findSpaceInfo}>FIND</button>
 
@@ -365,12 +365,13 @@ class App extends Component {
 
     return(
       <div className="roverPhotosRes">
-        <h3>The photos of {roverName} rover taken on {earthDate} </h3>
+        <h3>{roverName} rover photos </h3>
+        <p>Photos taken on <span>{earthDate}</span></p>
         <p>Left Earth <span>{launchDate}</span></p>
         <p>Landed on Mars <span>{landingDate}</span></p>
-        <p>Status <span>{roverStatus}</span></p>
         <p>Total photos taken <span>{total_photos}</span></p>
         <p>The last photos taken on <span>{max_date}</span></p>
+        <p>Status <span>{roverStatus}</span></p>
 
         <ul className="roverPhotos">
           {
