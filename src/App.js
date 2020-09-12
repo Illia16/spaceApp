@@ -5,6 +5,9 @@ import BgVideo from './BgVideo';
 import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
 import axios from 'axios';
 
+// console.log(React);
+// console.log(React.Component);
+
 class App extends Component {
     constructor() {
       super();

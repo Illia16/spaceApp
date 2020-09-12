@@ -1,10 +1,19 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import "./styles/app.scss";
 import Video from "./img/BgVideo2.mp4"
 
 const BgVideo = () => {
+    const spaceVideoRef= useRef();
+    const updateSpeed = () => { spaceVideoRef.current.playbackRate = .8; };
+
     return(
-            <video autoPlay loop muted
+            <video 
+                autoPlay 
+                loop 
+                muted
+                ref={ spaceVideoRef }
+                onCanPlay={ () => updateSpeed() }
+
                 style={{
                     position: "fixed",
                     width: "100%",

@@ -6,7 +6,6 @@ form .spaceInfo {
     justify-content: center;
     align-items: center;
     margin: 20px 0;
-    height: 100px;
 }
 
 form .dayPhoto > *,
@@ -21,14 +20,16 @@ form .spaceInfo > * {
 section {
     padding-bottom: 100px;
 
+    p {
+        max-width: 640px;
+        margin: 0 auto;
+    }
+
     h2, p {
         text-shadow: 2px 2px black;
         font-weight: 700;
     }
 
-    p {
-        text-align: center;
-    }
 }
 
 //FORMS /////////////////////////////////
@@ -125,4 +126,13 @@ footer .github:focus,
 footer .linkedin:hover,
 footer .linkedin:focus {
     transform: scale(1.25);
+}
+
+
+// SCROLL DOWN BUTTON
+
+.scrollDown {
+    position: fixed;
+    right: 5%;
+    bottom: 5%;
 }
