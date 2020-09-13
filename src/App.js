@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import "./styles/app.scss";
 import Error from './Error';
 import BgVideo from './BgVideo';
@@ -36,8 +36,8 @@ class App extends Component {
             roverPhotos: false,
             spaceInfo: false,
           }
-      }
-  }
+      };
+  };
 
   // loading logo while getting results ON
   loadingStatus = (loadOn) => {
@@ -100,6 +100,7 @@ class App extends Component {
             }
         }).then( (res) => {
             const photoOfTheDay = res.data;
+            console.log(photoOfTheDay);
             this.gettingResults('dayPhoto', photoOfTheDay);
 
         }).catch( error => {
@@ -214,7 +215,7 @@ class App extends Component {
 
     {/* LOOKING FOR PHOTO OF THE DAY */}
               <section>
-                <h2>Photo of the day</h2>
+                <h2>Photo/Video of the day</h2>
                 <p>Select a desired date. If date is not selected, by default today's date is set. The result shows up the title of the photo of the selected date, author name, description and the photo as well.</p>
 
                 <form action="">
@@ -342,17 +343,33 @@ class App extends Component {
   }
 
 
-  // 3 result components: dayPhoto, roverPhotos, spaceInfo
+  // 3 result components: dayPhoto, roverPhotos, spaceInfo /////////////////////////////////////////////////////////////////
   dayPhoto = () => {
-    const {title, url, copyright, date, explanation} = this.state.dayPhoto;
+    const {title, url, copyright, date, explanation, media_type} = this.state.dayPhoto;
 
     return(
         <div className="dayPhotoRes">
             <h3>{title}</h3>
-            {this.state.dayPhoto.hasOwnProperty("copyright") ? <p>Photo of the day <span>{date}</span> by {copyright}</p> : <p>Photo of the day <span>{date}</span> by unknown author</p> }
+            {
+              this.state.dayPhoto.hasOwnProperty("copyright") ?
+              <p>{media_type === "image" ? 'Photo of the day' : 'Video of the day'} <span>{date}</span> by {copyright}</p> 
+              :
+              <p>{media_type === "image" ? 'Photo of the day' : 'Video of the day'} <span>{date}</span> by unknown author</p> 
+            }
             <p>{explanation}</p>
             <div>
-              <img src={url} alt={title}/>
+              {
+                media_type === 'image' ? <img src={url} alt={title}/> : 
+                      <iframe 
+                        src={url}
+                        frameBorder='0'
+                        allow='autoplay; encrypted-media'
+                        allowFullScreen
+                        title='video'
+                        width='550px'
+                        height='325px'
+                      />
+              }
             </div>
 
             <div className="seeResLink">
@@ -442,6 +459,6 @@ class App extends Component {
       </Router>
     );
   }
-}
+};
 
 export default App;
