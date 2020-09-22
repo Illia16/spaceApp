@@ -41,7 +41,7 @@ The team project built on jQuery is now rebuilt on React using React Router. Wit
 
 
 ## Live link
-* Go to [Explore Space](https://illia16.github.io/spaceApp/)
+[Explore Space](https://illia16.github.io/spaceApp/)
 
 ### To install locally
 * Clone the repo via terminal `git clone HTTPS URL`
