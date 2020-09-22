@@ -108,10 +108,6 @@ class App extends Component {
         })
   }
 
-// Curiosity landed on: 2012-08-06 - 2870 days spent
-// Opportunity landed on: 2004-01-25 - 5111 days spent
-// Spirit landed on: 2004-01-04 - 2208 days spent
-
   findRoverPhotos = async (e) => {
     e.preventDefault();
       this.loadingStatus('roverPhotos');
@@ -122,67 +118,77 @@ class App extends Component {
 
         // exiting the fucntion
         return
-      };
+      } else {
+          // waiting for MAX DAYS SPENT ON MARS by selected rover to PASS that day value into next API call to get photos
+            await axios({
+              url: `https://api.nasa.gov/mars-photos/api/v1/manifests/${this.state.roverName}/`,
+              method: 'GET',
+              params: {
+                  api_key: `RQm9PKAWUOxPOwxSYLbTECB3ZtzrjLjlP4R9vIIm`,
+              }
+          }).then( (res) => {
+              this.setState({
+                manifestData: res.data.photo_manifest
+              })
+            }).catch( (er) => {
+              // console.group(er.response.data.error.code);
+              // console.group(er.response.data.error.message);
+              this.handingError('noRover', er.message, 'roverPhotos');
+            });
 
-      // waiting for MAX DAYS SPENT ON MARS by selected rover to PASS that day value into next API call to get photos
-        await axios({
-          url: `https://api.nasa.gov/mars-photos/api/v1/manifests/${this.state.roverName}/`,
-          method: 'GET',
-          params: {
-              api_key: `RQm9PKAWUOxPOwxSYLbTECB3ZtzrjLjlP4R9vIIm`,
-          }
-      }).then( (res) => {
-
-          this.setState({
-            manifestData: res.data.photo_manifest
-          })
-        }).catch( (er) => { console.log(er); });
+            // if the above call is succesfull, then get our data,
+            this.state.manifestData &&
+              axios({
+                url: `https://api.nasa.gov/mars-photos/api/v1/rovers/${this.state.roverName}/photos`, // need to be dynamic
+                method: 'GET',
+                params: {
+                    api_key: `RQm9PKAWUOxPOwxSYLbTECB3ZtzrjLjlP4R9vIIm`,
+                    sol: Math.floor(Math.random()*(this.state.manifestData.max_sol)+1), // getting a random day out of all days spent by the selected rover on Mars
+                    //earth_date: `2020-01-16`, // more practical would be to use sol instead of earth_date
+                }
+              }).then( (res) => {
+                const roverPhotos = res.data.photos;
+                this.gettingResults('roverPhotos', roverPhotos);
         
-      axios({
-        url: `https://api.nasa.gov/mars-photos/api/v1/rovers/${this.state.roverName}/photos`, // need to be dynamic
-        method: 'GET',
-        params: {
-            api_key: `RQm9PKAWUOxPOwxSYLbTECB3ZtzrjLjlP4R9vIIm`,
-            sol: Math.floor(Math.random()*(this.state.manifestData.max_sol)+1), // getting a random day out of all days spent by the selected rover on Mars
-            //earth_date: `2020-01-16`, // more practical would be to use sol instead of earth_date
-        }
-    }).then( (res) => {
-        const roverPhotos = res.data.photos;
-        this.gettingResults('roverPhotos', roverPhotos);
-
-    }).catch( (error) => {
-      this.handingError('noRover', error.response.data.errors, 'roverPhotos');
-    })
+              }).catch( (error) => {
+              this.handingError('noRover', error.response.data.errors, 'roverPhotos');
+              })
+      }
   }
 
   findSpaceInfo = (e) => {
     e.preventDefault();
     this.loadingStatus('spaceInfo');
-
-    axios({
-      url: `https://images-api.nasa.gov/search`,
-      method: 'GET',
-      params: {
-          q: this.state.searchText,
-      }
-    }).then( (res) => {
-      const spaceInfo = res.data.collection.items;
-
-      // showing error if there's no results based on the user input
-      if (!spaceInfo.length) { 
-        this.setState({ errorPopUp: true, loadingStatus: {...this.state.loadingStatus, spaceInfo: false}, }) 
-      } else {
-        this.gettingResults('spaceInfo', spaceInfo);
-      }
-    }).catch( (error) => {
-      this.handingError('emptyInput', error.response.data.reason, 'spaceInfo');  
-    })
+    
+    // checking if input is empty (no point in making an API call if the input in empty)
+    if (!this.state.searchText) {
+      this.handingError('emptyInput', 'The input is empty. Please, enter a keyword.', 'spaceInfo');
+      return
+    } else {
+        axios({
+          url: `https://images-api.nasa.gov/search`,
+          method: 'GET',
+          params: {
+              q: this.state.searchText,
+          }
+        }).then( (res) => {
+          const spaceInfo = res.data.collection.items;
+    
+          // showing error if there's no results based on the user input
+          if (!spaceInfo.length) {
+            this.setState({ errorPopUp: true, loadingStatus: {...this.state.loadingStatus, spaceInfo: false}, }) 
+          } else {
+            this.gettingResults('spaceInfo', spaceInfo);
+          }
+        }).catch( (error) => {
+          this.handingError('emptyInput', error.response.data.reason, 'spaceInfo');  
+        })
+    }
   }
 
 
   userSelection = (e) => {
     // saving data in stated based on the input used
-    console.log(e.target.name, e.target.value);
     this.setState({
       [e.target.name]: e.target.value,
     })
@@ -268,7 +274,7 @@ class App extends Component {
                       <option name="roverName" value="curiosity">Curiosity</option>
                     </select>
 
-                    <button onClick={this.findRoverPhotos}>FIND</button>
+                    <button onClick={this.findRoverPhotos}>SEARCH</button>
 
                     {
                       (this.state.resultsReady.roverPhotos && !this.state.loadingStatus.roverPhotos)
@@ -303,7 +309,7 @@ class App extends Component {
                     <label htmlFor="text" className="srOnly">Input your search query</label>
                     <input onChange={this.userSelection} type="text" name="searchText" id="text" placeholder="e.g. Nebulae"/>
                     
-                    <button onClick={this.findSpaceInfo}>FIND</button>
+                    <button onClick={this.findSpaceInfo}>SEARCH</button>
 
                     {
                     (this.state.resultsReady.spaceInfo && !this.state.loadingStatus.spaceInfo)

@@ -1,68 +1,54 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Explore Space
 
-## Available Scripts
+## Author
+[Illia Nikitin](https://illiaweb.dev/)
 
-In the project directory, you can run:
+## Description
+The team project built on jQuery is now rebuilt on React using React Router. With NASA API, the app lets user find media ofthe selected date, Mars photos taken by a selected rover andother space data based on the user input.
 
-### `npm start`
+## How to use?
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Photo/Video of the day
+1. Choose a desired date via date-picker (Note that the date must be between today's date and Jun 16, 1995)
+2. If date isn't selected, today's date is selected by default upon SEARCH click.
+3. Click SEE RESULTS button once it's appeared after the search. In there, you can see:
+	* Title
+	* The selected date and the author
+	* Overview
+	* Media (photo or video)
+4. Click GO BACK to return to the main page.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+### Mars Rover photos
+1. Choose one of 3 Mars rovers.
+2. Click SEE RESULTS button once it's appeared after the search. In there, you can see:
+	* Which Rover photos' are displayed
+	* Date when the photos were taken
+	* Date when the rover left Earch
+	* Date when the rover landed on Mars
+	* Total photos taken by the rover
+	* Date when the last photos were taken
+	* Rover status(either complete or active)
+	* Listed rover photos
+3. Click GO BACK to return to the main page.
 
-### `npm test`
+### Space information
+1. Type a desired search query.
+2. Click SEE RESULTS button once it's appeared after the search. In there, you can see a list of resutls. Every entity has:
+	* Title
+	* Photo/image
+	* Description
+3. Click GO BACK to return to the main page.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+## Live link
+* Go to [Explore Space](https://illia16.github.io/spaceApp/)
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### To install locally
+* Clone the repo via terminal `git clone HTTPS URL`
+* Then, in the terminal `npm install` to install all dependencies
+* Then, `npm start` to start the project locally
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+## Built with
+React, React Router
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
