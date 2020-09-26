@@ -85,13 +85,23 @@ class App extends Component {
     })
   }
 
+  setTodayDate = ()  => {
+    const today = new Date();
+    const dateArr = [today.getFullYear(), String(today.getMonth()+1).padStart(2, '0'), String(today.getDate()).padStart(2, '0')];
+    const todayRes = dateArr.join('-');
+    this.setState({ date: todayRes});
+  }
 
-  findPhotoDay = (e) => {
+
+  findPhotoDay = async (e) => {
     e.preventDefault();
+    
+        // setting today's date if no date is picked by user
+        !this.state.date && await this.setTodayDate()
+        
+        this.loadingStatus('dayPhoto');
 
-          this.loadingStatus('dayPhoto');
-
-          axios({
+        axios({
             url: `https://api.nasa.gov/planetary/apod`,
             method: 'GET',
             params: {
@@ -176,7 +186,10 @@ class App extends Component {
     
           // showing error if there's no results based on the user input
           if (!spaceInfo.length) {
-            this.setState({ errorPopUp: true, loadingStatus: {...this.state.loadingStatus, spaceInfo: false}, }) 
+            this.setState({ 
+              errorPopUp: true,
+              loadingStatus: {...this.state.loadingStatus, spaceInfo: false},
+            })
           } else {
             this.gettingResults('spaceInfo', spaceInfo);
           }
@@ -188,6 +201,7 @@ class App extends Component {
 
 
   userSelection = (e) => {
+    e.preventDefault()
     // saving data in stated based on the input used
     this.setState({
       [e.target.name]: e.target.value,
@@ -227,7 +241,7 @@ class App extends Component {
                 <form action="">
                   <div className="dayPhoto">
                     <label htmlFor="date" className="srOnly">Pick a date</label>
-                    <input onChange={this.userSelection} type="date" id="date" name="date" placeholder="e.g.: 2020-07-11"/>
+                    <input onChange={this.userSelection} type="date" id="date" name="date" placeholder="e.g.: 2020-07-11" value={this.state.date}/>
 
                     <button onClick={this.findPhotoDay}>SEARCH</button>
 
@@ -267,7 +281,7 @@ class App extends Component {
                   <div className="roverPhotos">
                     <label htmlFor="rover" className="srOnly">Select a rover</label>
 
-                    <select onChange={ this.userSelection } type="rover" id="rover" name="roverName">
+                    <select onChange={ this.userSelection } type="rover" id="rover" name="roverName" value={this.state.roverName}>
                       <option name="roverName" value="">Pick a Mars rover</option>
                       <option name="roverName" value="spirit">Spirit</option>
                       <option name="roverName" value="opportunity">Opportunity</option>
@@ -307,7 +321,7 @@ class App extends Component {
                 <form action="">
                   <div className="spaceInfo">
                     <label htmlFor="text" className="srOnly">Input your search query</label>
-                    <input onChange={this.userSelection} type="text" name="searchText" id="text" placeholder="e.g. Nebulae"/>
+                    <input onChange={this.userSelection} type="text" name="searchText" id="text" value={this.state.searchText} placeholder="e.g. Nebulae"/>
                     
                     <button onClick={this.findSpaceInfo}>SEARCH</button>
 
@@ -348,6 +362,13 @@ class App extends Component {
     )
   }
 
+  goBack = () => {
+    return (
+      <div className="seeResLink">
+        <NavLink to={`/`} className="goBackLink">GO BACK</NavLink>
+      </div>
+    )
+  }
 
   // 3 result components: dayPhoto, roverPhotos, spaceInfo /////////////////////////////////////////////////////////////////
   dayPhoto = () => {
@@ -377,10 +398,7 @@ class App extends Component {
                       />
               }
             </div>
-
-            <div className="seeResLink">
-              <NavLink to={`/`} className="goBackLink">GO BACK</NavLink>
-            </div>
+              { this.goBack() }
         </div>
     )
   }
@@ -409,9 +427,7 @@ class App extends Component {
             })
           }
         </ul>
-        <div className="seeResLink">
-          <NavLink to={`/`} className="goBackLink">GO BACK</NavLink>
-        </div>
+        { this.goBack() }
       </div>
     )
   }
@@ -439,9 +455,7 @@ class App extends Component {
             })
           }
         </ul>
-        <div className="seeResLink">
-          <NavLink to={`/`} className="goBackLink">GO BACK</NavLink>
-        </div>
+        { this.goBack() }
       </div>
     )
   }

@@ -3,7 +3,7 @@ import "./styles/app.scss";
 
 const Error = ( props ) => {
     const {states:{errorMsg:{badDate, emptyInput, noData, noRover}, searchText, spaceInfo},  closeWindow } = props;
-
+    
     return(
         <div className="popupBack">
             <div className="popup">
@@ -27,7 +27,8 @@ const Error = ( props ) => {
                 
                 {/* ERROR IF THERE'S NO RESULTS BASED on the user search input; spaceInfo - array of results*/}
                 {
-                (spaceInfo && searchText) ? <p>{noData}</p> : null
+                // (spaceInfo && searchText) ? <p>{noData}</p> : null
+                (spaceInfo && searchText && !noRover && !badDate) ? <p>{noData}</p> : null
                 }
 
                 <button onClick={closeWindow} >CLOSE</button>
