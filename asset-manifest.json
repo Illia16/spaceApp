@@ -1,23 +1,23 @@
 {
   "files": {
     "main.css": "/spaceApp/static/css/main.b8f11ce4.chunk.css",
-    "main.js": "/spaceApp/static/js/main.5b38965d.chunk.js",
-    "main.js.map": "/spaceApp/static/js/main.5b38965d.chunk.js.map",
+    "main.js": "/spaceApp/static/js/main.8d3e7d1a.chunk.js",
+    "main.js.map": "/spaceApp/static/js/main.8d3e7d1a.chunk.js.map",
     "runtime-main.js": "/spaceApp/static/js/runtime-main.e269b191.js",
     "runtime-main.js.map": "/spaceApp/static/js/runtime-main.e269b191.js.map",
-    "static/js/2.55d5bd11.chunk.js": "/spaceApp/static/js/2.55d5bd11.chunk.js",
-    "static/js/2.55d5bd11.chunk.js.map": "/spaceApp/static/js/2.55d5bd11.chunk.js.map",
+    "static/js/2.af4fa01d.chunk.js": "/spaceApp/static/js/2.af4fa01d.chunk.js",
+    "static/js/2.af4fa01d.chunk.js.map": "/spaceApp/static/js/2.af4fa01d.chunk.js.map",
     "index.html": "/spaceApp/index.html",
-    "precache-manifest.8905850cc3ae38f6f38f0fa2b5f7eaab.js": "/spaceApp/precache-manifest.8905850cc3ae38f6f38f0fa2b5f7eaab.js",
+    "precache-manifest.7073c8684f1ec0617ffc528c6a91140f.js": "/spaceApp/precache-manifest.7073c8684f1ec0617ffc528c6a91140f.js",
     "service-worker.js": "/spaceApp/service-worker.js",
     "static/css/main.b8f11ce4.chunk.css.map": "/spaceApp/static/css/main.b8f11ce4.chunk.css.map",
-    "static/js/2.55d5bd11.chunk.js.LICENSE.txt": "/spaceApp/static/js/2.55d5bd11.chunk.js.LICENSE.txt",
+    "static/js/2.af4fa01d.chunk.js.LICENSE.txt": "/spaceApp/static/js/2.af4fa01d.chunk.js.LICENSE.txt",
     "static/media/BgVideo2.mp4": "/spaceApp/static/media/BgVideo2.88bfffbc.mp4"
   },
   "entrypoints": [
     "static/js/runtime-main.e269b191.js",
-    "static/js/2.55d5bd11.chunk.js",
+    "static/js/2.af4fa01d.chunk.js",
     "static/css/main.b8f11ce4.chunk.css",
-    "static/js/main.5b38965d.chunk.js"
+    "static/js/main.8d3e7d1a.chunk.js"
   ]
 }
