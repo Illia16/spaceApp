@@ -69,3 +69,11 @@ p {
         opacity: 0;
     }
 }
+
+// footer to bottom
+#root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
