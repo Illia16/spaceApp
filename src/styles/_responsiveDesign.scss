@@ -39,4 +39,8 @@
     .popup p {
         font-size: 2rem;
     }
+
+    form .dayPhoto > *, form .roverPhotos > *, form .spaceInfo > * {
+        height: 35px;
+    }
 }
