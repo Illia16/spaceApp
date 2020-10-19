@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/spaceApp/static/css/main.279e8d7c.chunk.css",
+    "main.css": "/spaceApp/static/css/main.555eea2d.chunk.css",
     "main.js": "/spaceApp/static/js/main.e3d94658.chunk.js",
     "main.js.map": "/spaceApp/static/js/main.e3d94658.chunk.js.map",
     "runtime-main.js": "/spaceApp/static/js/runtime-main.e269b191.js",
@@ -8,9 +8,9 @@
     "static/js/2.670699ca.chunk.js": "/spaceApp/static/js/2.670699ca.chunk.js",
     "static/js/2.670699ca.chunk.js.map": "/spaceApp/static/js/2.670699ca.chunk.js.map",
     "index.html": "/spaceApp/index.html",
-    "precache-manifest.1d866ef86e596a88b38798d732f15260.js": "/spaceApp/precache-manifest.1d866ef86e596a88b38798d732f15260.js",
+    "precache-manifest.9100204a0d806dcb7bd1a2aad788bf63.js": "/spaceApp/precache-manifest.9100204a0d806dcb7bd1a2aad788bf63.js",
     "service-worker.js": "/spaceApp/service-worker.js",
-    "static/css/main.279e8d7c.chunk.css.map": "/spaceApp/static/css/main.279e8d7c.chunk.css.map",
+    "static/css/main.555eea2d.chunk.css.map": "/spaceApp/static/css/main.555eea2d.chunk.css.map",
     "static/js/2.670699ca.chunk.js.LICENSE.txt": "/spaceApp/static/js/2.670699ca.chunk.js.LICENSE.txt",
     "static/media/BgVideo2.mp4": "/spaceApp/static/media/BgVideo2.88bfffbc.mp4",
     "static/media/app.scss": "/spaceApp/static/media/ivana-cajina-asuyh-_ZX54-unsplash.6d30ae2d.jpg"
@@ -18,7 +18,7 @@
   "entrypoints": [
     "static/js/runtime-main.e269b191.js",
     "static/js/2.670699ca.chunk.js",
-    "static/css/main.279e8d7c.chunk.css",
+    "static/css/main.555eea2d.chunk.css",
     "static/js/main.e3d94658.chunk.js"
   ]
 }
