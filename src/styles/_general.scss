@@ -76,4 +76,25 @@ p {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-}
+};
+
+// BACKGROUND /////////////////////////////////
+.bg {
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    z-index: -10;
+};
+
+.bgVideo {
+    object-fit: cover;
+};
+
+.bgPicture{
+    // Background credit Ivana Cajina https://unsplash.com/@von_co
+    background: url(../img/ivana-cajina-asuyh-_ZX54-unsplash.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+};
