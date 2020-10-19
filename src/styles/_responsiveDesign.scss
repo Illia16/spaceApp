@@ -18,3 +18,25 @@
         height: auto;
     }
 }
+
+@media (max-width: 500px) {
+    body {
+        font-size: 1.4rem;
+    }
+
+    h1 {
+        font-size: 3.5rem;
+    }
+
+    h2 {
+        font-size: 2rem;
+    }
+
+    h3 {
+        font-size: 1.7rem;
+    }
+
+    .popup p {
+        font-size: 2rem;
+    }
+}
