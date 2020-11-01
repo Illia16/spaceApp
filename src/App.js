@@ -131,6 +131,7 @@ class App extends Component {
                 api_key: `RQm9PKAWUOxPOwxSYLbTECB3ZtzrjLjlP4R9vIIm`,
             }
         }).then( (res) => {
+            // console.log(res);
             this.setState({
               manifestData: res.data.photo_manifest
             })
@@ -150,6 +151,7 @@ class App extends Component {
                   //earth_date: `2020-01-16`, // more practical would be to use sol instead of earth_date
               }
             }).then( (res) => {
+              // console.log(res);
               const roverPhotos = res.data.photos;
               this.gettingResults('roverPhotos', roverPhotos);
             }).catch( (error) => {
@@ -171,8 +173,10 @@ class App extends Component {
           method: 'GET',
           params: {
               q: this.state.searchText,
+              page: 1,
           }
         }).then( (res) => {
+          // console.log(res);
           const spaceInfo = res.data.collection.items;
           // showing error if there's no results based on the user input
           if (!spaceInfo.length) {

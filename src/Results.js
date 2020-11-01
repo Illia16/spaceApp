@@ -1,10 +1,14 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import "./styles/app.scss";
+
+// Carousel
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
+import carouselSizesRoverPhotos from './styles/carouselSizes';
 
 const Results = ( props ) => {
     const {states:{dayPhoto, roverPhotos, manifestData, spaceInfo}, goBack} = props;
-
     // 3 result components: dayPhoto, roverPhotos, spaceInfo /////////////////////////////////////////////////////////////////
     const dayPhotoResults = () => {
         const { title, url, copyright, date, explanation, media_type } = dayPhoto;
@@ -42,26 +46,38 @@ const Results = ( props ) => {
         const [{ earth_date: earthDate, rover: { landing_date: landingDate, launch_date: launchDate, name: roverName, status: roverStatus } }] = roverPhotos
 
         const { max_date, total_photos } = manifestData
-
         return (
             <div className="roverPhotosRes">
-                <h3>{roverName} rover photos </h3>
+                <h3>Photos</h3>
+                <p>Rover name <span>{roverName}</span></p>
                 <p>Photos taken on <span>{earthDate}</span></p>
-                <p>Left Earth <span>{launchDate}</span></p>
-                <p>Landed on Mars <span>{landingDate}</span></p>
-                <p>Total photos taken <span>{total_photos}</span></p>
+                <p>Rover left Earth <span>{launchDate}</span></p>
+                <p>Rover landed on Mars <span>{landingDate}</span></p>
+                <p>Total photos taken by {roverName} <span>{total_photos}</span></p>
                 <p>The last photos taken on <span>{max_date}</span></p>
                 <p>Status <span>{roverStatus}</span></p>
 
-                <ul className="roverPhotos">
+                {/* className="roverPhotos" */}
+                <Carousel
+                    swipeable={true}
+                    draggable={true}
+                    arrows={true}
+                    keyBoardControl={true}
+                    responsive={carouselSizesRoverPhotos}
+                    customTransition="all .5"
+                    transitionDuration={500}
+                    containerClass="roverPhotosContainer"
+                    itemClass="roverPhotosItem"
+                    removeArrowOnDeviceType={["tablet", "mobile"]}
+                >
                     {
-                        roverPhotos.map((obj) => {
+                        roverPhotos.map( (obj) => {
                             return (
-                                <li key={obj.id}><img src={obj.img_src} alt={`taken by ${obj.rover.name} on ${obj.earth_date}`} /></li>
+                                <div key={obj.id}><img src={obj.img_src} alt={`taken by ${obj.rover.name} on ${obj.earth_date}`} /></div>
                             )
                         })
                     }
-                </ul>
+                </Carousel>
                 { goBack() }
             </div>
         )
@@ -74,10 +90,8 @@ const Results = ( props ) => {
 
                 <ul className="spaceInfoRes">
                     {
-                        spaceInfo.slice(0, 20).map((obj) => {
-                            // console.log(obj);
-                            // console.log(obj.hasOwnProperty('links'));
-
+                        // spaceInfo.slice(0, 20).map((obj) => {
+                        spaceInfo.map((obj) => {
                             return (
                                 <li key={obj.data[0].nasa_id}>
                                     <h4>{obj.data[0].title}</h4>

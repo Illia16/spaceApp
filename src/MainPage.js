@@ -1,11 +1,11 @@
 import React from 'react';
 import Error from './Error';
-import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import "./styles/app.scss";
 
 const MainPage = ( props ) => {
-    const {states:{errorMsg:{}, resultsReady:{dayPhoto, roverPhotos, spaceInfo}, date, roverName, searchText, errorPopUp},  closeWindow, userSelection, findPhotoDay, findRoverPhotos, findSpaceInfo } = props;
-    console.log(props);
+    const {states:{ resultsReady:{dayPhoto, roverPhotos, spaceInfo}, date, roverName, searchText, errorPopUp},  closeWindow, userSelection, findPhotoDay, findRoverPhotos, findSpaceInfo } = props;
+    // console.log(props);
 
     // Because some variable are gonna have the same name if declared, they're gonna be called without destructuring 
         // props.states.loadingStatus.dayPhoto
