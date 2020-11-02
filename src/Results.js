@@ -69,6 +69,7 @@ const Results = ( props ) => {
                     containerClass="roverPhotosContainer"
                     itemClass="roverPhotosItem"
                     removeArrowOnDeviceType={["tablet", "mobile"]}
+                    partialVisible={false}
                 >
                     {
                         roverPhotos.map( (obj) => {
