@@ -1,11 +1,12 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import "./styles/app.scss";
+import "../styles/app.scss";
+import GoBackButton from './presentational/GoBackButton';
 
 // Carousel
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-import carouselSizesRoverPhotos from './styles/carouselSizes';
+import carouselSizesRoverPhotos from '../styles/carouselSizes';
 
 const Results = ( props ) => {
     const {states:{dayPhoto, roverPhotos, manifestData, spaceInfo}, goBack} = props;
@@ -37,7 +38,7 @@ const Results = ( props ) => {
                             />
                     }
                 </div>
-                { goBack()}
+                <GoBackButton />
             </div>
         )
     }
@@ -79,7 +80,7 @@ const Results = ( props ) => {
                         })
                     }
                 </Carousel>
-                { goBack() }
+                <GoBackButton />
             </div>
         )
     }
@@ -105,7 +106,7 @@ const Results = ( props ) => {
                         })
                     }
                 </ul>
-                { goBack()}
+                <GoBackButton />
             </div>
         )
     }

@@ -1,7 +1,8 @@
 import React from 'react';
-import Error from './Error';
+import Error from '../Error';
 import { NavLink } from 'react-router-dom';
-import "./styles/app.scss";
+import Header from '../presentational/Header';
+import "../../styles/app.scss";
 
 const MainPage = ( props ) => {
     const {states:{ resultsReady:{dayPhoto, roverPhotos, spaceInfo}, date, roverName, searchText, errorPopUp},  closeWindow, userSelection, findPhotoDay, findRoverPhotos, findSpaceInfo } = props;
@@ -13,13 +14,9 @@ const MainPage = ( props ) => {
         // props.states.loadingStatus.spaceInfo
     return(
         <div>
-            <header>
-                <h1>Explore Space</h1>
-            </header>
-
-            {
-                errorPopUp ? <Error states={props.states} closeWindow={closeWindow} /> : null
-            }
+            <Header />
+            
+            { errorPopUp ? <Error states={props.states} closeWindow={closeWindow} /> : null }
 
             {/* LOOKING FOR PHOTO OF THE DAY */}
                 <section>

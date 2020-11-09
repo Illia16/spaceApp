@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import "./styles/app.scss";
-import BgVideo from './BgVideo';
-import MainPage from './MainPage';
-import Results from './Results';
+import BgVideo from './components/presentational/background/BgVideo';
+import MainPage from './components/MainPage/MainPage';
+import Results from './components/Results';
+import Footer from './components/presentational/Footer';
 import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
 import axios from 'axios';
 
-// console.log(React);
-// console.log(React.Component);
 
 class App extends Component {
   constructor() {
@@ -38,7 +37,6 @@ class App extends Component {
           spaceInfo: false,
         }
     };
-    // console.log(this, this.constructor.name);
   };
 
   // loading logo while getting results ON
@@ -131,13 +129,10 @@ class App extends Component {
                 api_key: `RQm9PKAWUOxPOwxSYLbTECB3ZtzrjLjlP4R9vIIm`,
             }
         }).then( (res) => {
-            // console.log(res);
             this.setState({
               manifestData: res.data.photo_manifest
             })
           }).catch( (er) => {
-            // console.group(er.response.data.error.code);
-            // console.group(er.response.data.error.message);
             this.handingError('noRover', er.message, 'roverPhotos');
           });
           // if the above call is succesfull, then get our data,
@@ -151,7 +146,6 @@ class App extends Component {
                   //earth_date: `2020-01-16`, // more practical would be to use sol instead of earth_date
               }
             }).then( (res) => {
-              // console.log(res);
               const roverPhotos = res.data.photos;
               this.gettingResults('roverPhotos', roverPhotos);
             }).catch( (error) => {
@@ -176,7 +170,6 @@ class App extends Component {
               page: 1,
           }
         }).then( (res) => {
-          // console.log(res);
           const spaceInfo = res.data.collection.items;
           // showing error if there's no results based on the user input
           if (!spaceInfo.length) {
@@ -215,24 +208,6 @@ class App extends Component {
     });
   };
 
-  Footer = () => {
-    return (
-      <footer>
-        <p>2020 Made by Illia Nikitin</p> 
-        <a href="https://github.com/Illia16" className="github" aria-label="github icon for Illia's profile"><i className="fab fa-github" aria-hidden="true"></i></a>
-        <a href="https://www.linkedin.com/in/illia-nikitin-a4a637122/" className="linkedin" aria-label="linkedin icon for Illia's profile"><i className="fab fa-linkedin" aria-hidden="true"></i></a>
-      </footer>
-    )
-  }
-
-  goBack = () => {
-    return (
-      <div className="seeResLink">
-        <NavLink to={`/`} className="goBackLink">GO BACK</NavLink>
-      </div>
-    )
-  }
-
   render() {
     return (
       <Router basename={process.env.PUBLIC_URL}>
@@ -249,12 +224,9 @@ class App extends Component {
             />
           </Route>
 
-          <Results
-            states={this.state} 
-            goBack={this.goBack}
-          />
+          <Results states={this.state} />
         </div>
-        < this.Footer />
+        < Footer />
       </Router>
     );
   }

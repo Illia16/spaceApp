@@ -1,11 +1,11 @@
 import React, { useRef, useState } from 'react';
-import "./styles/app.scss";
-import Video from "./img/BgVideo2.mp4";
+import "../../../styles/app.scss";
+import Video from "./BgVideo2.mp4";
 import Switch from "react-switch";
 
 const BgVideo = () => {
     const spaceVideoRef = useRef();
-    const updateSpeed = () => { spaceVideoRef.current.playbackRate = .8; };
+    const updateSpeed = () => { spaceVideoRef.current.playbackRate = 0.8; };
 
     // hook to toogle between background VIDEO and PICTURE (so that the user can read without distraction)
     const [bgVideo, toggleBg] = useState(true);
@@ -27,9 +27,10 @@ const BgVideo = () => {
                 : 
                 <div className="bg bgPicture"></div>
             }
+            
             <div className="bgOnOff">
                 <label htmlFor="toggleBg" className="srOnly">toggle background from video to picture</label>
-                <Switch 
+                <Switch
                     onChange={e => toggleBg(!bgVideo)} 
                     checked={bgVideo} 
                     id="toggleBg"
