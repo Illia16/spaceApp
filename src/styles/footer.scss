@@ -1,0 +1,22 @@
+footer {
+    display: flex;
+    justify-content: center;
+    background: black;
+}
+
+footer > * {
+    color: white;
+    padding: 5px 10px;
+    transition: all 0.3s;
+}
+
+footer .linkedin {
+    color: #0e76a8;
+}
+
+footer .github:hover,
+footer .github:focus,
+footer .linkedin:hover,
+footer .linkedin:focus {
+    transform: scale(1.25);
+}
