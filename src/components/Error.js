@@ -2,7 +2,7 @@ import React from 'react';
 import "../styles/app.scss";
 
 const Error = ( props ) => {
-    const {states:{errorMsg:{badDate, emptyInput, noData, noRover}, searchText, spaceInfo},  closeWindow } = props;
+    const {propsForError: { states:{ errorMsg:{ badDate, emptyInput, noData, noRover }, searchText, spaceInfo },  closeWindow } } = props;
     
     return(
         <div className="popupBack">

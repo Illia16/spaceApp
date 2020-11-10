@@ -9,7 +9,7 @@ import 'react-multi-carousel/lib/styles.css';
 import carouselSizesRoverPhotos from '../styles/carouselSizes';
 
 const Results = ( props ) => {
-    const {states:{dayPhoto, roverPhotos, manifestData, spaceInfo}, goBack} = props;
+    const {states:{dayPhoto, roverPhotos, manifestData, spaceInfo} } = props;
     // 3 result components: dayPhoto, roverPhotos, spaceInfo /////////////////////////////////////////////////////////////////
     const dayPhotoResults = () => {
         const { title, url, copyright, date, explanation, media_type } = dayPhoto;
