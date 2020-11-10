@@ -17,7 +17,6 @@ const MainPage = ( props ) => {
         <div>
             <Header />
 
-            {/* { errorPopUp ? <Error states={props.states} closeWindow={closeWindow} /> : null } */}
             { errorPopUp ? <Error propsForError={props} /> : null }
 
             {/* LOOKING FOR PHOTO OF THE DAY */}

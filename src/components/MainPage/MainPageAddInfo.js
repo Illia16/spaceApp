@@ -5,7 +5,7 @@ import "../../styles/app.scss";
 import LoadingLogo from '../presentational/LoadingLogo';
 
 const MainPageAddInfo = (props) => {
-    const {propsForAddInfo: { states:{ resultsReady:{spaceInfo}, searchText},  userSelection, findSpaceInfo }} = props;
+    const {propsForAddInfo: { states:{ resultsReady:{spaceInfo}, loadingStatus, searchText},  userSelection, findSpaceInfo }} = props;
 
     return(
         <section>
@@ -14,21 +14,20 @@ const MainPageAddInfo = (props) => {
 
             <form action="">
                 <div className="spaceInfo">
-                <label htmlFor="text" className="srOnly">Input your search query</label>
-                <input onChange={userSelection} type="text" name="searchText" id="text" value={searchText} placeholder="e.g. Nebulae"/>
-                
-                <button onClick={findSpaceInfo}>SEARCH</button>
+                    <label htmlFor="text" className="srOnly">Input your search query</label>
+                    <input onChange={userSelection} type="text" name="searchText" id="text" value={searchText} placeholder="e.g. Nebulae"/>
+                    
+                    <button onClick={findSpaceInfo}>SEARCH</button>
 
-                {
-                (spaceInfo && !props.propsForAddInfo.states.loadingStatus.spaceInfo)
-                ? <NavLink to="/spaceInfo" className="resultsLink">SEE RESULTS</NavLink>
-                : null
-                }
+                    {
+                    (spaceInfo && !loadingStatus.spaceInfo)
+                    ? <NavLink to="/spaceInfo" className="resultsLink">SEE RESULTS</NavLink>
+                    : null
+                    }
 
-                {
-                props.propsForAddInfo.states.loadingStatus.spaceInfo
-                ? <LoadingLogo /> : null
-                }
+                    {
+                    loadingStatus.spaceInfo ? <LoadingLogo /> : null
+                    }
                 </div>
             </form>
         </section>

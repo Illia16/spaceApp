@@ -4,13 +4,8 @@ import "../../styles/app.scss";
 
 import LoadingLogo from '../presentational/LoadingLogo';
 
-    // Because some variable are gonna have the same name if declared, they're gonna be called without destructuring 
-        // props.propsForApod.states.loadingStatus.dayPhoto
-        // props.propsForApod.states.loadingStatus.roverPhotos
-        // props.propsForApod.states.loadingStatus.spaceInfo
-
 const MainPageApod = (props) => {
-    const { propsForApod: { states:{ resultsReady:{dayPhoto}, date }, userSelection, findPhotoDay } } = props;
+    const { propsForApod: { states:{ resultsReady:{dayPhoto}, loadingStatus, date }, userSelection, findPhotoDay } } = props;
 
     return(
         <section>
@@ -19,23 +14,22 @@ const MainPageApod = (props) => {
 
         <form action="">
             <div className="dayPhoto">
-            <label htmlFor="date" className="srOnly">Pick a date</label>
-            <input onChange={userSelection} type="date" id="date" name="date" placeholder="e.g.: 2020-07-11" value={date}/>
+                <label htmlFor="date" className="srOnly">Pick a date</label>
+                <input onChange={userSelection} type="date" id="date" name="date" placeholder="e.g.: 2020-07-11" value={date}/>
 
-            <button onClick={findPhotoDay}>SEARCH</button>
+                <button onClick={findPhotoDay}>SEARCH</button>
 
-            {/* SHOW RESULTS ONCE WE GET THEM */}
-            {
-                (dayPhoto && !props.propsForApod.states.loadingStatus.dayPhoto)
-                ? <NavLink to="/photooftheday" className="resultsLink">SEE RESULTS</NavLink>
-                : null
-            }
+                {/* SHOW RESULTS ONCE WE GET THEM */}
+                {
+                    (dayPhoto && !loadingStatus.dayPhoto)
+                    ? <NavLink to="/photooftheday" className="resultsLink">SEE RESULTS</NavLink>
+                    : null
+                }
 
-            {/* WAITING LOGO WHILE GETTING THE RESULTS */}
-            {
-                props.propsForApod.states.loadingStatus.dayPhoto
-                ? <LoadingLogo /> : null
-            }
+                {/* WAITING LOGO WHILE GETTING THE RESULTS */}
+                {
+                    loadingStatus.dayPhoto ? <LoadingLogo /> : null
+                }
             </div>
         </form>
     </section>

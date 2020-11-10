@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import "./styles/app.scss";
 import BgVideo from './components/presentational/background/BgVideo';
 import MainPage from './components/MainPage/MainPage';
-import Results from './components/Results';
+import Results from './components/Results/Results';
 import Footer from './components/presentational/Footer';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import axios from 'axios';
