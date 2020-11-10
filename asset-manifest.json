@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/spaceApp/static/css/main.13e937e8.chunk.css",
-    "main.js": "/spaceApp/static/js/main.6fa6cb43.chunk.js",
-    "main.js.map": "/spaceApp/static/js/main.6fa6cb43.chunk.js.map",
+    "main.css": "/spaceApp/static/css/main.35ea600d.chunk.css",
+    "main.js": "/spaceApp/static/js/main.f62b0f1c.chunk.js",
+    "main.js.map": "/spaceApp/static/js/main.f62b0f1c.chunk.js.map",
     "runtime-main.js": "/spaceApp/static/js/runtime-main.e269b191.js",
     "runtime-main.js.map": "/spaceApp/static/js/runtime-main.e269b191.js.map",
     "static/css/2.b780b9bf.chunk.css": "/spaceApp/static/css/2.b780b9bf.chunk.css",
-    "static/js/2.383670d8.chunk.js": "/spaceApp/static/js/2.383670d8.chunk.js",
-    "static/js/2.383670d8.chunk.js.map": "/spaceApp/static/js/2.383670d8.chunk.js.map",
+    "static/js/2.aa0af406.chunk.js": "/spaceApp/static/js/2.aa0af406.chunk.js",
+    "static/js/2.aa0af406.chunk.js.map": "/spaceApp/static/js/2.aa0af406.chunk.js.map",
     "index.html": "/spaceApp/index.html",
-    "precache-manifest.ca2d6f88891c74e0dbe5c1dbdb56e3a2.js": "/spaceApp/precache-manifest.ca2d6f88891c74e0dbe5c1dbdb56e3a2.js",
+    "precache-manifest.7d1b695ee3657a6e8f6fb073588f322f.js": "/spaceApp/precache-manifest.7d1b695ee3657a6e8f6fb073588f322f.js",
     "service-worker.js": "/spaceApp/service-worker.js",
     "static/css/2.b780b9bf.chunk.css.map": "/spaceApp/static/css/2.b780b9bf.chunk.css.map",
-    "static/css/main.13e937e8.chunk.css.map": "/spaceApp/static/css/main.13e937e8.chunk.css.map",
-    "static/js/2.383670d8.chunk.js.LICENSE.txt": "/spaceApp/static/js/2.383670d8.chunk.js.LICENSE.txt",
+    "static/css/main.35ea600d.chunk.css.map": "/spaceApp/static/css/main.35ea600d.chunk.css.map",
+    "static/js/2.aa0af406.chunk.js.LICENSE.txt": "/spaceApp/static/js/2.aa0af406.chunk.js.LICENSE.txt",
     "static/media/BgVideo2.mp4": "/spaceApp/static/media/BgVideo2.88bfffbc.mp4",
     "static/media/app.scss": "/spaceApp/static/media/ivana-cajina-asuyh-_ZX54-unsplash.6d30ae2d.jpg",
     "static/media/styles.css": "/spaceApp/static/media/revicons.2feb69cc.eot"
@@ -21,8 +21,8 @@
   "entrypoints": [
     "static/js/runtime-main.e269b191.js",
     "static/css/2.b780b9bf.chunk.css",
-    "static/js/2.383670d8.chunk.js",
-    "static/css/main.13e937e8.chunk.css",
-    "static/js/main.6fa6cb43.chunk.js"
+    "static/js/2.aa0af406.chunk.js",
+    "static/css/main.35ea600d.chunk.css",
+    "static/js/main.f62b0f1c.chunk.js"
   ]
 }
