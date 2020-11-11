@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import "./styles/app.scss";
 import BgVideo from './components/presentational/background/BgVideo';
 import MainPage from './components/MainPage/MainPage';
@@ -7,228 +7,173 @@ import Footer from './components/presentational/Footer';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import axios from 'axios';
 
-class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-        date: "",
-        searchText: "",
-        roverName: "",
-        manifestData: [],
-        dayPhoto: [],
-        roverPhotos: [],
-        spaceInfo: [],
-        errorPopUp: false,
-        errorMsg: {
-          badDate: "",
-          noRover: "",
-          emptyInput: "",
-          noData: "No data found based on the search request",
-        },
-        loadingStatus: {
-          dayPhoto: false,
-          roverPhotos: false,
-          spaceInfo: false,
-        },
-        resultsReady: {
-          dayPhoto: false,
-          roverPhotos: false,
-          spaceInfo: false,
-        }
-    };
+function App() {
+
+  const [userInput, userSelection] = useState({date: '', roverName: '', searchText: ''});
+  
+  const [results, getData] = useState({ dayPhoto: [], manifestData: [], roverPhotos: [], spaceInfo: [] });
+  const [isLoading, setLoading] = useState({date: false, roverName: false, searchText: false});
+
+  const [errorPopUp, isThereError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
+  
+  const userChoice = (e) => {
+    userSelection({...userInput, [e.target.name]: e.target.value})
   };
 
-  // loading logo while getting results ON
-  loadingStatus = (loadOn) => {
-    this.setState({
-      loadingStatus: {
-        ...this.state.loadingStatus,
-        [loadOn]: true,
-      }
-    })
-  }
-
-  // saving results + loading status OFF + turning ON the results link 
-  gettingResults = (what, result) => {
-    // saving results in states
-    this.setState({
-      [what]: result,
-      // loading logo while getting results OFF
-      loadingStatus: {
-        ...this.state.loadingStatus,
-        [what]: false,
-      },
-      // showing "See results" link once we get the data
-      resultsReady: {
-        ...this.state.resultsReady,
-        [what]: true,
-      }
-    })
-  }
-
-  // If there's any error: showing error msg from API + popping up error window with responsive error msg + turining OFF loading status 
-  handingError = (typeOfError, errorText, what) => {
-    // getting error msg from API to later pass as a prop to Error component
-    this.setState({
-      errorMsg: {
-        ...this.state.errorMsg,
-        [typeOfError]: errorText,
-      },
-      // Error window pop-up ON
-      errorPopUp: true,
-      // loading logo while getting results OFF
-      loadingStatus: {
-        ...this.state.loadingStatus,
-        [what]: false,
-      }
-    })
-  }
-
-  setTodayDate = ()  => {
+  const setTodayDate = () => {
     const today = new Date();
     const dateArr = [today.getFullYear(), String(today.getMonth()+1).padStart(2, '0'), String(today.getDate()).padStart(2, '0')];
     const todayRes = dateArr.join('-');
-    this.setState({ date: todayRes});
-  }
+    userSelection({...userInput, date: todayRes});
+  };
 
-  findPhotoDay = async (e) => {
-    e.preventDefault();
-    // setting today's date if no date is picked by user
-    !this.state.date && await this.setTodayDate()
-    this.loadingStatus('dayPhoto');
-    axios({
-        url: `https://api.nasa.gov/planetary/apod`,
-        method: 'GET',
-        params: {
-            api_key: `RQm9PKAWUOxPOwxSYLbTECB3ZtzrjLjlP4R9vIIm`,
-            date: this.state.date,
-        }
-    }).then( (res) => {
-        const photoOfTheDay = res.data;
-        this.gettingResults('dayPhoto', photoOfTheDay);
-    }).catch( error => {
-      this.handingError('badDate', error.response.data.msg, 'dayPhoto');
-    })
-  }
 
-  findRoverPhotos = async (e) => {
-    e.preventDefault();
-    this.loadingStatus('roverPhotos');
-    // checking if one of the rovers is selected
-    if (!this.state.roverName) {
-      this.handingError('noRover', 'Please, select a rover', 'roverPhotos');
-      // exiting the fucntion
-      return
-    } else {
-        // waiting for MAX DAYS SPENT ON MARS by selected rover to PASS that day value into next API call to get photos
-          await axios({
-            url: `https://api.nasa.gov/mars-photos/api/v1/manifests/${this.state.roverName}/`,
+  const closeError = () => {
+    isThereError(false);
+    setErrorMsg('')
+  };
+  
+
+  // APOD CALL
+  useEffect( () => {
+    if (userInput.date) {
+        // setting today's date if no date is picked by user
+        !userInput.date && setTodayDate()
+        setLoading({...isLoading, date: true });
+        axios({
+            url: `https://api.nasa.gov/planetary/apod`,
             method: 'GET',
             params: {
                 api_key: `RQm9PKAWUOxPOwxSYLbTECB3ZtzrjLjlP4R9vIIm`,
+                date: userInput.date,
             }
         }).then( (res) => {
-            this.setState({
-              manifestData: res.data.photo_manifest
-            })
-          }).catch( (er) => {
-            this.handingError('noRover', er.message, 'roverPhotos');
-          });
-          // if the above call is succesfull, then get our data,
-          this.state.manifestData &&
-            axios({
-              url: `https://api.nasa.gov/mars-photos/api/v1/rovers/${this.state.roverName}/photos`, // need to be dynamic
-              method: 'GET',
-              params: {
-                  api_key: `RQm9PKAWUOxPOwxSYLbTECB3ZtzrjLjlP4R9vIIm`,
-                  sol: Math.floor(Math.random()*(this.state.manifestData.max_sol)+1), // getting a random day out of all days spent by the selected rover on Mars
-                  //earth_date: `2020-01-16`, // more practical would be to use sol instead of earth_date
-              }
-            }).then( (res) => {
-              const roverPhotos = res.data.photos;
-              this.gettingResults('roverPhotos', roverPhotos);
-            }).catch( (error) => {
-            this.handingError('noRover', error.response.data.errors, 'roverPhotos');
-            })
-    }
-  }
+            setLoading({...isLoading, date: false });
+            getData({...results, dayPhoto: res.data})
+          }).catch( error => {
+            isThereError(true);
+            setErrorMsg(error.response.data.msg)
+        })
+    };
+  }, [userInput.date]);
 
-  findSpaceInfo = (e) => {
-    e.preventDefault();
-    this.loadingStatus('spaceInfo');
-    // checking if input is empty (no point in making an API call if the input in empty)
-    if (!this.state.searchText) {
-      this.handingError('emptyInput', 'The input is empty. Please, enter a keyword.', 'spaceInfo');
-      return
-    } else {
-        axios({
+  // waiting for MAX DAYS SPENT ON MARS by selected rover to PASS that day value into next API call to get photos
+  useEffect( () => {
+    if (userInput.roverName) {
+      axios({
+        url: `https://api.nasa.gov/mars-photos/api/v1/manifests/${userInput.roverName}/`,
+        method: 'GET',
+        params: {
+            api_key: `RQm9PKAWUOxPOwxSYLbTECB3ZtzrjLjlP4R9vIIm`,
+        }
+      }).then( (res) => {
+        getData({...results, manifestData: res.data.photo_manifest});
+      }).catch( (er) => {
+        isThereError(true);
+        setErrorMsg(er.message);
+      });
+    }
+  }, [userInput.roverName]);
+
+
+  // ROVER PHOTOS CALL
+  useEffect( () => {
+    if (userInput.roverName && results.manifestData) {
+      setLoading({...isLoading, roverName: true });
+      axios({
+        url: `https://api.nasa.gov/mars-photos/api/v1/rovers/${userInput.roverName}/photos`, // need to be dynamic
+        method: 'GET',
+        params: {
+            api_key: `RQm9PKAWUOxPOwxSYLbTECB3ZtzrjLjlP4R9vIIm`,
+            sol: Math.floor(Math.random()*(results.manifestData.max_sol)+1), // getting a random day out of all days spent by the selected rover on Mars
+            //earth_date: `2020-01-16`, // more practical would be to use sol instead of earth_date
+        }
+      }).then( (res) => {
+        setLoading({...isLoading, roverName: false });
+        getData({...results, roverPhotos: res.data.photos});
+      }).catch( (error) => {
+        isThereError(true);
+        setErrorMsg(error.response.data.errors);
+      })
+    };
+  }, [userInput.roverName, results.manifestData]);
+
+
+  // ADDITIONAL INFO
+  useEffect( () => {
+    if (userInput.searchText) {
+      setLoading({...isLoading, searchText: true });
+      axios({
           url: `https://images-api.nasa.gov/search`,
           method: 'GET',
           params: {
-              q: this.state.searchText,
+              q: userInput.searchText,
               page: 1,
           }
-        }).then( (res) => {
-          const spaceInfo = res.data.collection.items;
-          // showing error if there's no results based on the user input
-          if (!spaceInfo.length) {
-            this.setState({ 
-              errorPopUp: true,
-              loadingStatus: {...this.state.loadingStatus, spaceInfo: false},
-            })
-          } else {
-            this.gettingResults('spaceInfo', spaceInfo);
-          }
-        }).catch( (error) => {
-          this.handingError('emptyInput', error.response.data.reason, 'spaceInfo');  
         })
-    }
-  }
+      .then( (res) => {
+          console.log(res);
+          const space = res.data.collection.items;
+          // showing error if there's no results based on the user input
+          if (!space.length) {
+            setLoading({...isLoading, searchText: false });
+            isThereError(true);
+          } else {
+            setLoading({...isLoading, searchText: false });
+            getData({...results, spaceInfo: space});
+          }
+        })
+      .catch( (error) => {
+          isThereError(true);
+          setErrorMsg(error.response.data.reason);
+        })
+    };
+  }, [userInput.searchText]);
 
-  userSelection = (e) => {
-    e.preventDefault()
-    // saving data in stated based on the input used
-    this.setState({
-      [e.target.name]: e.target.value,
-    })
-  }
 
-  closeError = () => {
-  // closing error window
-    this.setState({
-      errorPopUp: false,
-  // emptying error msg-es so that don't see them together if other error occurs
-      errorMsg: {
-        ...this.state.errorMsg,
-        badDate: "",
-        noRover: "",
-        emptyInput: "",
-      },
-    });
-  };
+  return (
+    // <Router basename={process.env.PUBLIC_URL}>
+    //   <BgVideo />
+    //   <div className="App wrapper">
+    //     <Route exact path="/">
+    //       <MainPage
+    //         states={this.state} 
+    //         closeWindow={this.closeError}
+    //         userSelection={this.userSelection}
+    //         findPhotoDay={this.findPhotoDay}
+    //         findRoverPhotos={this.findRoverPhotos}
+    //         findSpaceInfo={this.findSpaceInfo}
+    //       />
+    //     </Route>
 
-  render() {
-    return (
-      <Router basename={process.env.PUBLIC_URL}>
-        <BgVideo />
-        <div className="App wrapper">
-          <Route exact path="/">
-            <MainPage
-              states={this.state} 
-              closeWindow={this.closeError}
-              userSelection={this.userSelection}
-              findPhotoDay={this.findPhotoDay}
-              findRoverPhotos={this.findRoverPhotos}
-              findSpaceInfo={this.findSpaceInfo}
-            />
-          </Route>
+    //     <Results states={this.state} />
+    //   </div>
+    //   < Footer />
+    // </Router>
+    <div>
+      <div className="dayPhoto">
+          <label htmlFor="date" className="srOnly">Pick a date</label>
+          <input onChange={userChoice} type="date" id="date" name="date" placeholder="e.g.: 2020-07-11" value={userInput.date}/>
+      </div>
 
-          <Results states={this.state} />
-        </div>
-        < Footer />
-      </Router>
-    );
-  }
+      <div className="roverPhotos">
+        <label htmlFor="rover" className="srOnly">Select a rover</label>
+
+        <select onChange={ userChoice } type="rover" id="rover" name="roverName" value={userInput.roverName}>
+            <option name="roverName" value="">Pick a Mars rover</option>
+            <option name="roverName" value="spirit">Spirit</option>
+            <option name="roverName" value="opportunity">Opportunity</option>
+            <option name="roverName" value="curiosity">Curiosity</option>
+        </select>
+      </div>
+
+      <div className="spaceInfo">
+        <label htmlFor="text" className="srOnly">Input your search query</label>
+        <input onChange={userChoice} type="text" name="searchText" id="text" value={userInput.searchText} placeholder="e.g. Nebulae"/>
+      </div>
+    </div>
+  );
 };
 
 export default App;
