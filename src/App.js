@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext, createContext } from 'react';
 import "./styles/app.scss";
 import BgVideo from './components/presentational/background/BgVideo';
 import MainPage from './components/MainPage/MainPage';
@@ -8,12 +8,12 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import axios from 'axios';
 
 function App() {
-
+  
   const [userInput, userSelection] = useState({date: '', roverName: '', searchText: ''});
   
   const [results, getData] = useState({ dayPhoto: [], manifestData: [], roverPhotos: [], spaceInfo: [] });
   const [isLoading, setLoading] = useState({date: false, roverName: false, searchText: false});
-
+  
   const [errorPopUp, isThereError] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   
@@ -131,48 +131,50 @@ function App() {
     };
   }, [userInput.searchText]);
 
-
   return (
-    // <Router basename={process.env.PUBLIC_URL}>
-    //   <BgVideo />
-    //   <div className="App wrapper">
-    //     <Route exact path="/">
-    //       <MainPage
-    //         states={this.state} 
-    //         closeWindow={this.closeError}
-    //         userSelection={this.userSelection}
-    //         findPhotoDay={this.findPhotoDay}
-    //         findRoverPhotos={this.findRoverPhotos}
-    //         findSpaceInfo={this.findSpaceInfo}
-    //       />
-    //     </Route>
+      <Router basename={process.env.PUBLIC_URL}>
+          <BgVideo />
+          <div className="App wrapper">
+            <Route exact path="/">
+              <MainPage
+                errorPopUp={errorPopUp}
+                // closeWindow={this.closeError}
+                // userSelection={this.userSelection}
+                // findPhotoDay={this.findPhotoDay}
+                // findRoverPhotos={this.findRoverPhotos}
+                // findSpaceInfo={this.findSpaceInfo}
+                />
+            </Route>
 
-    //     <Results states={this.state} />
+            {/* <Results states={this.state} /> */}
+          </div>
+          < Footer />
+      </Router>
+
+
+
+    // <div>
+    //   <div className="dayPhoto">
+    //       <label htmlFor="date" className="srOnly">Pick a date</label>
+    //       <input onChange={userChoice} type="date" id="date" name="date" placeholder="e.g.: 2020-07-11" value={userInput.date}/>
     //   </div>
-    //   < Footer />
-    // </Router>
-    <div>
-      <div className="dayPhoto">
-          <label htmlFor="date" className="srOnly">Pick a date</label>
-          <input onChange={userChoice} type="date" id="date" name="date" placeholder="e.g.: 2020-07-11" value={userInput.date}/>
-      </div>
 
-      <div className="roverPhotos">
-        <label htmlFor="rover" className="srOnly">Select a rover</label>
+    //   <div className="roverPhotos">
+    //     <label htmlFor="rover" className="srOnly">Select a rover</label>
 
-        <select onChange={ userChoice } type="rover" id="rover" name="roverName" value={userInput.roverName}>
-            <option name="roverName" value="">Pick a Mars rover</option>
-            <option name="roverName" value="spirit">Spirit</option>
-            <option name="roverName" value="opportunity">Opportunity</option>
-            <option name="roverName" value="curiosity">Curiosity</option>
-        </select>
-      </div>
+    //     <select onChange={ userChoice } type="rover" id="rover" name="roverName" value={userInput.roverName}>
+    //         <option name="roverName" value="">Pick a Mars rover</option>
+    //         <option name="roverName" value="spirit">Spirit</option>
+    //         <option name="roverName" value="opportunity">Opportunity</option>
+    //         <option name="roverName" value="curiosity">Curiosity</option>
+    //     </select>
+    //   </div>
 
-      <div className="spaceInfo">
-        <label htmlFor="text" className="srOnly">Input your search query</label>
-        <input onChange={userChoice} type="text" name="searchText" id="text" value={userInput.searchText} placeholder="e.g. Nebulae"/>
-      </div>
-    </div>
+    //   <div className="spaceInfo">
+    //     <label htmlFor="text" className="srOnly">Input your search query</label>
+    //     <input onChange={userChoice} type="text" name="searchText" id="text" value={userInput.searchText} placeholder="e.g. Nebulae"/>
+    //   </div>
+    // </div>
   );
 };
 
