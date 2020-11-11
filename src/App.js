@@ -1,23 +1,34 @@
-import React, { useState, useEffect, useContext, createContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import "./styles/app.scss";
 import BgVideo from './components/presentational/background/BgVideo';
 import MainPage from './components/MainPage/MainPage';
-import Results from './components/Results/Results';
+// import Results from './components/Results/Results';
 import Footer from './components/presentational/Footer';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import axios from 'axios';
 
 function App() {
   
+  // USER INPUT
   const [userInput, userSelection] = useState({date: '', roverName: '', searchText: ''});
   
+  // RESULTS
   const [results, getData] = useState({ dayPhoto: [], manifestData: [], roverPhotos: [], spaceInfo: [] });
+
+  // LOADING OR NOT
   const [isLoading, setLoading] = useState({date: false, roverName: false, searchText: false});
   
+  // ERROR T/F
   const [errorPopUp, isThereError] = useState(false);
+
+  // ERROR MESSAGE
   const [errorMsg, setErrorMsg] = useState('');
   
+
+
+
   const userChoice = (e) => {
+    e.preventDefault();
     userSelection({...userInput, [e.target.name]: e.target.value})
   };
 
@@ -29,10 +40,10 @@ function App() {
   };
 
 
-  const closeError = () => {
-    isThereError(false);
-    setErrorMsg('')
-  };
+  // const closeError = () => {
+  //   isThereError(false);
+  //   setErrorMsg('')
+  // };
   
 
   // APOD CALL
@@ -138,14 +149,18 @@ function App() {
             <Route exact path="/">
               <MainPage
                 errorPopUp={errorPopUp}
-                // closeWindow={this.closeError}
-                // userSelection={this.userSelection}
+                closeWindow={isThereError}
+                errorMsg={errorMsg}
+
+                results={results}
+                userSelection={userChoice}
+                isLoading={isLoading}
                 // findPhotoDay={this.findPhotoDay}
                 // findRoverPhotos={this.findRoverPhotos}
                 // findSpaceInfo={this.findSpaceInfo}
                 />
             </Route>
-
+            
             {/* <Results states={this.state} /> */}
           </div>
           < Footer />

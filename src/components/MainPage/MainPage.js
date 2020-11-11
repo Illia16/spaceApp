@@ -12,7 +12,6 @@ import MainPageAddInfo from './MainPageAddInfo';
 
 const MainPage = ( props ) => {
     const { errorPopUp } = props;
-
     return(
         <div>
             <Header />
@@ -20,7 +19,7 @@ const MainPage = ( props ) => {
             { errorPopUp ? <Error propsForError={props} /> : null }
 
             {/* LOOKING FOR PHOTO OF THE DAY */}
-            {/* <MainPageApod propsForApod={props}/> */}
+            <MainPageApod propsForApod={props}/>
 
             {/* LOOKING FOR ROVER PHOTOS */}
             {/* <MainPageRoverPhotos propsForRovers={props}/> */}

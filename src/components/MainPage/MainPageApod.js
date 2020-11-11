@@ -5,8 +5,9 @@ import "../../styles/app.scss";
 import LoadingLogo from '../presentational/LoadingLogo';
 
 const MainPageApod = (props) => {
-    const { propsForApod: { states:{ resultsReady:{dayPhoto}, loadingStatus, date }, userSelection, findPhotoDay } } = props;
-
+    const { propsForApod: { isLoading:{date}, results: {dayPhoto}, userSelection } } = props;
+    console.log(props);
+    
     return(
         <section>
         <h2>Photo/Video of the day</h2>
@@ -17,23 +18,27 @@ const MainPageApod = (props) => {
                 <label htmlFor="date" className="srOnly">Pick a date</label>
                 <input onChange={userSelection} type="date" id="date" name="date" placeholder="e.g.: 2020-07-11" value={date}/>
 
-                <button onClick={findPhotoDay}>SEARCH</button>
+                <button onClick={userSelection}>SEARCH</button>
 
                 {/* SHOW RESULTS ONCE WE GET THEM */}
                 {
-                    (dayPhoto && !loadingStatus.dayPhoto)
-                    ? <NavLink to="/photooftheday" className="resultsLink">SEE RESULTS</NavLink>
-                    : null
+                (dayPhoto && !date)
+                ? <NavLink to="/photooftheday" className="resultsLink">SEE RESULTS</NavLink>
+                : null
                 }
 
                 {/* WAITING LOGO WHILE GETTING THE RESULTS */}
                 {
-                    loadingStatus.dayPhoto ? <LoadingLogo /> : null
+                date ? <LoadingLogo /> : null
                 }
             </div>
         </form>
+
     </section>
     );
 };
 
 export default MainPageApod;
+
+
+
