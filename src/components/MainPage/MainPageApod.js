@@ -35,6 +35,3 @@ const MainPageApod = (props) => {
 };
 
 export default MainPageApod;
-
-
-

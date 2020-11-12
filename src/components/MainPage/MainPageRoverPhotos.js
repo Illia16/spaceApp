@@ -31,9 +31,7 @@ const MainPageRoverPhotos = (props) => {
                         : null
                     }
 
-                    {
-                        roverName ? <LoadingLogo /> : null
-                    }
+                    { roverName ? <LoadingLogo /> : null }
                 </div>
             </form>
         </section>

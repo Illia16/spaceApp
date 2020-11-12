@@ -11,20 +11,11 @@ import axios from 'axios';
 import SetTodayDate from './components/SetTodayDate';
 
 function App() {
-  // USER INPUT
-  const [userInput, userSelection] = useState({date: '', roverName: '', searchText: ''});
-  
-  // RESULTS
-  const [results, getData] = useState({ dayPhoto: [], manifestData: [], roverPhotos: [], spaceInfo: [] });
-
-  // LOADING OR NOT
-  const [isLoading, setLoading] = useState({date: false, roverName: false, searchText: false});
-  
-  // ERROR T/F
-  const [errorPopUp, isThereError] = useState(false);
-
-  // ERROR MESSAGE
-  const [errorMsg, setErrorMsg] = useState('');
+  const [userInput, userSelection] = useState({date: '', roverName: '', searchText: ''}); // USER INPUT
+  const [results, getData] = useState({ dayPhoto: [], manifestData: [], roverPhotos: [], spaceInfo: [] }); // RESULTS
+  const [isLoading, setLoading] = useState({date: false, roverName: false, searchText: false}); // LOADING OR NOT
+  const [errorPopUp, isThereError] = useState(false); // ERROR T/F
+  const [errorMsg, setErrorMsg] = useState(''); // ERROR MESSAGE
   
 
   const userSelectedQuery = (e) => {
@@ -32,7 +23,7 @@ function App() {
     userSelection({...userInput, [e.target.name]: e.target.value})
   };
 
-  
+
   // APOD CALL
   const findPhotoDay = (e) => {
         e.preventDefault();
@@ -58,14 +49,13 @@ function App() {
         })
   };
 
-  // waiting for MAX DAYS SPENT ON MARS by selected rover to PASS that day value into next API call to get photos
+  // GETTING MAX DAYS SPENT ON MARS by selected rover to PASS that day value into our next API call to get photos
   const findRoverPhotos = (e) => {
     e.preventDefault();
 
     if (!userInput.roverName) {
       isThereError(true);
       setErrorMsg('The input is empty.');
-      // exiting the fucntion
       return
     } else {
       setLoading({...isLoading, roverName: true });
@@ -161,13 +151,11 @@ function App() {
                 closeWindow={isThereError}
                 errorMsg={errorMsg}
 
-
                 isLoading={isLoading}
                 userInput={userInput}
                 userSelectedQuery={userSelectedQuery}
                 findPhotoDay={findPhotoDay}
                 results={results}
-
 
                 findRoverPhotos={findRoverPhotos}
                 findSpaceInfo={findSpaceInfo}

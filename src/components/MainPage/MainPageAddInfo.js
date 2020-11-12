@@ -25,9 +25,7 @@ const MainPageAddInfo = (props) => {
                     : null
                     }
 
-                    {
-                    searchText ? <LoadingLogo /> : null
-                    }
+                    { searchText ? <LoadingLogo /> : null }
                 </div>
             </form>
         </section>
