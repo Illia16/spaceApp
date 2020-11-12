@@ -22,10 +22,10 @@ const MainPage = ( props ) => {
             <MainPageApod propsForApod={props}/>
 
             {/* LOOKING FOR ROVER PHOTOS */}
-            {/* <MainPageRoverPhotos propsForRovers={props}/> */}
+            <MainPageRoverPhotos propsForRovers={props}/>
 
             {/* LOOKING FOR ADDITIONAL SPACE INFO */}
-            {/* <MainPageAddInfo propsForAddInfo={props}/> */}
+            <MainPageAddInfo propsForAddInfo={props}/>
         </div>
     );
 };

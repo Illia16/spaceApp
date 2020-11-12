@@ -5,8 +5,7 @@ import "../../styles/app.scss";
 import LoadingLogo from '../presentational/LoadingLogo';
 
 const MainPageApod = (props) => {
-    const { propsForApod: { isLoading:{date}, results: {dayPhoto}, userSelection } } = props;
-    console.log(props);
+    const { propsForApod: { isLoading:{date}, results: {dayPhoto}, userInput, userSelectedQuery, findPhotoDay } } = props;
     
     return(
         <section>
@@ -16,21 +15,18 @@ const MainPageApod = (props) => {
         <form action="">
             <div className="dayPhoto">
                 <label htmlFor="date" className="srOnly">Pick a date</label>
-                <input onChange={userSelection} type="date" id="date" name="date" placeholder="e.g.: 2020-07-11" value={date}/>
+                <input onChange={userSelectedQuery} type="date" id="date" name="date" placeholder="e.g.: 2020-07-11" value={userInput.date}/>
 
-                <button onClick={userSelection}>SEARCH</button>
+                <button onClick={findPhotoDay}>SEARCH</button>
 
                 {/* SHOW RESULTS ONCE WE GET THEM */}
                 {
-                (dayPhoto && !date)
-                ? <NavLink to="/photooftheday" className="resultsLink">SEE RESULTS</NavLink>
+                dayPhoto.date ? <NavLink to="/photooftheday" className="resultsLink">SEE RESULTS</NavLink>
                 : null
                 }
 
                 {/* WAITING LOGO WHILE GETTING THE RESULTS */}
-                {
-                date ? <LoadingLogo /> : null
-                }
+                { date ? <LoadingLogo /> : null }
             </div>
         </form>
 
