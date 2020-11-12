@@ -8,7 +8,7 @@ import ResultsRoverPhotos from './ResultsRoverPhotos'
 import ResultsAddInfo from './ResultsAddInfo'
 
 const Results = ( props ) => {
-    const {states:{dayPhoto, roverPhotos, manifestData, spaceInfo} } = props;
+    const {results:{dayPhoto, roverPhotos, manifestData, spaceInfo} } = props;
     // 3 result components: dayPhoto, roverPhotos, spaceInfo /////////////////////////////////////////////////////////////////
     return(
         <div>

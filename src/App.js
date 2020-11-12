@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import "./styles/app.scss";
 import BgVideo from './components/presentational/background/BgVideo';
 import MainPage from './components/MainPage/MainPage';
-// import Results from './components/Results/Results';
+import Results from './components/Results/Results';
 import Footer from './components/presentational/Footer';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import axios from 'axios';
@@ -11,7 +11,6 @@ import axios from 'axios';
 import SetTodayDate from './components/SetTodayDate';
 
 function App() {
-  
   // USER INPUT
   const [userInput, userSelection] = useState({date: '', roverName: '', searchText: ''});
   
@@ -28,13 +27,10 @@ function App() {
   const [errorMsg, setErrorMsg] = useState('');
   
 
-
-
   const userSelectedQuery = (e) => {
     e.preventDefault();
     userSelection({...userInput, [e.target.name]: e.target.value})
   };
-
 
   
   // APOD CALL
@@ -178,7 +174,7 @@ function App() {
                 />
             </Route>
             
-            {/* <Results states={this.state} /> */}
+            <Results results={results} />
           </div>
           < Footer />
       </Router>
