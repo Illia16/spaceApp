@@ -4,7 +4,7 @@ import React from 'react';
 import "../../styles/app.scss";
 
 // Components
-import Error from '../Error';
+import Error from '../Error/Error';
 import Header from '../presentational/Header';
 import MainPageApod from './MainPageApod';
 import MainPageRoverPhotos from './MainPageRoverPhotos';
