@@ -13,6 +13,8 @@ import { useError } from './components/Error/ErrorContext';
 // FUNCTIONS
 import SetTodayDate from './components/SetTodayDate';
 
+// 3 more smart components needed: UserInput, Results, Loading
+
 function App() {
   const [userInput, userSelection] = useState({date: '', roverName: '', searchText: ''}); // USER INPUT
   const [results, getData] = useState({ dayPhoto: [], manifestData: [], roverPhotos: [], spaceInfo: [] }); // RESULTS
