@@ -10,13 +10,18 @@ import MainPageApod from './MainPageApod';
 import MainPageRoverPhotos from './MainPageRoverPhotos';
 import MainPageAddInfo from './MainPageAddInfo';
 
+// grabbing Error component logic
+import { useError } from '../Error/ErrorContext';
+
 const MainPage = ( props ) => {
-    const { errorPopUp } = props;
+    // using logic from Error component
+    const { errorPopUp } = useError();
+
     return(
         <div>
             <Header />
 
-            { errorPopUp ? <Error propsForError={props} /> : null }
+            { errorPopUp ? <Error /> : null }
 
             {/* LOOKING FOR PHOTO OF THE DAY */}
             <MainPageApod propsForApod={props}/>

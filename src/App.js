@@ -7,6 +7,7 @@ import Footer from './components/presentational/Footer';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import axios from 'axios';
 
+// grabbing Error component logic
 import { useError } from './components/Error/ErrorContext';
 
 // FUNCTIONS
@@ -16,13 +17,9 @@ function App() {
   const [userInput, userSelection] = useState({date: '', roverName: '', searchText: ''}); // USER INPUT
   const [results, getData] = useState({ dayPhoto: [], manifestData: [], roverPhotos: [], spaceInfo: [] }); // RESULTS
   const [isLoading, setLoading] = useState({date: false, roverName: false, searchText: false}); // LOADING OR NOT
-  // const [errorPopUp, isThereError] = useState(false); // ERROR T/F
-  // const [errorMsg, setErrorMsg] = useState(''); // ERROR MESSAGE
   
-  // using Error component in order to handle error
-  const { errorPopUp, isThereError, errorMsg, setErrorMsg } = useError();
-  console.log(errorPopUp);
-
+  // using Error component's functions to handle error
+  const { isThereError, setErrorMsg } = useError();
 
   const userSelectedQuery = (e) => {
     e.preventDefault();
@@ -153,9 +150,7 @@ function App() {
           <div className="App wrapper">
             <Route exact path="/">
               <MainPage
-                errorPopUp={errorPopUp}
                 closeWindow={isThereError}
-                errorMsg={errorMsg}
 
                 isLoading={isLoading}
                 userInput={userInput}

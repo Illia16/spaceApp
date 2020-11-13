@@ -1,14 +1,17 @@
 import React from 'react';
 import "../../styles/app.scss";
 
-const Error = ( props ) => {
-    const {propsForError: { closeWindow, errorMsg, errorPopUp } } = props;
+// grabbing Error component logic
+import { useError } from './ErrorContext';
+
+const Error = () => {
+    const { isThereError, errorMsg } = useError();
 
     return(
         <div className="popupBack">
             <div className="popup">
-                {errorPopUp && <p>{errorMsg}</p>}
-                <button onClick={() => closeWindow(false)} >CLOSE</button>
+                <p>{errorMsg}</p>
+                <button onClick={() => isThereError(false)} >CLOSE</button>
             </div>
         </div>
     );
