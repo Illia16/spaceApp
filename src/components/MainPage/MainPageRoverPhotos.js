@@ -6,7 +6,7 @@ import LoadingLogo from '../Loading/LoadingLogo';
 
 const MainPageRoverPhotos = (props) => {
     const { propsForRovers: { isLoading:{roverName}, results: {roverPhotos}, userInput, userSelectedQuery, findRoverPhotos } } = props;
-
+    
     return(
         <section>
             <h2>Mars Rover photos</h2>

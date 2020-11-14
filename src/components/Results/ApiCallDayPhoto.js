@@ -9,8 +9,6 @@ import { useLoading } from '../Loading/LoadingContext';
 // FUNCTIONS
 import SetTodayDate from '../SetTodayDate';
 
-
-
 const ApiCallDayPhoto = createContext();
 // Using useDayPhoto will allow us to grab useDayPhoto's content in any file in the App
 export const useDayPhoto = () => {

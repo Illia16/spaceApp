@@ -6,6 +6,8 @@ import ErrorProvider from './components/Error/ErrorContext';
 import UserInputProvider from './components/UserInput/UserInput';
 import LoadingProvider from './components/Loading/LoadingContext';
 import DayPhotoProvider from './components/Results/ApiCallDayPhoto';
+import RoverPhotosProvider from './components/Results/ApiCallRoverPhotos';
+import AddInfoProvider from './components/Results/ApiCallAddInfo';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -13,7 +15,11 @@ ReactDOM.render(
       <ErrorProvider>
         <LoadingProvider>
           <DayPhotoProvider>
-            <App />
+            <RoverPhotosProvider>
+              <AddInfoProvider>
+                <App />
+              </AddInfoProvider>
+            </RoverPhotosProvider>
           </DayPhotoProvider>
         </LoadingProvider>
       </ErrorProvider>
