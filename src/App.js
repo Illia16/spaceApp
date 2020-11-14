@@ -10,23 +10,28 @@ import axios from 'axios';
 // grabbing Error component logic
 import { useError } from './components/Error/ErrorContext';
 
+// grabbing UserInput component logic
+import { useInput } from './components/UserInput/UserInput';
+
 // FUNCTIONS
 import SetTodayDate from './components/SetTodayDate';
 
 // 3 more smart components needed: UserInput, Results, Loading
 
 function App() {
-  const [userInput, userSelection] = useState({date: '', roverName: '', searchText: ''}); // USER INPUT
+  // const [userInput, userSelection] = useState({date: '', roverName: '', searchText: ''}); // USER INPUT
   const [results, getData] = useState({ dayPhoto: [], manifestData: [], roverPhotos: [], spaceInfo: [] }); // RESULTS
   const [isLoading, setLoading] = useState({date: false, roverName: false, searchText: false}); // LOADING OR NOT
   
   // using Error component's functions to handle error
   const { isThereError, setErrorMsg } = useError();
+  // using UserInput component's functions to handle user's choice
+  const { userInput, userSelection, userSelectedQuery} = useInput();
 
-  const userSelectedQuery = (e) => {
-    e.preventDefault();
-    userSelection({...userInput, [e.target.name]: e.target.value})
-  };
+  // const userSelectedQuery = (e) => {
+  //   e.preventDefault();
+  //   userSelection({...userInput, [e.target.name]: e.target.value})
+  // };
 
 
   // APOD CALL

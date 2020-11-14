@@ -3,12 +3,15 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import ErrorProvider from './components/Error/ErrorContext';
+import UserInputProvider from './components/UserInput/UserInput';
 
 ReactDOM.render(
   <React.StrictMode>
-    <ErrorProvider>
-      <App />
-    </ErrorProvider>
+    <UserInputProvider>
+      <ErrorProvider>
+        <App />
+      </ErrorProvider>
+    </UserInputProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
