@@ -5,13 +5,16 @@ import * as serviceWorker from './serviceWorker';
 import ErrorProvider from './components/Error/ErrorContext';
 import UserInputProvider from './components/UserInput/UserInput';
 import LoadingProvider from './components/Loading/LoadingContext';
+import DayPhotoProvider from './components/Results/ApiCallDayPhoto';
 
 ReactDOM.render(
   <React.StrictMode>
     <UserInputProvider>
       <ErrorProvider>
         <LoadingProvider>
-          <App />
+          <DayPhotoProvider>
+            <App />
+          </DayPhotoProvider>
         </LoadingProvider>
       </ErrorProvider>
     </UserInputProvider>

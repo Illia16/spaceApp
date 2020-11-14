@@ -7,54 +7,23 @@ import Footer from './components/Footer';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import axios from 'axios';
 
-// grabbing UserInput component logic
+// grabbing every needed component' logic
 import { useInput } from './components/UserInput/UserInput';
-// grabbing Error component logic
 import { useError } from './components/Error/ErrorContext';
-// grabbing Loading component logic
 import { useLoading } from './components/Loading/LoadingContext';
+import { useDayPhoto } from './components/Results/ApiCallDayPhoto';
 
 
-// FUNCTIONS
-import SetTodayDate from './components/SetTodayDate';
 
-// 1 more smart components needed: Results
 
-function App() {
-  const [results, getData] = useState({ dayPhoto: [], manifestData: [], roverPhotos: [], spaceInfo: [] }); // RESULTS
-  
-  // using UserInput component's functions to handle user's choice
+function App() {  
+  // using imported functions from other smart components
   const { userInput, userSelection, userSelectedQuery} = useInput();
-  // using Error component's functions to handle error
   const { isThereError, showError, errorMsg, setErrorMsg } = useError();
-  // using Loading component's functions to handle loading state
   const { isLoading, setLoading } = useLoading();
+  const { results, getData, findPhotoDay } = useDayPhoto();
 
 
-  // APOD CALL
-  const findPhotoDay = (e) => {
-        e.preventDefault();
-
-        setLoading({...isLoading, date: true });
-        axios({
-            url: `https://api.nasa.gov/planetary/apod`,
-            method: 'GET',
-            params: {
-                api_key: `RQm9PKAWUOxPOwxSYLbTECB3ZtzrjLjlP4R9vIIm`,
-                date: userInput.date || SetTodayDate(),
-            }
-        }).then( (res) => {
-            setLoading({...isLoading, date: false });
-            getData({...results, dayPhoto: res.data})
-
-            userSelection({...userInput, date: res.data.date})
-
-          }).catch( error => {
-            setLoading({...isLoading, date: false });
-            showError(true);
-            setErrorMsg(error.response.data.msg)
-        })
-  };
 
   // GETTING MAX DAYS SPENT ON MARS by selected rover to PASS that day value into our next API call to get photos
   const findRoverPhotos = (e) => {
