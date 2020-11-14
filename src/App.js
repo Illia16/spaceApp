@@ -7,25 +7,28 @@ import Footer from './components/presentational/Footer';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import axios from 'axios';
 
-// grabbing Error component logic
-import { useError } from './components/Error/ErrorContext';
-
 // grabbing UserInput component logic
 import { useInput } from './components/UserInput/UserInput';
+// grabbing Error component logic
+import { useError } from './components/Error/ErrorContext';
+// grabbing Loading component logic
+import { useLoading } from './components/Loading/LoadingContext';
+
 
 // FUNCTIONS
 import SetTodayDate from './components/SetTodayDate';
 
-// 2 more smart components needed: Results, Loading
+// 1 more smart components needed: Results
 
 function App() {
   const [results, getData] = useState({ dayPhoto: [], manifestData: [], roverPhotos: [], spaceInfo: [] }); // RESULTS
-  const [isLoading, setLoading] = useState({date: false, roverName: false, searchText: false}); // LOADING OR NOT
   
-  // using Error component's functions to handle error
-  const { isThereError, showError, errorMsg, setErrorMsg } = useError();
   // using UserInput component's functions to handle user's choice
   const { userInput, userSelection, userSelectedQuery} = useInput();
+  // using Error component's functions to handle error
+  const { isThereError, showError, errorMsg, setErrorMsg } = useError();
+  // using Loading component's functions to handle loading state
+  const { isLoading, setLoading } = useLoading();
 
 
   // APOD CALL

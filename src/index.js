@@ -4,12 +4,15 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import ErrorProvider from './components/Error/ErrorContext';
 import UserInputProvider from './components/UserInput/UserInput';
+import LoadingProvider from './components/Loading/LoadingContext';
 
 ReactDOM.render(
   <React.StrictMode>
     <UserInputProvider>
       <ErrorProvider>
-        <App />
+        <LoadingProvider>
+          <App />
+        </LoadingProvider>
       </ErrorProvider>
     </UserInputProvider>
   </React.StrictMode>,

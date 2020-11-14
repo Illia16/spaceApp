@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import "../../styles/app.scss";
 
-import LoadingLogo from '../presentational/LoadingLogo';
+import LoadingLogo from '../Loading/LoadingLogo';
 
 const MainPageRoverPhotos = (props) => {
     const { propsForRovers: { isLoading:{roverName}, results: {roverPhotos}, userInput, userSelectedQuery, findRoverPhotos } } = props;
