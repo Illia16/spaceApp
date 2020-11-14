@@ -9,13 +9,13 @@ export const useError = () => {
 
 // Error functional
 export default function ErrorProvider({ children }){
-    const [errorPopUp, isThereError] = useState(false); // ERROR T/F
+    const [isThereError, showError] = useState(false); // ERROR T/F
     const [errorMsg, setErrorMsg] = useState(''); // ERROR MESSAGE
     
     return(
         <ErrorContext.Provider value={{
-            errorPopUp: errorPopUp,
             isThereError: isThereError,
+            showError: showError,
             errorMsg: errorMsg,
             setErrorMsg: setErrorMsg,
         }}>

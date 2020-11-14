@@ -16,22 +16,16 @@ import { useInput } from './components/UserInput/UserInput';
 // FUNCTIONS
 import SetTodayDate from './components/SetTodayDate';
 
-// 3 more smart components needed: UserInput, Results, Loading
+// 2 more smart components needed: Results, Loading
 
 function App() {
-  // const [userInput, userSelection] = useState({date: '', roverName: '', searchText: ''}); // USER INPUT
   const [results, getData] = useState({ dayPhoto: [], manifestData: [], roverPhotos: [], spaceInfo: [] }); // RESULTS
   const [isLoading, setLoading] = useState({date: false, roverName: false, searchText: false}); // LOADING OR NOT
   
   // using Error component's functions to handle error
-  const { isThereError, setErrorMsg } = useError();
+  const { isThereError, showError, errorMsg, setErrorMsg } = useError();
   // using UserInput component's functions to handle user's choice
   const { userInput, userSelection, userSelectedQuery} = useInput();
-
-  // const userSelectedQuery = (e) => {
-  //   e.preventDefault();
-  //   userSelection({...userInput, [e.target.name]: e.target.value})
-  // };
 
 
   // APOD CALL
@@ -54,7 +48,7 @@ function App() {
 
           }).catch( error => {
             setLoading({...isLoading, date: false });
-            isThereError(true);
+            showError(true);
             setErrorMsg(error.response.data.msg)
         })
   };
@@ -64,7 +58,7 @@ function App() {
     e.preventDefault();
 
     if (!userInput.roverName) {
-      isThereError(true);
+      showError(true);
       setErrorMsg('The input is empty.');
       return
     } else {
@@ -81,7 +75,7 @@ function App() {
         getData({...results, manifestData: res.data.photo_manifest});
       }).catch( (er) => {
         setLoading({...isLoading, roverName: false });
-        isThereError(true);
+        showError(true);
         setErrorMsg(er.message);
       });
     }
@@ -105,7 +99,7 @@ function App() {
         getData({...results, roverPhotos: res.data.photos});
       }).catch( (error) => {
         setLoading({...isLoading, roverName: false });
-        isThereError(true);
+        showError(true);
         setErrorMsg(error.response.data.errors);
       })
     };
@@ -118,7 +112,7 @@ function App() {
 
     // checking if input is empty (no point in making an API call if the input in empty)
     if (!userInput.searchText) {
-      isThereError(true);
+      showError(true);
       setErrorMsg('The input is empty.');
       return
     } else {
@@ -136,7 +130,7 @@ function App() {
           // showing error if there's no results based on the user input
           if (!space.length) {
             setLoading({...isLoading, searchText: false });
-            isThereError(true);
+            showError(true);
             setErrorMsg('No results found based on your input.');
           } else {
             setLoading({...isLoading, searchText: false });
@@ -145,7 +139,7 @@ function App() {
         })
       .catch( (error) => {
           setLoading({...isLoading, searchText: false });
-          isThereError(true);
+          showError(true);
           setErrorMsg(error.response.data.reason);
         })
     };
@@ -157,7 +151,9 @@ function App() {
           <div className="App wrapper">
             <Route exact path="/">
               <MainPage
-                closeWindow={isThereError}
+                isThereError={isThereError}
+                showError={showError}
+                errorMsg={errorMsg}
 
                 isLoading={isLoading}
                 userInput={userInput}
