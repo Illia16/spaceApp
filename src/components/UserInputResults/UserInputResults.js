@@ -10,7 +10,7 @@ export const useInput = () => {
 // UserInputProvider functional
 export default function UserInputProvider({ children }){
     const [userInput, userSelection] = useState({date: '', roverName: '', searchText: ''}); // USER INPUT STORAGE
-    const [results, getData] = useState({ dayPhoto: [], manifestData: [], roverPhotos: [], spaceInfo: [] }); // RESULTS
+    const [results, getData] = useState({ dayPhoto: [], manifestData: [], roverPhotos: [], spaceInfo: [] }); // RESULTS STORAGE
 
     const userSelectedQuery = (e) => {
         e.preventDefault();
