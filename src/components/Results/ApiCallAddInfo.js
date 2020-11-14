@@ -2,11 +2,9 @@ import React, { createContext, useContext } from 'react';
 import axios from 'axios';
 
 // grabbing every needed component' logic
-import { useInput } from '../UserInput/UserInput';
+import { useInput } from '../UserInputResults/UserInputResults';
 import { useError } from '../Error/ErrorContext';
 import { useLoading } from '../Loading/LoadingContext';
-import { useDayPhoto } from './ApiCallDayPhoto';
-
 
 const ApiCallAddInfo = createContext();
 // Using useDayPhoto will allow us to grab useDayPhoto's content in any file in the App
@@ -17,10 +15,9 @@ export const useAddInfo = () => {
 // AddInfo API call logic functional
 export default function AddInfoProvider({ children }){
     // using imported functions from other smart components
-    const { userInput, userSelection, userSelectedQuery} = useInput();
+    const { userInput, userSelection, userSelectedQuery, results, getData } = useInput();
     const { isThereError, showError, errorMsg, setErrorMsg } = useError();
     const { isLoading, setLoading } = useLoading();
-    const { results, getData, findPhotoDay } = useDayPhoto();
 
     // ADDITIONAL INFO
     const findSpaceInfo = (e) => {

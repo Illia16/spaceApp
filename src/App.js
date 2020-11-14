@@ -7,7 +7,7 @@ import Footer from './components/Footer';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 // grabbing every needed component' logic
-import { useInput } from './components/UserInput/UserInput';
+import { useInput } from './components/UserInputResults/UserInputResults';
 import { useError } from './components/Error/ErrorContext';
 import { useLoading } from './components/Loading/LoadingContext';
 import { useDayPhoto } from './components/Results/ApiCallDayPhoto';
@@ -17,10 +17,10 @@ import { useAddInfo } from './components/Results/ApiCallAddInfo';
 
 function App() {  
   // using imported functions from other smart components
-  const { userInput, userSelection, userSelectedQuery} = useInput();
+  const { userInput, userSelection, userSelectedQuery, results, getData} = useInput();
   const { isThereError, showError, errorMsg, setErrorMsg } = useError();
   const { isLoading, setLoading } = useLoading();
-  const { results, getData, findPhotoDay } = useDayPhoto();
+  const { findPhotoDay } = useDayPhoto();
   const { findRoverPhotos } = useRoverPhotos();
   const { findSpaceInfo } = useAddInfo();
 

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import ErrorProvider from './components/Error/ErrorContext';
-import UserInputProvider from './components/UserInput/UserInput';
+import UserInputProvider from './components/UserInputResults/UserInputResults';
 import LoadingProvider from './components/Loading/LoadingContext';
 import DayPhotoProvider from './components/Results/ApiCallDayPhoto';
 import RoverPhotosProvider from './components/Results/ApiCallRoverPhotos';
