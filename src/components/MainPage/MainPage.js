@@ -5,7 +5,7 @@ import "../../styles/app.scss";
 
 // Components
 import Error from '../Error/Error';
-import Header from '../presentational/Header';
+import Header from '../Header';
 import MainPageApod from './MainPageApod';
 import MainPageRoverPhotos from './MainPageRoverPhotos';
 import MainPageAddInfo from './MainPageAddInfo';

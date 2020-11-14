@@ -1,6 +1,6 @@
 import React from 'react';
 import "../../styles/app.scss";
-import GoBackButton from '../presentational/GoBackButton';
+import GoBackButton from '../GoBackButton';
 
 const ResultsAddInfo = ( props ) => {
         return (
