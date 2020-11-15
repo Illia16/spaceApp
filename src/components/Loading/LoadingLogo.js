@@ -1,4 +1,5 @@
 import React from 'react';
+import './waitingLogo.scss';
 
 const LoadingLogo = () => {
     return(

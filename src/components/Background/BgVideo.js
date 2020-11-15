@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import "../../styles/app.scss";
+import "./backgroundVideo.scss";
 import Video from "./BgVideo2.mp4";
 import Switch from "react-switch";
 

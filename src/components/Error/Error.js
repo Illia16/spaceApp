@@ -1,5 +1,5 @@
 import React from 'react';
-import "../../styles/app.scss";
+import "./errorWindow.scss";
 
 const Error = (props) => {
     const { propsForError: {showError, errorMsg} } = props;
