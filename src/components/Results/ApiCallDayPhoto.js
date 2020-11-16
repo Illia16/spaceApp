@@ -7,7 +7,7 @@ import { useError } from '../Error/ErrorContext';
 import { useLoading } from '../Loading/LoadingContext';
 
 // FUNCTIONS
-import SetTodayDate from '../SetTodayDate';
+import setTodayDate from '../../helpers/setTodayDate';
 
 const ApiCallDayPhoto = createContext();
 // Using useDayPhoto will allow us to grab useDayPhoto's content in any file in the App
@@ -33,7 +33,7 @@ export default function DayPhotoProvider({ children }){
             method: 'GET',
             params: {
                 api_key: `RQm9PKAWUOxPOwxSYLbTECB3ZtzrjLjlP4R9vIIm`,
-                date: userInput.date || SetTodayDate(),
+                date: userInput.date || setTodayDate(),
             }
         }).then( (res) => {
             setLoading({...isLoading, date: false });
