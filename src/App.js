@@ -1,5 +1,5 @@
 import React from 'react';
-import "./styles/app.scss";
+import "./styles/general.scss";
 import BgVideo from './components/Background/BgVideo';
 import MainPage from './components/MainPage/MainPage';
 import Results from './components/Results/Results';
