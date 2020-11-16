@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import "../../styles/app.scss";
+import "./results.scss";
 
 // UI components
 import ResultsDayPhoto from './ResultsDayPhoto'

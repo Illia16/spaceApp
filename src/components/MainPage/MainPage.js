@@ -1,7 +1,5 @@
 import React from 'react';
-
-// Styles
-import "../../styles/app.scss";
+import './main.scss';
 
 // Components
 import Error from '../Error/Error';

@@ -65,3 +65,10 @@ input[type="text"]:focus {
     border: transparent 2px solid;
     border-bottom: black 2px solid;
 }
+
+
+@media (max-width: 500px) {
+    form .dayPhoto > *, form .roverPhotos > *, form .spaceInfo > * {
+        height: 35px;
+    }
+}

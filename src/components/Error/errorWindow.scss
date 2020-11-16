@@ -35,3 +35,9 @@
     right: 0;
     z-index: 5;
 }
+
+@media (max-width: 500px) {
+    .popup p {
+        font-size: 2rem;
+    }
+}
