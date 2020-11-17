@@ -1,3 +1,4 @@
+// testing today's date
 const setTodayDate = require('./setTodayDate');
 
 const todayDateTest = () => {
