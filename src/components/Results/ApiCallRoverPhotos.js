@@ -35,6 +35,28 @@ export default function RoverPhotosProvider({ children }) {
         }
     };
 
+
+    const manifestCall = () => {
+        setLoading({ ...isLoading, roverName: true });
+
+        axios({
+            url: `https://api.nasa.gov/mars-photos/api/v1/manifests/${roverName}/`,
+            method: 'GET',
+            params: {
+                api_key: `RQm9PKAWUOxPOwxSYLbTECB3ZtzrjLjlP4R9vIIm`,
+            }
+        }).then( (res) => {
+            setLoading({ ...isLoading, roverName: false });
+            getManifestData({ ...manifestData, [roverName]: res.data.photo_manifest });
+        }).catch((er) => {
+            setLoading({ ...isLoading, roverName: false });
+            showError(true);
+            setErrorMsg(er.message);
+        });
+
+        roverCall();
+    };
+
     const roverCall = () => {
         console.log(roverName, manifestData[roverName]);
         setLoading({ ...isLoading, roverName: true });
@@ -56,30 +78,6 @@ export default function RoverPhotosProvider({ children }) {
             setErrorMsg(error.response.data.errors);
         })
     };
-
-
-    const manifestCall = async () => {
-        setLoading({ ...isLoading, roverName: true });
-
-        await axios({
-            url: `https://api.nasa.gov/mars-photos/api/v1/manifests/${roverName}/`,
-            method: 'GET',
-            params: {
-                api_key: `RQm9PKAWUOxPOwxSYLbTECB3ZtzrjLjlP4R9vIIm`,
-            }
-        }).then( (res) => {
-            setLoading({ ...isLoading, roverName: false });
-            getManifestData({ ...manifestData, [roverName]: res.data.photo_manifest });
-        }).catch((er) => {
-            setLoading({ ...isLoading, roverName: false });
-            showError(true);
-            setErrorMsg(er.message);
-        });
-
-        roverCall();
-    };
-
-
 
 
     // ROVER PHOTOS CALL
