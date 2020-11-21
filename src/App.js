@@ -17,7 +17,7 @@ import { useAddInfo } from './components/Results/ApiCallAddInfo';
 
 function App() {  
   // using imported functions from other smart components
-  const { userInput, userSelection, userSelectedQuery, results, getData} = useInput();
+  const { userInput, userSelection, userSelectedQuery, results, getData, manifestData, getManifestData} = useInput();
   const { isThereError, showError, errorMsg, setErrorMsg } = useError();
   const { isLoading, setLoading } = useLoading();
   const { findPhotoDay } = useDayPhoto();
@@ -45,7 +45,7 @@ function App() {
                 />
             </Route>
             
-            <Results results={results} />
+            <Results results={results} manifestData={manifestData} />
           </div>
           < Footer />
       </Router>

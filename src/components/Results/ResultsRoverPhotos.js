@@ -7,8 +7,10 @@ import 'react-multi-carousel/lib/styles.css';
 import carouselSizesRoverPhotos from '../../styles/carouselSizes';
 
 const ResultsRoverPhotos = ( props ) => {
-        const { propsForRoverPhotos: [ [{ earth_date: earthDate, rover: { landing_date: landingDate, launch_date: launchDate, name: roverName, status: roverStatus } }], { max_date, total_photos }] } = props;
-        
+        const { roverPhotos: [ { earth_date: earthDate, rover: { landing_date: landingDate, launch_date: launchDate, name: roverName, status: roverStatus } } ], manifestData } = props;
+        // { max_date, total_photos }
+        console.log(props, roverName);
+        console.log(manifestData);
         return (
             <div className="roverPhotosRes">
                 <h3>Photos</h3>
@@ -16,8 +18,8 @@ const ResultsRoverPhotos = ( props ) => {
                 <p>Photos taken on <span>{earthDate}</span></p>
                 <p>Rover left Earth <span>{launchDate}</span></p>
                 <p>Rover landed on Mars <span>{landingDate}</span></p>
-                <p>Total photos taken by {roverName} <span>{total_photos}</span></p>
-                <p>The last photos taken on <span>{max_date}</span></p>
+                <p>Total photos taken by {roverName} <span>{manifestData[roverName.toLowerCase()].total_photos}</span></p>
+                <p>The last photos taken on <span>{manifestData[roverName.toLowerCase()].max_date}</span></p>
                 <p>Status <span>{roverStatus}</span></p>
 
                 {/* className="roverPhotos" */}
@@ -35,7 +37,7 @@ const ResultsRoverPhotos = ( props ) => {
                     partialVisible={false}
                 >
                     {
-                        props.propsForRoverPhotos[0].map( (obj) => {
+                        props.roverPhotos.map( (obj) => {
                             return (
                                 <div key={obj.id}><img src={obj.img_src} alt={`taken by ${obj.rover.name} on ${obj.earth_date}`} /></div>
                             )

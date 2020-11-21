@@ -8,7 +8,7 @@ import ResultsRoverPhotos from './ResultsRoverPhotos'
 import ResultsAddInfo from './ResultsAddInfo'
 
 const Results = ( props ) => {
-    const {results:{dayPhoto, roverPhotos, manifestData, spaceInfo} } = props;
+    const {results:{dayPhoto, roverPhotos, spaceInfo}, manifestData } = props;
     // 3 result components: dayPhoto, roverPhotos, spaceInfo /////////////////////////////////////////////////////////////////
     return(
         <div>
@@ -17,7 +17,7 @@ const Results = ( props ) => {
             </Route>
 
             <Route exact path="/roverPhotos">
-                <ResultsRoverPhotos propsForRoverPhotos={[roverPhotos, manifestData]} />
+                <ResultsRoverPhotos roverPhotos={roverPhotos} manifestData={manifestData} />
             </Route>
 
             <Route exact path="/spaceInfo">
