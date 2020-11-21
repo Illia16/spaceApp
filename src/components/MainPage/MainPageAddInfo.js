@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import LoadingLogo from '../Loading/LoadingLogo';
 
 const MainPageAddInfo = (props) => {
-    const { propsForAddInfo: { isLoading:{searchText}, results: {spaceInfo}, userInput, userSelectedQuery, findSpaceInfo } } = props;
+    const { propsForAddInfo: { isLoading, results: {spaceInfo}, userInput, userSelectedQuery, findSpaceInfo } } = props;
 
     return(
         <section>
@@ -19,12 +19,9 @@ const MainPageAddInfo = (props) => {
                     <button onClick={findSpaceInfo}>SEARCH</button>
 
                     {
-                    (spaceInfo.length)
-                    ? <NavLink to="/spaceInfo" className="resultsLink">SEE RESULTS</NavLink>
-                    : null
+                    (spaceInfo.length && !isLoading.searchText) ? <NavLink to="/spaceInfo" className="resultsLink">SEE RESULTS</NavLink>
+                    : isLoading.searchText ? <LoadingLogo /> : null
                     }
-
-                    { searchText ? <LoadingLogo /> : null }
                 </div>
             </form>
         </section>

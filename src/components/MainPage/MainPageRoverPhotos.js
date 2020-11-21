@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import LoadingLogo from '../Loading/LoadingLogo';
 
 const MainPageRoverPhotos = (props) => {
-    const { propsForRovers: { isLoading:{roverName}, results: {roverPhotos}, userInput, userSelectedQuery, findRoverPhotos } } = props;
+    const { propsForRovers: { isLoading, results: {roverPhotos}, userInput, userSelectedQuery, findRoverPhotos } } = props;
     
     return(
         <section>
@@ -25,12 +25,9 @@ const MainPageRoverPhotos = (props) => {
                     <button onClick={ findRoverPhotos }>SEARCH</button>
 
                     {
-                        (roverPhotos.length)
-                        ?<NavLink to="/roverPhotos" className="resultsLink">SEE RESULTS</NavLink>
-                        : null
+                        (roverPhotos.length && !isLoading.roverName) ? <NavLink to="/roverPhotos" className="resultsLink">SEE RESULTS</NavLink>
+                        : isLoading.roverName ? <LoadingLogo /> : null
                     }
-
-                    { roverName ? <LoadingLogo /> : null }
                 </div>
             </form>
         </section>
