@@ -30,9 +30,9 @@ export default function RoverPhotosProvider({ children }) {
         } else if ( manifestData[roverName].hasOwnProperty('name') ) {
             roverCall();
             return
+        } else {
+            manifestCall();
         }
-
-        manifestCall();
     };
 
     const roverCall = () => {
