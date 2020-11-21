@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useInput } from '../UserInputResults/UserInputResults';
 import { useError } from '../Error/ErrorContext';
 import { useLoading } from '../Loading/LoadingContext';
+import { logRoles } from '@testing-library/react';
 
 const ApiCallRoverPhotos = createContext();
 // Using useDayPhoto will allow us to grab useDayPhoto's content in any file in the App
@@ -19,57 +20,26 @@ export default function RoverPhotosProvider({ children }) {
     const { isThereError, showError, errorMsg, setErrorMsg } = useError();
     const { isLoading, setLoading } = useLoading();
 
-    // GETTING MAX DAYS SPENT ON MARS by selected rover to PASS that day value into our next API call to get photos
-    const findRoverPhotos = (e) => {
+    // GETTING MAX DAYS SPENT ON MARS by selected rover to PASS that day value into the next API call to get photos
+    const findRoverPhotos = async (e) => {
         e.preventDefault();
+        setLoading({ ...isLoading, roverName: true });
 
         if (!roverName) {
             showError(true);
             setErrorMsg('The input is empty.');
             return
-        } else if ( manifestData[roverName].hasOwnProperty('name') ) {
-            roverCall();
-            return
-        } else {
-            manifestCall();
         }
-    };
 
-
-    const manifestCall = () => {
-        setLoading({ ...isLoading, roverName: true });
-
-        axios({
-            url: `https://api.nasa.gov/mars-photos/api/v1/manifests/${roverName}/`,
-            method: 'GET',
-            params: {
-                api_key: `RQm9PKAWUOxPOwxSYLbTECB3ZtzrjLjlP4R9vIIm`,
-            }
-        }).then( (res) => {
-            setLoading({ ...isLoading, roverName: false });
+        await manifestCall().then( (res) => {
             getManifestData({ ...manifestData, [roverName]: res.data.photo_manifest });
         }).catch((er) => {
-            setLoading({ ...isLoading, roverName: false });
             showError(true);
             setErrorMsg(er.message);
         });
 
-        roverCall();
-    };
-
-    const roverCall = () => {
-        console.log(roverName, manifestData[roverName]);
-        setLoading({ ...isLoading, roverName: true });
-        axios({
-            url: `https://api.nasa.gov/mars-photos/api/v1/rovers/${roverName}/photos`, // need to be dynamic
-            method: 'GET',
-            params: {
-                api_key: `RQm9PKAWUOxPOwxSYLbTECB3ZtzrjLjlP4R9vIIm`,
-                sol: Math.floor(Math.random() * (manifestData[roverName].max_sol) + 1), // getting a random day out of all days spent by the selected rover on Mars
-                //earth_date: `2020-01-16`, // more practical would be to use sol instead of earth_date
-            }
-        }).then((res) => {
-            console.log(res.data.photos);
+        
+        roverCall().then((res) => {
             setLoading({ ...isLoading, roverName: false });
             getData({ ...results, roverPhotos: res.data.photos });
         }).catch((error) => {
@@ -80,12 +50,30 @@ export default function RoverPhotosProvider({ children }) {
     };
 
 
-    // ROVER PHOTOS CALL
-    // useEffect(() => {
-    //     if (roverName && manifestData[roverName]) {
+    const manifestCall = () => {
+        return axios({
+            url: `https://api.nasa.gov/mars-photos/api/v1/manifests/${roverName}/`,
+            method: 'GET',
+            params: {
+                api_key: `RQm9PKAWUOxPOwxSYLbTECB3ZtzrjLjlP4R9vIIm`,
+            }
+        })
+    };
 
-    //     }
-    // }, [manifestData[roverName]]);
+    const roverCall = () => {
+        console.log(manifestData[roverName]);
+        return axios({
+            url: `https://api.nasa.gov/mars-photos/api/v1/rovers/${roverName}/photos`, // need to be dynamic
+            method: 'GET',
+            params: {
+                api_key: `RQm9PKAWUOxPOwxSYLbTECB3ZtzrjLjlP4R9vIIm`,
+                sol: Math.floor(Math.random() * (manifestData[roverName].max_sol) + 1), // getting a random day out of all days spent by the selected rover on Mars
+                //earth_date: `2020-01-16`, // more practical would be to use sol instead of earth_date
+            }
+        })
+    };
+
+
 
     return(
         <ApiCallRoverPhotos.Provider value={{
