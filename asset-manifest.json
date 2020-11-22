@@ -1,28 +1,28 @@
 {
   "files": {
-    "main.css": "/spaceApp/static/css/main.35ea600d.chunk.css",
-    "main.js": "/spaceApp/static/js/main.f62b0f1c.chunk.js",
-    "main.js.map": "/spaceApp/static/js/main.f62b0f1c.chunk.js.map",
+    "main.css": "/spaceApp/static/css/main.f15afd7e.chunk.css",
+    "main.js": "/spaceApp/static/js/main.dbc862b1.chunk.js",
+    "main.js.map": "/spaceApp/static/js/main.dbc862b1.chunk.js.map",
     "runtime-main.js": "/spaceApp/static/js/runtime-main.e269b191.js",
     "runtime-main.js.map": "/spaceApp/static/js/runtime-main.e269b191.js.map",
     "static/css/2.b780b9bf.chunk.css": "/spaceApp/static/css/2.b780b9bf.chunk.css",
-    "static/js/2.aa0af406.chunk.js": "/spaceApp/static/js/2.aa0af406.chunk.js",
-    "static/js/2.aa0af406.chunk.js.map": "/spaceApp/static/js/2.aa0af406.chunk.js.map",
+    "static/js/2.a7f4119f.chunk.js": "/spaceApp/static/js/2.a7f4119f.chunk.js",
+    "static/js/2.a7f4119f.chunk.js.map": "/spaceApp/static/js/2.a7f4119f.chunk.js.map",
     "index.html": "/spaceApp/index.html",
-    "precache-manifest.7d1b695ee3657a6e8f6fb073588f322f.js": "/spaceApp/precache-manifest.7d1b695ee3657a6e8f6fb073588f322f.js",
+    "precache-manifest.5cba83955f2aa7dc1c5610a19ce4113e.js": "/spaceApp/precache-manifest.5cba83955f2aa7dc1c5610a19ce4113e.js",
     "service-worker.js": "/spaceApp/service-worker.js",
     "static/css/2.b780b9bf.chunk.css.map": "/spaceApp/static/css/2.b780b9bf.chunk.css.map",
-    "static/css/main.35ea600d.chunk.css.map": "/spaceApp/static/css/main.35ea600d.chunk.css.map",
-    "static/js/2.aa0af406.chunk.js.LICENSE.txt": "/spaceApp/static/js/2.aa0af406.chunk.js.LICENSE.txt",
+    "static/css/main.f15afd7e.chunk.css.map": "/spaceApp/static/css/main.f15afd7e.chunk.css.map",
+    "static/js/2.a7f4119f.chunk.js.LICENSE.txt": "/spaceApp/static/js/2.a7f4119f.chunk.js.LICENSE.txt",
     "static/media/BgVideo2.mp4": "/spaceApp/static/media/BgVideo2.88bfffbc.mp4",
-    "static/media/app.scss": "/spaceApp/static/media/ivana-cajina-asuyh-_ZX54-unsplash.6d30ae2d.jpg",
+    "static/media/backgroundVideo.scss": "/spaceApp/static/media/ivana-cajina-asuyh-_ZX54-unsplash.6d30ae2d.jpg",
     "static/media/styles.css": "/spaceApp/static/media/revicons.2feb69cc.eot"
   },
   "entrypoints": [
     "static/js/runtime-main.e269b191.js",
     "static/css/2.b780b9bf.chunk.css",
-    "static/js/2.aa0af406.chunk.js",
-    "static/css/main.35ea600d.chunk.css",
-    "static/js/main.f62b0f1c.chunk.js"
+    "static/js/2.a7f4119f.chunk.js",
+    "static/css/main.f15afd7e.chunk.css",
+    "static/js/main.dbc862b1.chunk.js"
   ]
 }
