@@ -1,10 +1,10 @@
 import React from 'react';
-import GoBackButton from '../GoBackButton';
+import GoBackButton from '../../presentational/GoBackButton';
 
 // Carousel
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-import carouselSizesRoverPhotos from '../../styles/carouselSizes';
+import carouselSizesRoverPhotos from '../../../styles/carouselSizes';
 
 const ResultsRoverPhotos = ( props ) => {
         const { roverPhotos: [ { earth_date: earthDate, rover: { landing_date: landingDate, launch_date: launchDate, name: roverName, status: roverStatus } } ], manifestData } = props;
@@ -33,7 +33,7 @@ const ResultsRoverPhotos = ( props ) => {
                     transitionDuration={500}
                     containerClass="roverPhotosContainer"
                     itemClass="roverPhotosItem"
-                    removeArrowOnDeviceType={["tablet", "mobile"]}
+                    // removeArrowOnDeviceType={["tablet", "mobile"]}
                     partialVisible={false}
                 >
                     {

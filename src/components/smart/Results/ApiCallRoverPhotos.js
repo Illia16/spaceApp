@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useInput } from '../UserInputResults/UserInputResults';
 import { useError } from '../Error/ErrorContext';
 import { useLoading } from '../Loading/LoadingContext';
-import { logRoles } from '@testing-library/react';
+// import { logRoles } from '@testing-library/react';
 
 const ApiCallRoverPhotos = createContext();
 // Using useDayPhoto will allow us to grab useDayPhoto's content in any file in the App
@@ -28,6 +28,7 @@ export default function RoverPhotosProvider({ children }) {
         if (!roverName) {
             showError(true);
             setErrorMsg('The input is empty.');
+            setLoading({ ...isLoading, roverName: false });
             return
         }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import GoBackButton from '../GoBackButton';
+import GoBackButton from '../../presentational/GoBackButton';
 
 const ResultsDayPhoto = ( props ) => {
     const { propsForDayPhoto: { title, url, copyright, date, explanation, media_type } } = props;

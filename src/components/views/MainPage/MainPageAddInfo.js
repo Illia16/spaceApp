@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-import LoadingLogo from '../Loading/LoadingLogo';
+import LoadingLogo from '../../presentational/Loading/LoadingLogo';
 
 const MainPageAddInfo = (props) => {
     const { propsForAddInfo: { isLoading, results: {spaceInfo}, userInput, userSelectedQuery, findSpaceInfo } } = props;

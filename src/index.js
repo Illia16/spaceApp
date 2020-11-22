@@ -2,12 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import ErrorProvider from './components/Error/ErrorContext';
-import UserInputProvider from './components/UserInputResults/UserInputResults';
-import LoadingProvider from './components/Loading/LoadingContext';
-import DayPhotoProvider from './components/Results/ApiCallDayPhoto';
-import RoverPhotosProvider from './components/Results/ApiCallRoverPhotos';
-import AddInfoProvider from './components/Results/ApiCallAddInfo';
+import ErrorProvider from './components/smart/Error/ErrorContext';
+import UserInputProvider from './components/smart/UserInputResults/UserInputResults';
+import LoadingProvider from './components/smart/Loading/LoadingContext';
+import DayPhotoProvider from './components/smart/Results/ApiCallDayPhoto';
+import RoverPhotosProvider from './components/smart/Results/ApiCallRoverPhotos';
+import AddInfoProvider from './components/smart/Results/ApiCallAddInfo';
 
 ReactDOM.render(
   <React.StrictMode>

@@ -1,18 +1,18 @@
 import React from 'react';
 import "./styles/general.scss";
-import BgVideo from './components/Background/BgVideo';
-import MainPage from './components/MainPage/MainPage';
-import Results from './components/Results/Results';
-import Footer from './components/Footer/Footer';
+import BgVideo from './components/smart/Background/BgVideo';
+import MainPage from './components/views/MainPage/MainPage';
+import Results from './components/views/Results/Results';
+import Footer from './components/presentational/Footer/Footer';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 // grabbing every needed component' logic
-import { useInput } from './components/UserInputResults/UserInputResults';
-import { useError } from './components/Error/ErrorContext';
-import { useLoading } from './components/Loading/LoadingContext';
-import { useDayPhoto } from './components/Results/ApiCallDayPhoto';
-import { useRoverPhotos } from './components/Results/ApiCallRoverPhotos';
-import { useAddInfo } from './components/Results/ApiCallAddInfo';
+import { useInput } from './components/smart/UserInputResults/UserInputResults';
+import { useError } from './components/smart/Error/ErrorContext';
+import { useLoading } from './components/smart/Loading/LoadingContext';
+import { useDayPhoto } from './components/smart/Results/ApiCallDayPhoto';
+import { useRoverPhotos } from './components/smart/Results/ApiCallRoverPhotos';
+import { useAddInfo } from './components/smart/Results/ApiCallAddInfo';
 
 
 function App() {  

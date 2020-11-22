@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-import LoadingLogo from '../Loading/LoadingLogo';
+import LoadingLogo from '../../presentational/Loading/LoadingLogo';
 
 const MainPageApod = (props) => {
     const { propsForApod: { isLoading, results: {dayPhoto}, userInput, userSelectedQuery, findPhotoDay } } = props;

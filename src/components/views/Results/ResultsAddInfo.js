@@ -1,8 +1,8 @@
 import React from 'react';
-import GoBackButton from '../GoBackButton';
+import GoBackButton from '../../presentational/GoBackButton';
 
 // FUNCTIONS
-import checkPrevNextPages from '../../helpers/checkPrevNextPages/checkPrevNextPages';
+import checkPrevNextPages from '../../../helpers/checkPrevNextPages/checkPrevNextPages';
 
 const ResultsAddInfo = ( props ) => {
         const {currentPage, changePage } = props;

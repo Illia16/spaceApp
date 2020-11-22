@@ -2,8 +2,8 @@ import React from 'react';
 import './main.scss';
 
 // Components
-import Error from '../Error/Error';
-import Header from '../Header';
+import Error from '../../smart/Error/Error';
+import Header from '../../presentational/Header';
 import MainPageApod from './MainPageApod';
 import MainPageRoverPhotos from './MainPageRoverPhotos';
 import MainPageAddInfo from './MainPageAddInfo';
