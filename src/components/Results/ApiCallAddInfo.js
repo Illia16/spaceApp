@@ -23,7 +23,7 @@ export default function AddInfoProvider({ children }){
     const findSpaceInfo = (e) => {
         e.preventDefault();
         changePage(1);
-        
+
         // checking if input is empty (no point in making an API call if the input in empty)
         if (!userInput.searchText) {
             showError(true);
@@ -45,7 +45,6 @@ export default function AddInfoProvider({ children }){
             }
         })
         .then((res) => {
-            console.log(res);
             const space = res.data.collection;
             // showing error if there's no results based on the user input
             if (!space.items.length) {

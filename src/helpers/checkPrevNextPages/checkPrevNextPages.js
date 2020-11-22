@@ -1,5 +1,6 @@
 export default function checkPrevNextPages(pages) {
 
+    // the function checks what pages are available to go to after the first API call(default: page 1)
     if (!pages) {
         return
     }
