@@ -29,6 +29,7 @@ export default function RoverPhotosProvider({ children }) {
             return
         }
 
+        setLoading({ ...isLoading, roverName: true });
         manifestCall().then( (res) => {
             getManifestData({ ...manifestData, [roverName]: res.data.photo_manifest });
         }).catch((er) => {
@@ -39,7 +40,6 @@ export default function RoverPhotosProvider({ children }) {
 
     useEffect(() => {
         if (manifestData[roverName]) {
-            setLoading({ ...isLoading, roverName: true });
             roverCall().then((res) => {
                 setLoading({ ...isLoading, roverName: false });
                 getData({ ...results, roverPhotos: res.data.photos });
