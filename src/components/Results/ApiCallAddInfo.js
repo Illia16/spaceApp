@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext, useEffect } from 'react';
 import axios from 'axios';
 
 // grabbing every needed component' logic
@@ -15,14 +15,15 @@ export const useAddInfo = () => {
 // AddInfo API call logic functional
 export default function AddInfoProvider({ children }){
     // using imported functions from other smart components
-    const { userInput, userSelection, userSelectedQuery, results, getData } = useInput();
+    const { userInput, userSelection, userSelectedQuery, results, getData, currentPage, changePage } = useInput();
     const { isThereError, showError, errorMsg, setErrorMsg } = useError();
     const { isLoading, setLoading } = useLoading();
 
     // ADDITIONAL INFO
     const findSpaceInfo = (e) => {
         e.preventDefault();
-
+        changePage(1);
+        
         // checking if input is empty (no point in making an API call if the input in empty)
         if (!userInput.searchText) {
             showError(true);
@@ -30,33 +31,44 @@ export default function AddInfoProvider({ children }){
             return
         } else {
             setLoading({ ...isLoading, searchText: true });
-            axios({
-                url: `https://images-api.nasa.gov/search`,
-                method: 'GET',
-                params: {
-                    q: userInput.searchText,
-                    page: 1,
-                }
-            })
-                .then((res) => {
-                    const space = res.data.collection.items;
-                    // showing error if there's no results based on the user input
-                    if (!space.length) {
-                        setLoading({ ...isLoading, searchText: false });
-                        showError(true);
-                        setErrorMsg('No results found based on your input.');
-                    } else {
-                        setLoading({ ...isLoading, searchText: false });
-                        getData({ ...results, spaceInfo: space });
-                    }
-                })
-                .catch((error) => {
-                    setLoading({ ...isLoading, searchText: false });
-                    showError(true);
-                    setErrorMsg(error.response.data.reason);
-                })
+            findSpaceInfoApiCall();
         };
     };
+
+    const findSpaceInfoApiCall = () => {
+        axios({
+            url: `https://images-api.nasa.gov/search`,
+            method: 'GET',
+            params: {
+                q: userInput.searchText,
+                page: currentPage,
+            }
+        })
+        .then((res) => {
+            console.log(res);
+            const space = res.data.collection;
+            // showing error if there's no results based on the user input
+            if (!space.items.length) {
+                setLoading({ ...isLoading, searchText: false });
+                showError(true);
+                setErrorMsg('No results found based on your input.');
+            } else {
+                setLoading({ ...isLoading, searchText: false });
+                getData({ ...results, spaceInfo: space });
+            }
+        })
+        .catch((error) => {
+            setLoading({ ...isLoading, searchText: false });
+            showError(true);
+            setErrorMsg(error.response.data.reason);
+        })
+    };
+
+    useEffect(() => {
+        if (currentPage && results.spaceInfo.hasOwnProperty('items')) {
+            findSpaceInfoApiCall();
+        };
+    }, [currentPage]);
 
     return(
         <ApiCallAddInfo.Provider value={{

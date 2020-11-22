@@ -7,7 +7,7 @@ import { useError } from '../Error/ErrorContext';
 import { useLoading } from '../Loading/LoadingContext';
 
 // FUNCTIONS
-import setTodayDate from '../../helpers/setTodayDate';
+import setTodayDate from '../../helpers/setTodayDate/setTodayDate';
 
 const ApiCallDayPhoto = createContext();
 // Using useDayPhoto will allow us to grab useDayPhoto's content in any file in the App

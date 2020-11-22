@@ -69,6 +69,10 @@
     align-items: center;
 }
 
+.spaceInfoRes li:last-child {
+    margin-bottom: 0;
+}
+
 .spaceInfoRes li > * {
     margin-bottom: 25px;
 }
@@ -78,6 +82,14 @@
     margin: 0 auto;
 }
 
+.prevNextPages {
+    text-align: center;
+    margin: 0 0 75px 0;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+// MEDIA QUARIES
 @media (max-width: 1200px) {
     .dayPhotoRes {
         flex-direction: column;

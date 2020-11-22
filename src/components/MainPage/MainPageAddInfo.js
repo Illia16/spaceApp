@@ -5,7 +5,6 @@ import LoadingLogo from '../Loading/LoadingLogo';
 
 const MainPageAddInfo = (props) => {
     const { propsForAddInfo: { isLoading, results: {spaceInfo}, userInput, userSelectedQuery, findSpaceInfo } } = props;
-
     return(
         <section>
             <h2>Space information</h2>
@@ -19,7 +18,7 @@ const MainPageAddInfo = (props) => {
                     <button onClick={findSpaceInfo}>SEARCH</button>
 
                     {
-                    (spaceInfo.length && !isLoading.searchText) ? <NavLink to="/spaceInfo" className="resultsLink">SEE RESULTS</NavLink>
+                    (spaceInfo.hasOwnProperty('items') && !isLoading.searchText) ? <NavLink to="/spaceInfo" className="resultsLink">SEE RESULTS</NavLink>
                     : isLoading.searchText ? <LoadingLogo /> : null
                     }
                 </div>

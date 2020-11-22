@@ -1,15 +1,21 @@
 import React from 'react';
 import GoBackButton from '../GoBackButton';
 
+// FUNCTIONS
+import checkPrevNextPages from '../../helpers/checkPrevNextPages/checkPrevNextPages';
+
 const ResultsAddInfo = ( props ) => {
+        const {currentPage, changePage } = props;
+        const checkingPages = checkPrevNextPages(props.propsForAddInfo.links);
+
         return (
             <div>
                 <h3>Space Information</h3>
 
                 <ul className="spaceInfoRes">
                     {
-                        // spaceInfo.slice(0, 20).map((obj) => {
-                        props.propsForAddInfo.map((obj) => {
+                        // props.propsForAddInfo.items.slice(0, 10).map((obj) => {
+                        props.propsForAddInfo.items.map((obj) => {
                             return (
                                 <li key={obj.data[0].nasa_id}>
                                     <h4>{obj.data[0].title}</h4>
@@ -22,6 +28,23 @@ const ResultsAddInfo = ( props ) => {
                         })
                     }
                 </ul>
+                
+                {
+                    (checkingPages && checkingPages[0]) === 'prev' ? 
+                        <div className='prevNextPages'>
+                            <button onClick={ () => changePage(checkingPages[1]) } aria-label='go to the previous page'><i class="fas fa-chevron-left" aria-hidden='true'></i></button>
+                        </div>
+                    : (checkingPages && checkingPages[0]) === 'next' ? 
+                        <div className='prevNextPages'>                    
+                            <button onClick={ () => changePage(checkingPages[1]) } aria-label='go to the next page'><i class="fas fa-chevron-right" aria-hidden='true'></i></button>
+                        </div>
+                    : checkingPages ?
+                    <div className='prevNextPages'>
+                        <button onClick={ () => changePage(checkingPages[0]) } aria-label='go to the previous page'><i class="fas fa-chevron-left" aria-hidden='true'></i></button>
+                        <button onClick={ () => changePage(checkingPages[1]) } aria-label='go to the next page'><i class="fas fa-chevron-right" aria-hidden='true'></i></button>
+                    </div>
+                    : null
+                }
                 <GoBackButton />
             </div>
         )

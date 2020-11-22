@@ -13,6 +13,8 @@ export default function UserInputProvider({ children }){
     const [manifestData, getManifestData] = useState({ spirit:[], opportunity:[], curiosity:[] }); // Manifest Results STORAGE(for rover photos)
     const [results, getData] = useState({ dayPhoto: [], roverPhotos: [], spaceInfo: [] }); // RESULTS STORAGE
 
+    const [currentPage, changePage] = useState(1); // RESULTS PAGE STORAGE
+
     const userSelectedQuery = (e) => {
         e.preventDefault();
         userSelection({...userInput, [e.target.name]: e.target.value})
@@ -30,6 +32,9 @@ export default function UserInputProvider({ children }){
 
             manifestData:manifestData,
             getManifestData:getManifestData,
+
+            currentPage:currentPage,
+            changePage:changePage,
         }}>
             { children }
         </UserInput.Provider>
