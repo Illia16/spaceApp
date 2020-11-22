@@ -20,34 +20,36 @@ export default function RoverPhotosProvider({ children }) {
     const { isLoading, setLoading } = useLoading();
 
     // GETTING MAX DAYS SPENT ON MARS by selected rover to PASS that day value into the next API call to get photos
-    const findRoverPhotos = async (e) => {
+    const findRoverPhotos = (e) => {
         e.preventDefault();
-        setLoading({ ...isLoading, roverName: true });
 
         if (!roverName) {
             showError(true);
             setErrorMsg('The input is empty.');
-            setLoading({ ...isLoading, roverName: false });
             return
         }
 
-        await manifestCall().then( (res) => {
+        manifestCall().then( (res) => {
             getManifestData({ ...manifestData, [roverName]: res.data.photo_manifest });
         }).catch((er) => {
             showError(true);
             setErrorMsg(er.message);
         });
-
-        
-        roverCall().then((res) => {
-            setLoading({ ...isLoading, roverName: false });
-            getData({ ...results, roverPhotos: res.data.photos });
-        }).catch((error) => {
-            setLoading({ ...isLoading, roverName: false });
-            showError(true);
-            setErrorMsg(error.response.data.errors);
-        })
     };
+
+    useEffect(() => {
+        if (manifestData[roverName]) {
+            setLoading({ ...isLoading, roverName: true });
+            roverCall().then((res) => {
+                setLoading({ ...isLoading, roverName: false });
+                getData({ ...results, roverPhotos: res.data.photos });
+            }).catch((error) => {
+                setLoading({ ...isLoading, roverName: false });
+                showError(true);
+                setErrorMsg(error.response.data.errors);
+            })
+        }
+    }, [manifestData[roverName]]);
 
 
     const manifestCall = () => {
@@ -61,7 +63,6 @@ export default function RoverPhotosProvider({ children }) {
     };
 
     const roverCall = () => {
-        console.log(manifestData[roverName]);
         return axios({
             url: `https://api.nasa.gov/mars-photos/api/v1/rovers/${roverName}/photos`, // need to be dynamic
             method: 'GET',

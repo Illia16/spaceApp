@@ -15,14 +15,13 @@ export const useAddInfo = () => {
 // AddInfo API call logic functional
 export default function AddInfoProvider({ children }){
     // using imported functions from other smart components
-    const { userInput, results, getData, currentPage, changePage } = useInput();
+    const { userInput, results, getData, currentPage } = useInput();
     const { showError, setErrorMsg } = useError();
     const { isLoading, setLoading } = useLoading();
 
     // ADDITIONAL INFO
     const findSpaceInfo = (e) => {
         e.preventDefault();
-        changePage(1);
 
         // checking if input is empty (no point in making an API call if the input in empty)
         if (!userInput.searchText) {
@@ -41,7 +40,7 @@ export default function AddInfoProvider({ children }){
             method: 'GET',
             params: {
                 q: userInput.searchText,
-                page: currentPage,
+                page: currentPage || 1,
             }
         })
         .then((res) => {
@@ -64,8 +63,9 @@ export default function AddInfoProvider({ children }){
     };
 
     useEffect(() => {
-        if (currentPage && results.spaceInfo.hasOwnProperty('items')) {
+        if (currentPage) {
             findSpaceInfoApiCall();
+            window.scrollTo(0, 0);
         };
     }, [currentPage]);
 

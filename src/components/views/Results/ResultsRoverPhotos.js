@@ -8,9 +8,6 @@ import carouselSizesRoverPhotos from '../../../styles/carouselSizes';
 
 const ResultsRoverPhotos = ( props ) => {
         const { roverPhotos: [ { earth_date: earthDate, rover: { landing_date: landingDate, launch_date: launchDate, name: roverName, status: roverStatus } } ], manifestData } = props;
-        // { max_date, total_photos }
-        console.log(props, roverName);
-        console.log(manifestData);
         return (
             <div className="roverPhotosRes">
                 <h3>Photos</h3>

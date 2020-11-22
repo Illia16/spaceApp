@@ -32,20 +32,20 @@ const ResultsAddInfo = ( props ) => {
                 {
                     (checkingPages && checkingPages[0]) === 'prev' ? 
                         <div className='prevNextPages'>
-                            <button onClick={ () => changePage(checkingPages[1]) } aria-label='go to the previous page'><i class="fas fa-chevron-left" aria-hidden='true'></i></button>
+                            <button onClick={ () => changePage(checkingPages[1]) } aria-label='go to the previous page'><i className="fas fa-chevron-left" aria-hidden='true'></i></button>
                         </div>
                     : (checkingPages && checkingPages[0]) === 'next' ? 
                         <div className='prevNextPages'>                    
-                            <button onClick={ () => changePage(checkingPages[1]) } aria-label='go to the next page'><i class="fas fa-chevron-right" aria-hidden='true'></i></button>
+                            <button onClick={ () => changePage(checkingPages[1]) } aria-label='go to the next page'><i className="fas fa-chevron-right" aria-hidden='true'></i></button>
                         </div>
                     : checkingPages ?
                     <div className='prevNextPages'>
-                        <button onClick={ () => changePage(checkingPages[0]) } aria-label='go to the previous page'><i class="fas fa-chevron-left" aria-hidden='true'></i></button>
-                        <button onClick={ () => changePage(checkingPages[1]) } aria-label='go to the next page'><i class="fas fa-chevron-right" aria-hidden='true'></i></button>
+                        <button onClick={ () => changePage(checkingPages[0]) } aria-label='go to the previous page'><i className="fas fa-chevron-left" aria-hidden='true'></i></button>
+                        <button onClick={ () => changePage(checkingPages[1]) } aria-label='go to the next page'><i className="fas fa-chevron-right" aria-hidden='true'></i></button>
                     </div>
                     : null
                 }
-                <GoBackButton />
+                <GoBackButton  changePage={changePage} />
             </div>
         )
 };
