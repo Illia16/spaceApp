@@ -17,9 +17,9 @@ import { useAddInfo } from './components/smart/Results/ApiCallAddInfo';
 
 function App() {  
   // using imported functions from other smart components
-  const { userInput, userSelection, manifestData, getManifestData, results, getData, currentPage, changePage, userSelectedQuery} = useInput();
-  const { isThereError, showError, errorMsg, setErrorMsg } = useError();
-  const { isLoading, setLoading } = useLoading();
+  const { userInput, manifestData, results, currentPage, changePage, userSelectedQuery} = useInput();
+  const { isThereError, showError, errorMsg } = useError();
+  const { isLoading } = useLoading();
   const { findPhotoDay } = useDayPhoto();
   const { findRoverPhotos } = useRoverPhotos();
   const { findSpaceInfo } = useAddInfo();

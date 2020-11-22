@@ -15,8 +15,8 @@ export const useAddInfo = () => {
 // AddInfo API call logic functional
 export default function AddInfoProvider({ children }){
     // using imported functions from other smart components
-    const { userInput, userSelection, userSelectedQuery, results, getData, currentPage, changePage } = useInput();
-    const { isThereError, showError, errorMsg, setErrorMsg } = useError();
+    const { userInput, results, getData, currentPage, changePage } = useInput();
+    const { showError, setErrorMsg } = useError();
     const { isLoading, setLoading } = useLoading();
 
     // ADDITIONAL INFO

@@ -5,7 +5,7 @@ import GoBackButton from '../../presentational/GoBackButton';
 import checkPrevNextPages from '../../../helpers/checkPrevNextPages/checkPrevNextPages';
 
 const ResultsAddInfo = ( props ) => {
-        const {currentPage, changePage } = props;
+        const { changePage } = props;
         const checkingPages = checkPrevNextPages(props.propsForAddInfo.links);
 
         return (

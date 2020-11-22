@@ -18,8 +18,8 @@ export const useDayPhoto = () => {
 // DayPhoto API call logic functional
 export default function DayPhotoProvider({ children }){
     // using imported functions from other smart components
-    const { userInput, userSelection, userSelectedQuery, results, getData } = useInput();
-    const { isThereError, showError, errorMsg, setErrorMsg } = useError();
+    const { userInput, userSelection, results, getData } = useInput();
+    const { showError, setErrorMsg } = useError();
     const { isLoading, setLoading } = useLoading();
 
 

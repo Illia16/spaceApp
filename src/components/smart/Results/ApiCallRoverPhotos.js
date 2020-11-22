@@ -5,7 +5,6 @@ import axios from 'axios';
 import { useInput } from '../UserInputResults/UserInputResults';
 import { useError } from '../Error/ErrorContext';
 import { useLoading } from '../Loading/LoadingContext';
-// import { logRoles } from '@testing-library/react';
 
 const ApiCallRoverPhotos = createContext();
 // Using useDayPhoto will allow us to grab useDayPhoto's content in any file in the App
@@ -16,8 +15,8 @@ export const useRoverPhotos = () => {
 // RoverPhotos API call logic functional
 export default function RoverPhotosProvider({ children }) {
     // using imported functions from other smart components
-    const { userInput: { roverName }, userSelection, userSelectedQuery, results, getData, manifestData, getManifestData } = useInput();
-    const { isThereError, showError, errorMsg, setErrorMsg } = useError();
+    const { userInput: { roverName }, results, getData, manifestData, getManifestData } = useInput();
+    const { showError, setErrorMsg } = useError();
     const { isLoading, setLoading } = useLoading();
 
     // GETTING MAX DAYS SPENT ON MARS by selected rover to PASS that day value into the next API call to get photos
