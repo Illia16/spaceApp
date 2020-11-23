@@ -11,7 +11,7 @@ export const useError = () => {
 export default function ErrorProvider({ children }){
     const [isThereError, showError] = useState(false); // ERROR T/F
     const [errorMsg, setErrorMsg] = useState(''); // ERROR MESSAGE
-    
+
     return(
         <ErrorContext.Provider value={{
             isThereError: isThereError,
