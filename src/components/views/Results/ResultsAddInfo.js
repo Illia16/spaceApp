@@ -1,5 +1,7 @@
 import React from 'react';
 import GoBackButton from '../../presentational/GoBackButton';
+import LazyLoad from 'react-lazyload';
+import Loading from '../../presentational/Loading/LoadingLogo';
 
 // FUNCTIONS
 import checkPrevNextPages from '../../../helpers/checkPrevNextPages/checkPrevNextPages';
@@ -17,13 +19,23 @@ const ResultsAddInfo = ( props ) => {
                         // props.propsForAddInfo.items.slice(0, 10).map((obj) => {
                         props.propsForAddInfo.items.map((obj) => {
                             return (
-                                <li key={obj.data[0].nasa_id}>
-                                    <h4>{obj.data[0].title}</h4>
-                                    {
-                                        obj.hasOwnProperty('links') ? <div className="imgParent"><img src={obj.links[0].href} alt={`${obj.data[0].title}`} /></div> : null
-                                    }
-                                    <p>{obj.data[0].description}</p>
-                                </li>
+                                <LazyLoad
+                                    key={obj.data[0].nasa_id}
+                                    height={100}
+                                    // offset={[-100,100]}
+                                    offset={-50}
+                                    placeholder={<Loading/>}
+                                    // once
+                                >
+                                    {/* <li key={obj.data[0].nasa_id}> */}
+                                    <li>
+                                        <h4>{obj.data[0].title}</h4>
+                                        {
+                                            obj.hasOwnProperty('links') ? <div className="imgParent"><img src={obj.links[0].href} alt={`${obj.data[0].title}`} /></div> : null
+                                        }
+                                        <p>{obj.data[0].description}</p>
+                                    </li>
+                                </LazyLoad>
                             )
                         })
                     }
