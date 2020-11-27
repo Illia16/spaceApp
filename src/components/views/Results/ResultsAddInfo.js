@@ -22,12 +22,11 @@ const ResultsAddInfo = ( props ) => {
                                 <LazyLoad
                                     key={obj.data[0].nasa_id}
                                     height={100}
-                                    // offset={[-100,100]}
-                                    offset={-50}
+                                    offset={[-100,100]}
                                     placeholder={<Loading/>}
-                                    // once
+                                    unmountIfInvisible={true}
+                                    once
                                 >
-                                    {/* <li key={obj.data[0].nasa_id}> */}
                                     <li>
                                         <h4>{obj.data[0].title}</h4>
                                         {
