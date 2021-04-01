@@ -9,7 +9,9 @@ import checkPrevNextPages from '../../../helpers/checkPrevNextPages/checkPrevNex
 const ResultsAddInfo = ( props ) => {
         const { changePage } = props;
         const checkingPages = checkPrevNextPages(props.propsForAddInfo.links);
-
+        console.log(checkingPages);
+        console.log(props);
+        console.log(window.innerHeight);
         return (
             <div>
                 <h3>Space Information</h3>
@@ -57,6 +59,11 @@ const ResultsAddInfo = ( props ) => {
                     : null
                 }
                 <GoBackButton  changePage={changePage} />
+
+                <div className="scrollBtn">
+                    <button onClick={ () => window.scrollTo(0, document.body.scrollHeight)} >Scroll to bottom</button>
+                    <button onClick={ () => window.scrollTo(0, 0)} >Scroll to top</button>
+                </div>
             </div>
         )
 };
