@@ -1,28 +1,22 @@
 import React from 'react';
 import "./styles/general.scss";
-import BgVideo from './components/smart/Background/BgVideo';
+import BgVideo from './components/presentational/Background/BgVideo';
 import MainPage from './components/views/MainPage/MainPage';
 import Results from './components/views/Results/Results';
 import Footer from './components/presentational/Footer/Footer';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 // grabbing every needed component' logic
-import { useInput } from './components/smart/UserInputResults/UserInputResults';
-import { useError } from './components/smart/Error/ErrorContext';
-import { useLoading } from './components/smart/Loading/LoadingContext';
-import { useDayPhoto } from './components/smart/Results/ApiCallDayPhoto';
-import { useRoverPhotos } from './components/smart/Results/ApiCallRoverPhotos';
-import { useAddInfo } from './components/smart/Results/ApiCallAddInfo';
-
+import { useLogic } from './components/smart/AppContext';
 
 function App() {  
   // using imported functions from other smart components
-  const { userInput, manifestData, results, currentPage, changePage, userSelectedQuery} = useInput();
-  const { isThereError, showError, errorMsg } = useError();
-  const { isLoading } = useLoading();
-  const { findPhotoDay } = useDayPhoto();
-  const { findRoverPhotos } = useRoverPhotos();
-  const { findSpaceInfo } = useAddInfo();
+  const { userInput, manifestData, results, currentPage, changePage, userSelectedQuery, 
+          isThereError, showError, errorMsg,
+          isLoading,
+          findPhotoDay,
+          findRoverPhotos,
+          findSpaceInfo } = useLogic();
 
   return (
       <Router basename={process.env.PUBLIC_URL}>

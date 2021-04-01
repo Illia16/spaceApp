@@ -2,7 +2,7 @@ import React from 'react';
 import './main.scss';
 
 // Components
-import Error from '../../smart/Error/Error';
+import Error from '../../presentational/Error/Error';
 import Header from '../../presentational/Header';
 import MainPageApod from './MainPageApod';
 import MainPageRoverPhotos from './MainPageRoverPhotos';

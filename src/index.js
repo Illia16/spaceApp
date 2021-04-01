@@ -2,28 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import ErrorProvider from './components/smart/Error/ErrorContext';
-import UserInputProvider from './components/smart/UserInputResults/UserInputResults';
-import LoadingProvider from './components/smart/Loading/LoadingContext';
-import DayPhotoProvider from './components/smart/Results/ApiCallDayPhoto';
-import RoverPhotosProvider from './components/smart/Results/ApiCallRoverPhotos';
-import AddInfoProvider from './components/smart/Results/ApiCallAddInfo';
+import AppContext from './components/smart/AppContext';
 
 ReactDOM.render(
   <React.StrictMode>
-    <UserInputProvider>
-      <ErrorProvider>
-        <LoadingProvider>
-          <DayPhotoProvider>
-            <RoverPhotosProvider>
-              <AddInfoProvider>
-                <App />
-              </AddInfoProvider>
-            </RoverPhotosProvider>
-          </DayPhotoProvider>
-        </LoadingProvider>
-      </ErrorProvider>
-    </UserInputProvider>
+    <AppContext>
+      <App />
+    </AppContext>
   </React.StrictMode>,
   document.getElementById('root')
 );
