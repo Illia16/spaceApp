@@ -22,29 +22,33 @@ function App() {
     return (
       <Router basename={process.env.PUBLIC_URL}>
         <BgVideo />
-            <div className="App wrapper">
-            <Route exact path="/">
-                <MainPage
-                  isThereError={isThereError}
-                  showError={showError}
-                  errorMsg={errorMsg}
+        <div className="App wrapper">
+          <Route exact path="/">
+              <MainPage
+                isThereError={isThereError}
+                showError={showError}
+                errorMsg={errorMsg}
 
-                  isLoading={isLoading}
-                  userInput={userInput}
-                  userSelectedQuery={userSelectedQuery}
-                  findPhotoDay={findPhotoDay}
-                  results={results}
+                isLoading={isLoading}
+                userInput={userInput}
+                userSelectedQuery={userSelectedQuery}
+                findPhotoDay={findPhotoDay}
+                results={results}
 
-                  findRoverPhotos={findRoverPhotos}
-                  findSpaceInfo={findSpaceInfo}
-                  />
-            </Route>
+                findRoverPhotos={findRoverPhotos}
+                findSpaceInfo={findSpaceInfo}
+                />
+          </Route>
+        <Switch>
+          <Route path="/">
             <Results results={results} manifestData={manifestData} currentPage={currentPage} changePage={changePage} />
-            </div>
-            < Footer />
-
-          {/* <Route path="/404" component={Page404} />
-          <Redirect from="" to="/404"/> */}
+            {/* {( (!userInput.date || !userInput.roverName || !userInput.searchText) && window.location.pathname != '/spaceApp/') && <Redirect to="/404" /> } */}
+            {/* <Route exact path="/404" component={Page404} /> */}
+            <Route component={Page404} />
+          </Route>
+        </Switch>
+        </div>
+        < Footer />
       </Router>
   );
 };
