@@ -1,7 +1,6 @@
 import React from 'react';
 import "./errorWindow.scss";
 import FocusTrap from 'focus-trap-react'
-import imageBg from '../Background/ivana-cajina-asuyh-_ZX54-unsplash.jpg';
 
 const Error = (props) => {
     const { propsForError: { showError, errorMsg } } = props;

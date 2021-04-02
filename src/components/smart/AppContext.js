@@ -13,6 +13,8 @@ export const useLogic = () => {
 
 // AppContext functional
 export default function AppContext({ children }){
+    const paths = ["/", "/photooftheday", "/roverPhotos", "/spaceInfo", "/400"];
+
     const [userInput, userSelection] = useState({date: '', roverName: '', searchText: ''}); // USER INPUT STORAGE
     const [manifestData, getManifestData] = useState({ spirit: '', opportunity: '', curiosity: '' }); // Manifest Results STORAGE(for rover photos)
     const [results, getData] = useState({ dayPhoto: [], roverPhotos: [], spaceInfo: [] }); // RESULTS STORAGE
@@ -161,10 +163,12 @@ export default function AppContext({ children }){
             window.scrollTo(0, 0);
         };
     }, [currentPage]);
-    
+
     return(
         <UserInput.Provider value={{
             userSelectedQuery: userSelectedQuery,
+
+            paths: paths,
 
             userInput: userInput,
             userSelection: userSelection,
