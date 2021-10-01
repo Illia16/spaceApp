@@ -61,6 +61,39 @@
     margin: 5px;
 }
 
+.roverPhotosRes {
+    ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+        margin: 10rem 0;
+
+        li {
+            flex: 1 1 25%;
+            max-width: 500px;
+            position: relative;
+
+            a {
+                font-size: 10px;
+                background: white;
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                transform: rotate(-15deg);
+                font-style: italic;
+                padding: 0.75rem 0.5rem;
+                color: black;
+                transition: all 0.3s ease;
+
+                &:hover,
+                &:focus {
+                    transform: none;
+                }
+            }
+        }
+    }
+}
+
 // SPACE INFO RESULTS /////////////////////////////////////////////////
 .spaceInfoRes li {
     margin-bottom: 100px;

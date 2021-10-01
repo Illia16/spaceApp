@@ -1,11 +1,6 @@
 import React from 'react';
 import GoBackButton from '../../presentational/GoBackButton';
 
-// Carousel
-import Carousel from 'react-multi-carousel';
-import 'react-multi-carousel/lib/styles.css';
-import carouselSizesRoverPhotos from '../../../styles/carouselSizes';
-
 const ResultsRoverPhotos = ( props ) => {
         const { roverPhotos: [ { earth_date: earthDate, rover: { landing_date: landingDate, launch_date: launchDate, name: roverName, status: roverStatus } } ], manifestData } = props;
         return (
@@ -19,28 +14,18 @@ const ResultsRoverPhotos = ( props ) => {
                 <p>The last photos taken on <span>{manifestData[roverName.toLowerCase()].max_date}</span></p>
                 <p>Status <span>{roverStatus}</span></p>
 
-                {/* className="roverPhotos" */}
-                <Carousel
-                    swipeable={true}
-                    draggable={true}
-                    arrows={true}
-                    keyBoardControl={true}
-                    responsive={carouselSizesRoverPhotos}
-                    customTransition="all .5"
-                    transitionDuration={500}
-                    containerClass="roverPhotosContainer"
-                    itemClass="roverPhotosItem"
-                    // removeArrowOnDeviceType={["tablet", "mobile"]}
-                    partialVisible={false}
-                >
+                <ul>
                     {
                         props.roverPhotos.map( (obj) => {
                             return (
-                                <div key={obj.id}><img src={obj.img_src} alt={`taken by ${obj.rover.name} on ${obj.earth_date}`} /></div>
+                                <li key={obj.id}>
+                                    <img src={obj.img_src} alt={`taken by ${obj.rover.name} on ${obj.earth_date}`} />
+                                    <a href={obj.img_src} target='_blank' rel='noopener noreferrer'>Full image</a>
+                                </li>
                             )
                         })
                     }
-                </Carousel>
+                </ul>
                 <GoBackButton />
             </div>
         )

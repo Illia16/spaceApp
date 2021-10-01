@@ -8,7 +8,7 @@ const BgVideo = () => {
     const updateSpeed = () => { spaceVideoRef.current.playbackRate = 0.8; };
 
     // hook to toogle between background VIDEO and PICTURE (so that the user can read without distraction)
-    const [bgVideo, toggleBg] = useState(true);
+    const [bgVideo, toggleBg] = useState(false);
 
     return(
         <div>
@@ -24,15 +24,15 @@ const BgVideo = () => {
                 >
                 <source src={Video} type="video/mp4"/>
                 </video>
-                : 
+                :
                 <div className="bg bgPicture"></div>
             }
-            
+
             <div className="bgOnOff">
                 <label htmlFor="toggleBg" className="srOnly">toggle background from video to picture</label>
                 <Switch
-                    onChange={e => toggleBg(!bgVideo)} 
-                    checked={bgVideo} 
+                    onChange={e => toggleBg(!bgVideo)}
+                    checked={bgVideo}
                     id="toggleBg"
                     onHandleColor = '#000000'
                     offHandleColor = '#000000'

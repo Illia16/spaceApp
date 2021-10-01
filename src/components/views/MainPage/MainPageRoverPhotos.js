@@ -5,7 +5,7 @@ import LoadingLogo from '../../presentational/Loading/LoadingLogo';
 
 const MainPageRoverPhotos = (props) => {
     const { propsForRovers: { isLoading, results: {roverPhotos}, userInput, userSelectedQuery, findRoverPhotos } } = props;
-    
+
     return(
         <section>
             <h2>Mars Rover photos</h2>
@@ -20,6 +20,7 @@ const MainPageRoverPhotos = (props) => {
                         <option name="roverName" value="spirit">Spirit</option>
                         <option name="roverName" value="opportunity">Opportunity</option>
                         <option name="roverName" value="curiosity">Curiosity</option>
+                        <option name="roverName" value="perseverance">Perseverance</option>
                     </select>
 
                     <button onClick={ findRoverPhotos }>SEARCH</button>
