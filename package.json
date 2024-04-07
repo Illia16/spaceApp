@@ -23,6 +23,7 @@
     "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build_dot_net_app": "csc /target:winexe /out:\"c#\\spaceApp.exe\" \"c#\\spaceApp.cs\"",
     "test": "jest",
     "eject": "react-scripts eject"
   },
